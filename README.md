@@ -1,4 +1,4 @@
-# :closed_book: <span style="color:yellowgreen"> WEB BOOk </span>
+# :closed_book: ${\textsf{\color{green}WEB BOOK}}$
 
 ## TEAM MEMBER :family:
 
