@@ -1,6 +1,6 @@
 # :closed_book: ${\textsf{\color{green}WEB BOOK}}$
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=CCCCFF,33CC33&height=150&section=header" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=33CC33&height=150&section=header" />
 
 
 ## TEAM MEMBER :family:
@@ -14,4 +14,4 @@
 
 
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=CCCCFF,33CC33&height=150&section=footer" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=33CC33&height=150&section=footer" />
