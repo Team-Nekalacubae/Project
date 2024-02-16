@@ -1,8 +1,5 @@
 # :closed_book: ${\textsf{\color{green}WEB BOOK}}$
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=33CC33&height=150&section=header" />
-
-
 ## TEAM MEMBER :family:
 
 |                                         Backend                                          |                                         Backend                                          |                                         Backend                                          |                                         Backend                                         |                                                                  
@@ -12,6 +9,3 @@
 
 
 
-
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=33CC33&height=150&section=footer" />
