@@ -1,6 +1,6 @@
 # :closed_book: ${\textsf{\color{green}WEB BOOK}}$
 
-<div align="center">
+
 <img src="https://capsule-render.vercel.app/api?type=waving&color=99CC33&height=150&section=header" />
 
 
@@ -38,5 +38,5 @@
 #### Program Used
 
 
-<div align="center">
+
 <img src="https://capsule-render.vercel.app/api?type=waving&color=FF9999&height=150&section=footer" />
