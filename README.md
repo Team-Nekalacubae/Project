@@ -51,6 +51,8 @@ a) 대여 : 결제 -> 열람기간
 b) 소장 : 결제
 3) 비회원) 비회원은 이용불가합니다. -초기화면으로 전환
 
+
+
  ---------------------------------------------------------------
 
 ### ‼️ Used Programming language
@@ -64,6 +66,15 @@ b) 소장 : 결제
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/>
 
  ---------------------------------------------------------------
+
+// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation 'mysql:mysql-connector-java:8.0.28'
+
+ ---------------------------------------------------------------
+
+
+
+
 
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=FF9999&height=150&section=footer" />
