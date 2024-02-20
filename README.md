@@ -91,8 +91,8 @@ WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언
 
 ### ‼️ Used Programming language
 
-<img src="https://img.shields.io/badge/java-007396?style=flat-square&logo=java&logoColor=white"/> 
-
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+ 
  ---------------------------------------------------------------
  
 ### ‼️ Used Tools
