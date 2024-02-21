@@ -13,8 +13,17 @@ WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언
 | <img src="https://avatars.githubusercontent.com/u/157683190?v=4" width=400px alt="구예성"/> | <img src="https://avatars.githubusercontent.com/u/155221216?v=4" width=400px alt="강민서"/> | <img src="https://avatars.githubusercontent.com/u/157683193?v=4" width=400px alt="권순상"/> | <img src="https://avatars.githubusercontent.com/u/157683498?v=4" width=400px alt="이수진"> |
 |                       [구예성](https://github.com/KUYESUNG)                        |                            [강민서](https://github.com/KANGMINSEO0)                            |                            [권순상](https://github.com/sunskwon)                            |                          [이수진](https://github.com/ZZINYMON)                           |                                     
 
+## ‼️ Used Programming language
 
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
  
+## ‼️ Used Tools
+
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/>
+
+// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation 'mysql:mysql-connector-java:8.0.28'
+
 # ✅ Implementation Function
 
 ## 시스템 요구사항
@@ -106,24 +115,8 @@ WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언
    검색한 도서가 도서 목록에 없으면
       도서 등록 요청 목록 추가 여부를 확인합니다.
  
-#
 
-### ‼️ Used Programming language
 
-<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
- 
-#
- 
-### ‼️ Used Tools
-
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/>
-
-#
-
-// https://mvnrepository.com/artifact/mysql/mysql-connector-java
-    implementation 'mysql:mysql-connector-java:8.0.28'
-
-#
 
 
 
