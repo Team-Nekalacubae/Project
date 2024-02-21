@@ -3,6 +3,7 @@
 WebBook 프로젝트(가명)는 웹툰/웹소설 플랫폼의 회원가입 여부 확인, 웹툰 및 웹소설의 추가와 검색 등 플랫폼의 기본적인 기능과 대여/소장 요청에 따른 개별 목록 활성화 및 검색 기능의 구현을 목표로 합니다.
 WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언어와 sql 자료 사이의 입/출력과 수정 기능을 중점적으로 사용합니다.
 
+<br/>
 
 # 👪 TEAM MEMBER 
 
@@ -10,6 +11,8 @@ WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언
 | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | 
 | <img src="https://avatars.githubusercontent.com/u/157683190?v=4" width=400px alt="구예성"/> | <img src="https://avatars.githubusercontent.com/u/155221216?v=4" width=400px alt="강민서"/> | <img src="https://avatars.githubusercontent.com/u/157683193?v=4" width=400px alt="권순상"/> | <img src="https://avatars.githubusercontent.com/u/157683498?v=4" width=400px alt="이수진"> |
 |                       [구예성](https://github.com/KUYESUNG)                        |                            [강민서](https://github.com/KANGMINSEO0)                            |                            [권순상](https://github.com/sunskwon)                            |                          [이수진](https://github.com/ZZINYMON)                           |                                     
+
+<br/>
 
 ## ‼️ Used Programming language
 
@@ -19,8 +22,7 @@ WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언
 
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/>
 
-// https://mvnrepository.com/artifact/mysql/mysql-connector-java
-    implementation 'mysql:mysql-connector-java:8.0.28'
+<br/>
 
 # ✅ Implementation Function
 
@@ -112,6 +114,7 @@ WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언
    5-3. 소장 중이라면 소장중이라고 출력합니다.
    검색한 도서가 도서 목록에 없으면
       도서 등록 요청 목록 추가 여부를 확인합니다.
+ <br/>
    
  # 🚩System Structure
  <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/42d89b9b-e7cd-4c3b-9073-043f538a9fea width="1000" height="500"/>
