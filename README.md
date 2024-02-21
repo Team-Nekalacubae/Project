@@ -1,6 +1,4 @@
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=99CC33&height=150&section=header" />
-
 # 📖 WEB BOOK
 WebBook 프로젝트(가명)는 웹툰/웹소설 플랫폼의 회원가입 여부 확인, 웹툰 및 웹소설의 추가와 검색 등 플랫폼의 기본적인 기능과 대여/소장 요청에 따른 개별 목록 활성화 및 검색 기능의 구현을 목표로 합니다.
 WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언어와 sql 자료 사이의 입/출력과 수정 기능을 중점적으로 사용합니다.
@@ -115,18 +113,8 @@ WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언
    검색한 도서가 도서 목록에 없으면
       도서 등록 요청 목록 추가 여부를 확인합니다.
    
- # 🚩Project Direction
+ # 🚩System Structure
  <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/42d89b9b-e7cd-4c3b-9073-043f538a9fea width="1000" height="500"/>
  <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/9c2898ef-0613-42fe-8726-2357ea76c825 width="1000" height="600"/> 
  <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/0f1bd27f-f6fd-45c6-848d-11eeed3fc663 width="1000" height="500"/> 
 
-
-
-
-
-
-
-
-
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=FF9999&height=150&section=footer" />
