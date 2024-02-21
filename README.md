@@ -116,9 +116,9 @@ WebBook 프로젝트는 java와 sql을 기반으로 제작되었으며, java 언
       도서 등록 요청 목록 추가 여부를 확인합니다.
    
  # 🚩Project Direction
- <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/42d89b9b-e7cd-4c3b-9073-043f538a9fea width="500" height="450"/>
- <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/9c2898ef-0613-42fe-8726-2357ea76c825 width="500" height="450"/> 
- <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/0f1bd27f-f6fd-45c6-848d-11eeed3fc663 width="500" height="450"/> 
+ <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/42d89b9b-e7cd-4c3b-9073-043f538a9fea width="1000" height="500"/>
+ <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/9c2898ef-0613-42fe-8726-2357ea76c825 width="1000" height="500"/> 
+ <img src= https://github.com/Team-Nekalacubae/Project/assets/157683190/0f1bd27f-f6fd-45c6-848d-11eeed3fc663 width="1000" height="500"/> 
 
 
 
