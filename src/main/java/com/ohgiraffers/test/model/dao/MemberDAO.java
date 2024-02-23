@@ -88,4 +88,30 @@ public class MemberDAO {
         }
         return memberList;
     }
+
+    public int selectLastMemberCode(Connection con) {
+
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        int maxMemberCode = 0;
+
+        String query = prop.getProperty("selectLastMemberCode");
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            if (rset.next()) {
+                maxMemberCode = rset.getInt("MAX(A.MEMBER_CODE)");
+            }
+            System.out.println("maxMemberCode = " + maxMemberCode);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return maxMemberCode;
+    }
 }

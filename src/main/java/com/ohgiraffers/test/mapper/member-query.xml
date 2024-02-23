@@ -35,4 +35,8 @@
              , A.MEMBER_TYPE
           FROM MEMBERS A
     </entry>
+    <entry key="selectLastMemberCode">
+        SELECT MAX(A.MEMBER_CODE)
+          FROM MEMBERS A
+    </entry>
 </properties>
