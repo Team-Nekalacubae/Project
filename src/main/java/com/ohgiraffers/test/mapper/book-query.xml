@@ -2,4 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <comment/>
+    <entry key="">
+        xml merge test2
+    </entry>
 </properties>
