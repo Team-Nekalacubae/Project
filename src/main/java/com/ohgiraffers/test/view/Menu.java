@@ -150,4 +150,77 @@ public class Menu {
 
     }
 
+    public void checkMemberType() {
+        System.out.println("============= 회원 여부 확인 =============");
+        System.out.print("회원 아이디를 입력하세요 : ");
+        String memberId = sc.nextLine();
+        System.out.print("회원 비밀번호를 입력하세요 : ");
+        String memberPw = sc.nextLine();
+        int memberType = registDAO.checkMember(con, memberId, memberPw);
+        switch (memberType) {
+            case 1 :
+                System.out.println("관리자로 확인되었습니다.");
+                System.out.print("관리자 메뉴로 넘어가겠습니까? (예/아니오) : ");
+                String answer = sc.nextLine();
+                if (answer == "예") {
+                    System.out.println("관리자 메뉴로 넘어갑니다.");
+                    managerMenu();
+                } else if (answer == "아니오") {
+                    System.out.println("도서 메뉴로 넘어갑니다.");
+                    menu();
+                } else {
+                    System.out.println("잘못된 응답입니다. 초기 메뉴로 돌아갑니다.");
+                }
+                break;
+            case 2 :
+                System.out.println("회원 확인 되었습니다. 도서 메뉴로 넘어갑니다.");
+                break;
+            case 3 :
+                System.out.println("비회원 확인 되었습니다. 초기 메뉴로 돌아갑니다.");
+                break;
+            default:
+                System.out.println("아이디와 패스워드를 확인하세요. 초기 메뉴로 돌아갑니다.");
+        }
+
+    }
+
+    public void deleteMember() {
+        System.out.println("=========== 회원 정보 삭제 =============");
+        System.out.print("삭제 할 회원의 코드를 입력하세요 : ");
+        int memberCode = sc.nextInt();
+        int memberType = 4;
+        int result = registDAO.updateMember(con, memberCode, memberType);
+        if (result > 0) {
+            System.out.println("회원 유형이 변경 되었습니다.");
+        } else {
+            System.out.println("회원 정보 유형 변경이 실패되었습니다.");
+        }
+    }
+
+    public void managerMenu() {
+        int select = 0;
+        while (true) {
+            System.out.println("============= 관리자 메뉴 ==============");
+            System.out.println("1. 회원 목록 조회");
+            System.out.println("2. 신규 회원 추가");
+            System.out.println("3. 회원 삭제");
+            System.out.println("4. 관리자 메뉴 종료");
+            System.out.print("원하시는 메뉴의 번호를 입력하세요 : ");
+            select = sc.nextInt();
+            switch (select) {
+                case 1 : printAllMember(); break;
+                case 2 : addNewMember(); break;
+                case 3 : deleteMember(); break;
+                case 4 :
+                    System.out.println("관리자 메뉴가 종료 됩니다.");
+                    break;
+                default:
+                    System.out.println("잘못된 메뉴입니다. 다시 선택해주세요"); break;
+            }
+            if (select == 4) {
+                break;
+            }
+        }
+    }
+
 }

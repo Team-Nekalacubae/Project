@@ -39,4 +39,14 @@
         SELECT MAX(A.MEMBER_CODE)
           FROM MEMBERS A
     </entry>
+    <entry key="checkMember">
+        SELECT MEMBER_TYPE
+          FROM MEMBERS
+         WHERE MEMBER_ID = ? AND MEMBER_PW = ?
+    </entry>
+    <entry key="updateMemberType">
+        UPDATE MEMBERS
+           SET MEMBER_TYPE = ?
+         WHERE MEMBER_CODE = ?
+    </entry>
 </properties>

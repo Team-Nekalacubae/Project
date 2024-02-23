@@ -114,4 +114,52 @@ public class MemberDAO {
         }
         return maxMemberCode;
     }
+
+    public int checkMember(Connection con, String memberId, String memberPw) {
+
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        int memberType = 3;
+
+        String query = prop.getProperty("checkMember");
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            if (rset.next()) {
+                memberType = rset.getInt("MEMBER_TYPE");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return memberType;
+    }
+
+    public int updateMember(Connection con, int memberCode, int memberType) {
+
+        MemberDTO changeMember = new MemberDTO();
+        changeMember.setMemberCode(memberCode);
+        changeMember.setMemberType(memberType);
+
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("updateMemberType");
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, changeMember.getMemberType());
+            pstmt.setInt(2, changeMember.getMemberCode());
+
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+
+        return result;
+    }
 }
