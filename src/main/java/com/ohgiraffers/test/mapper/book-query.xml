@@ -2,7 +2,26 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <comment/>
-    <entry key="">
-        xml merge test2
+    <entry key="searchBookByBookName">
+        SELECT *
+        FROM BOOKS
+        WHERE BOOK_NAME LIKE ?
+    </entry>
+
+    <entry key="searchBookByBookAuthor">
+        SELECT *
+        FROM BOOKS
+        WHERE BOOK_AUTHOR LIKE ?
+    </entry>
+
+    <entry key="searchBookByBookPublisher">
+        SELECT *
+        FROM BOOKS
+        WHERE BOOK_PUBLISHER LIKE ?
+    </entry>
+
+    <entry key="deleteBook">
+        DELETE FROM BOOKS
+        WHERE BOOK_CODE = ?
     </entry>
 </properties>
