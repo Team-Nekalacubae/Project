@@ -24,8 +24,5 @@
     <entry key="deleteBook">
         DELETE FROM BOOKS
         WHERE BOOK_CODE = ?
-
-    <entry key="">
-
     </entry>
 </properties>
