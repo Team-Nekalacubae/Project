@@ -20,7 +20,6 @@ public class Menu {
     BookDAO resistBookDAO = new BookDAO();
     MemberDAO registDAO = new MemberDAO();
 
-    BookDAO resistBookDAO = new BookDAO();
 
     public Menu() {}
 
@@ -67,24 +66,30 @@ public class Menu {
 
             switch (selct) {
                 case 1 :
-                    System.out.print("장르 선택");
+                    System.out.println("장르 선택");
                     System.out.println("1. 비문학 | 2. 철학 | 3. 드라마 | 4. 액션 | 5. 무협 | 6. 개그 | 7. 판타지 | 8. 모험 | 9. 아동 | 10. 사회 | 11. 인문");
+                    System.out.print("선택 : ");
                     int genre = 0;
                     genre = sc.nextInt();
                     resistBookDAO.selectGenreBook(con, genre);
                     break;
                 case 2 :
                     System.out.println("종류 선택");
-                    System.out.print("1. 수필 | 2. 참고서 | 3. 만화 | 4. 동화 | 5. 자기계발서 | 6. 소설");
+                    System.out.println("1. 수필 | 2. 참고서 | 3. 만화 | 4. 동화 | 5. 자기계발서 | 6. 소설");
+                    System.out.println("선택 : ");
                     int type = 0;
                     type = sc.nextInt();
                     resistBookDAO.selectTypeBook(con, type);
                     break;
                 default :
-                    System.out.println("잘못된 선택입니다 다시 골라주세요");
-                    break;
+                    if (selct != 0) {
+                        System.out.println("잘못된 선택입니다 다시 골라주세요");
+                        break;
+                    }
+
             }
             if (selct == 0) {
+                System.out.println("시스템을 종료합니다.");
                 break;
             }
         }
