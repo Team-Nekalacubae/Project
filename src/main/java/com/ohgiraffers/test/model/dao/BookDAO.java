@@ -2,7 +2,13 @@ package com.ohgiraffers.test.model.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Properties;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+
+import static com.ohgiraffers.test.common.JDBCTemplate.close;
 
 public class BookDAO {
 
