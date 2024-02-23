@@ -4,6 +4,8 @@ import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static com.ohgiraffers.test.common.JDBCTemplate.getConnection;
@@ -14,6 +16,8 @@ public class Menu {
     Scanner sc = new Scanner(System.in);
     Connection con = getConnection();
     Connection conAuto = getConnectionAuto();
+
+    MemberDAO registDAO = new MemberDAO();
 
     public Menu() {}
 
@@ -44,7 +48,6 @@ public class Menu {
     }
 
     public void addNewMember() {
-        MemberDAO registDAO = new MemberDAO();
         int maxMemberCode = registDAO.selectLastMemberCode(con);
 
         Scanner sc = new Scanner(System.in);
@@ -78,6 +81,15 @@ public class Menu {
             System.out.println("신규 회원 정보가 입력되었습니다.");
         } else {
             System.out.println("신규 회원 정보 입력이 실패 되었습니다.");
+        }
+
+    }
+
+    public void printAllMember() {
+        System.out.println("============ 회원 전체 목록 출력 ============");
+        List<MemberDTO> memberList = registDAO.selectAllMember(con);
+        for (MemberDTO member : memberList) {
+            System.out.println(member);
         }
 
     }

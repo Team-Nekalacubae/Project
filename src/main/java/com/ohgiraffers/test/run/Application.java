@@ -8,8 +8,6 @@ public class Application {
 
         Menu menu = new Menu();
 
-//        menu.start();
-
-        menu.addNewMember();
+        menu.start();
     }
 }
