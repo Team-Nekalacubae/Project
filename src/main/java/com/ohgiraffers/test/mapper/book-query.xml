@@ -3,6 +3,12 @@
 <properties>
     <comment/>
 
+    <entry key="selectBook">
+        SELECT B.*
+            FROM BOOKS B
+            WHERE B.BOOK_GENRE LIKE CONCAT(?, '%')
+    </entry>
+      
     <entry key="searchBookByBookName">
         SELECT *
         FROM BOOKS
