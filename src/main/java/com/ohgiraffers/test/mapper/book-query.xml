@@ -25,4 +25,38 @@
         DELETE FROM BOOKS
         WHERE BOOK_CODE = ?
     </entry>
+
+    <entry key="insertBook">
+        INTO BOOKS
+        (
+        BOOK_CODE
+        , BOOK_NAME
+        , BOOK_AUTHOR
+        , BOOK_GENRE
+        , BOOK_TYPE
+        , BOOK_PUBLISHER
+        )
+        VALUES
+        (
+        ?
+        , ?
+        , ?
+        , ?
+        , ?
+        , ?
+        )
+    </entry>
+    <entry key="selectAllBook">
+        SELECT A.BOOK_CODE
+        , A.BOOK_NAME
+        , A.BOOK_AUTHOR
+        , A.BOOK_GENRE
+        , A.BOOK_TYPE
+        , A.BOOK_PUBLISHER
+        FROM BOOKS A
+    </entry>
+    <entry key="selectLastBookCode">
+        SELECT MAX(A.BOOK_CODE)
+        FROM BOOKS A
+    </entry>
 </properties>

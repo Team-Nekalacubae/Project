@@ -165,4 +165,56 @@ public class BookDAO {
 
         return result;
     }
+
+    public int insertNewBook(Connection con, BookDTO newBook) {
+
+        PreparedStatement pstmt = null;
+
+        int result = 0;
+        String query = prop.getProperty("insertBOOKS");
+
+        try {
+            pstmt = con.prepareStatement(query);
+
+            pstmt.setInt(1, newBook.getBookCode());
+            pstmt.setString(2, newBook.getBookName());
+            pstmt.setString(3, newBook.getBookAuthor());
+            pstmt.setString(4, newBook.getBookGenre());
+            pstmt.setString(5, newBook.getBookType());
+            pstmt.setString(6, newBook.getBookPublisher());
+
+            ResultSet rset = null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+
+        return result;
+    }
+
+    public List<BookDTO> selectAllBook(Connection con) {
+
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        List<BookDTO> BookList = null;
+
+        String query = prop.getProperty("selectAllBook");
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            bookList = new ArrayList<>();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+
 }
