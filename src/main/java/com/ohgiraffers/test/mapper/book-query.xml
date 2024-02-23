@@ -2,7 +2,11 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <comment/>
-    <entry key="">
-        xml merge test2
+    <entry key="selectBook">
+        SELECT
+                BOOK_AUTHOR
+                BOOK_GENRE
+                BOOK_PUBLISHER
+        FROM  BOOKS
     </entry>
 </properties>
