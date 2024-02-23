@@ -1,17 +1,12 @@
 package com.ohgiraffers.test.model.dao;
 
 import com.ohgiraffers.test.model.dto.BookDTO;
+import com.ohgiraffers.test.view.Menu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.sql.*;
+import java.util.*;
 
 import static com.ohgiraffers.test.common.JDBCTemplate.close;
 
@@ -27,32 +22,62 @@ public class BookDAO {
         }
     }
 
-    public List<String> selectBook(Connection con) {
+    public void selectGenreBook(Connection con, int genre) {
 
-        Statement stmt = null;
-        ResultSet rset = null;
+        PreparedStatement pstmt = null;
+            ResultSet rset = null;
 
-        List<String> author = null;
+            String query = prop.getProperty("selectBook");
 
-        String query = prop.getProperty("selectBook");
+            BookDTO row = null;
+            List<BookDTO> genreList = null;
+            String bon = "";
 
-        try {
-            stmt = con.createStatement();
-            rset = stmt.executeQuery(query);
+            switch (genre) {
+                case 1 : bon = "비문학";
 
-            author = new ArrayList<>();
 
-            while (rset.next()) {
-
-                author.add(query);
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(rset);
-            close(stmt);
-        }
-         return author;
+            try {
+                pstmt = con.prepareStatement(query);
+                pstmt.setString(1, bon);
+
+                rset = pstmt.executeQuery();
+
+                genreList = new ArrayList<>();
+
+                while (rset.next()) {
+
+                    row = new BookDTO();
+
+                    row.setBookCode(rset.getInt("BOOK_CODE"));
+                    row.setBookName(rset.getString("BOOK_NAME"));
+                    row.setBookAuthor(rset.getString("BOOK_AUTHOR"));
+                    row.setBookGenre(rset.getString("BOOK_GENRE"));
+                    row.setBookType(rset.getString("BOOK_TYPE"));
+                    row.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
+
+                    genreList.add(row);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } finally {
+                close(rset);
+                close(pstmt);
+                close(con);
+            }
+
+            for (BookDTO book : genreList) {
+                System.out.println("book = " + book);
+            }
+    }
+
+
+
+
+    public void selectTypeBook(Connection con, int type) {
+
     }
 }
+

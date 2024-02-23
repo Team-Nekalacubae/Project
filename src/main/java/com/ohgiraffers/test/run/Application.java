@@ -12,12 +12,13 @@ public class Application {
 
     public static void main(String[] args) {
 
-        BookDAO dao = new BookDAO();
-        Connection con = getConnection();
-//
 //        Menu menu = new Menu();
 //        menu.start();
 
-        List<String> author = dao.selectBook(con);
+        Connection con = getConnection();
+        BookDAO registDAO = new BookDAO();
+        Menu me = new Menu();
+        me.choiceMenu();
+
     }
 }

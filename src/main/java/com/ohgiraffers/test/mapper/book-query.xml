@@ -3,10 +3,8 @@
 <properties>
     <comment/>
     <entry key="selectBook">
-        SELECT
-                BOOK_AUTHOR
-                BOOK_GENRE
-                BOOK_PUBLISHER
-        FROM  BOOKS
+        SELECT B.*
+            FROM BOOKS B
+            WHERE B.BOOK_GENRE LIKE CONCAT(?, '%')
     </entry>
 </properties>
