@@ -2,6 +2,41 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <comment/>
-    <entry key="">
+    <entry key="insertMember">
+        INSERT
+          INTO MEMBERS
+        (
+          MEMBER_CODE
+        , MEMBER_ID
+        , MEMBER_PW
+        , MEMBER_NAME
+        , MEMBER_PHONE
+        , MEMBER_EMAIL
+        , MEMBER_TYPE
+        )
+        VALUES
+        (
+          ?
+        , ?
+        , ?
+        , ?
+        , ?
+        , ?
+        , ?
+        )
+    </entry>
+    <entry key="selectAllMember">
+        SELECT A.MEMBER_CODE
+             , A.MEMBER_ID
+             , A.MEMBER_PW
+             , A.MEMBER_NAME
+             , A.MEMBER_PHONE
+             , A.MEMBER_EMAIL
+             , A.MEMBER_TYPE
+          FROM MEMBERS A
+    </entry>
+    <entry key="selectLastMemberCode">
+        SELECT MAX(A.MEMBER_CODE)
+          FROM MEMBERS A
     </entry>
 </properties>

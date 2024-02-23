@@ -10,6 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import java.sql.Statement;
+import java.util.*;
+
+
 import static com.ohgiraffers.test.common.JDBCTemplate.close;
 
 public class BookDAO {

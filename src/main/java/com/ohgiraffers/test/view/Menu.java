@@ -1,8 +1,13 @@
 package com.ohgiraffers.test.view;
 
+
 import com.ohgiraffers.test.model.dao.BookDAO;
+import com.ohgiraffers.test.model.dao.MemberDAO;
+import com.ohgiraffers.test.model.dto.MemberDTO;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static com.ohgiraffers.test.common.JDBCTemplate.getConnection;
@@ -13,10 +18,11 @@ public class Menu {
     Scanner sc = new Scanner(System.in);
     Connection con = getConnection();
     Connection conAuto = getConnectionAuto();
+   
     BookDAO resistBookDAO = new BookDAO();
+    MemberDAO registDAO = new MemberDAO();
 
-    public Menu() {
-    }
+    public Menu() {}
 
     public void start() {
         int select = 0;
@@ -96,4 +102,52 @@ public class Menu {
 
         return num;
     }
+
+    public void addNewMember() {
+        int maxMemberCode = registDAO.selectLastMemberCode(con);
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("============ 회원 정보 입력 ==============");
+        System.out.println("추가할 내용을 입력하세요.");
+        System.out.print("1. 아이디 : ");
+        String memberId = sc.nextLine();
+        System.out.print("2. 비밀번호 : ");
+        String memberPw = sc.nextLine();
+        System.out.print("3. 성함 : ");
+        String memberName = sc.nextLine();
+        System.out.print("4. 전화번호 : ");
+        String memberPhone = sc.nextLine();
+        System.out.print("5. 이메일 : ");
+        String memberEmail = sc.nextLine();
+        System.out.print("6. 회원 유형 (관리자/일반회원) :");
+        String answerType = sc.nextLine();
+
+        int memeberType =0;
+        switch (answerType) {
+            case "관리자" : memeberType = 1; break;
+            case "일반회원" : memeberType = 2; break;
+        }
+
+        int memberCode = maxMemberCode + 1;
+
+        MemberDTO newMember = new MemberDTO(memberCode, memberId, memberPw, memberName, memberPhone, memberEmail, memeberType);
+        int result = registDAO.insertNewMember(con, newMember);
+
+        if (result > 0) {
+            System.out.println("신규 회원 정보가 입력되었습니다.");
+        } else {
+            System.out.println("신규 회원 정보 입력이 실패 되었습니다.");
+        }
+
+    }
+
+    public void printAllMember() {
+        System.out.println("============ 회원 전체 목록 출력 ============");
+        List<MemberDTO> memberList = registDAO.selectAllMember(con);
+        for (MemberDTO member : memberList) {
+            System.out.println(member);
+        }
+
+    }
+
 }
