@@ -35,6 +35,7 @@ public class BookDAO {
 
             switch (genre) {
                 case 1 : bon = "비문학";
+                case 2 : bon = "철학";
 
 
             }
