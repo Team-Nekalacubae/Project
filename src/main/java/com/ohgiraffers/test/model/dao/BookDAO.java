@@ -401,5 +401,74 @@ public class BookDAO {
             System.out.println("도서 추가 요청 실패");
         }
     }
+
+    public void insertBookBoxToRent(Connection con, int memberCode, int bookCode) {
+
+        PreparedStatement pstmt = null;
+
+        int result = 0;
+
+        LocalDate now = LocalDate.now();
+
+        String query = prop.getProperty("insertIntoBoxToRent");
+        String expDate = "ADDDATE('" + String.valueOf(now) + "', INTERVAL 3 DAY)";
+        System.out.println("expDate = " + expDate);
+
+        System.out.println("query = " + query);
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, memberCode);
+            pstmt.setInt(2, bookCode);
+            pstmt.setString(3, String.valueOf(now));
+            pstmt.setString(4, String.valueOf(now));
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+        }
+
+        if (result > 0) {
+            System.out.println("소장 요청 성공");
+        } else {
+            System.out.println("소장 요청 실패");
+        }
+    }
+
+    public void insertBookBoxToBuy(Connection con, int memberCode, int bookCode) {
+
+        PreparedStatement pstmt = null;
+
+        int result = 0;
+
+        LocalDate now = LocalDate.now();
+
+        String query = prop.getProperty("insertIntoBoxToBuy");
+
+        System.out.println("query = " + query);
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, memberCode);
+            pstmt.setInt(2, bookCode);
+            pstmt.setString(3, String.valueOf(now));
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+        }
+
+        if (result > 0) {
+            System.out.println("소장 요청 성공");
+        } else {
+            System.out.println("소장 요청 실패");
+        }
+    }
 }
 
