@@ -210,6 +210,7 @@ public class Menu {
 
         System.out.println("관리자 로그인");
         System.out.print("관리자 ID를 입력하세요 : ");
+        sc.nextLine();
         loginInfo[0] = sc.nextLine();
         System.out.print("비밀번호를 입력하세요 : ");
         loginInfo[1] = sc.nextLine();
