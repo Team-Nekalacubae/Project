@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 import static com.ohgiraffers.test.common.JDBCTemplate.close;
 
@@ -113,5 +114,47 @@ public class MemberDAO {
             close(rset);
         }
         return maxMemberCode;
+    }
+
+    public int memberIdentification(Connection con, String[] loginInfo) {
+
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        String id = null;
+        int memberCode = 0;
+
+        String query = prop.getProperty("pwCheck");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, loginInfo[0]);
+
+            rset = pstmt.executeQuery();
+
+            while (rset.next()) {
+
+                if (rset.getString("MEMBER_PW").equals(loginInfo[1])) {
+
+                    if (rset.getInt("MEMBER_TYPE") == 1) {
+
+                        id = rset.getString("MEMBER_ID");
+                        System.out.println("접속을 환영합니다. 관리자 " + id + " 님");
+                        memberCode = rset.getInt("MEMBER_CODE");
+                    } else {
+                        System.out.println("정상적인 접속 경로가 아닙니다.");
+                    }
+                } else {
+                    System.out.println("비밀번호가 일치하지 않습니다.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+            close(rset);
+        }
+
+        return memberCode;
     }
 }

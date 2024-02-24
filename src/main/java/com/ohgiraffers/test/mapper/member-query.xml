@@ -39,4 +39,10 @@
         SELECT MAX(A.MEMBER_CODE)
           FROM MEMBERS A
     </entry>
+
+    <entry key="pwCheck">
+        SELECT *
+        FROM MEMBERS
+        WHERE MEMBER_ID = ?
+    </entry>
 </properties>
