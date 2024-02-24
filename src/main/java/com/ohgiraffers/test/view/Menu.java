@@ -191,8 +191,7 @@ public class Menu {
         System.out.println("=========== 회원 정보 삭제 =============");
         System.out.print("삭제 할 회원의 코드를 입력하세요 : ");
         int memberCode = sc.nextInt();
-        int memberType = 4;
-        System.out.println("deleteMemeber 확인용");
+        int memberType = 3; //4 현재 멤버타입 1,2,3 으로 제약 되어있어서 추후 논의 후 결정
         int result = registDAO.updateMember(con, memberCode, memberType);
         if (result > 0) {
             System.out.println("회원 유형이 변경 되었습니다.");

@@ -146,19 +146,13 @@ public class MemberDAO {
 
     public int updateMember(Connection con, int memberCode, int memberType) {
 
-        System.out.println("updateMemeber 확인 1");
-        MemberDTO changeMember = new MemberDTO();
-        changeMember.setMemberCode(memberCode);
-        changeMember.setMemberType(memberType);
-
-        System.out.println("updateMemeber 확인 2");
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("updateMemberType");
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, changeMember.getMemberType());
-            pstmt.setInt(2, changeMember.getMemberCode());
+            pstmt.setInt(1, memberType);
+            pstmt.setInt(2, memberCode);
 
             result = pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -166,9 +160,6 @@ public class MemberDAO {
         } finally {
             close(pstmt);
         }
-
-
-        System.out.println("updateMemeber 확인 3");
         return result;
     }
 }
