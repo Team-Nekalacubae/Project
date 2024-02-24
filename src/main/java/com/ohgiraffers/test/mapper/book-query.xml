@@ -37,4 +37,11 @@
         DELETE FROM BOOKS
         WHERE BOOK_CODE = ?
     </entry>
+
+    <entry key="insertSearchedBook">
+        INSERT INTO SEARCH
+        (SEARCH_ELEMENT, SEARCH_NAME, SEARCH_DATE, MEMBER_CODE, BOOK_CODE)
+        VALUES (?, ?, ?, ?, ?)
+    </entry>
+
 </properties>
