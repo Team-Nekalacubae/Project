@@ -12,13 +12,13 @@ public class Application {
 
     public static void main(String[] args) {
 
-//        Menu menu = new Menu();
-//        menu.start();
+        Menu menu = new Menu();
+        menu.menu();
 
-        Connection con = getConnection();
-        BookDAO registDAO = new BookDAO();
-        Menu me = new Menu();
-        me.choiceMenu();
+//        Connection con = getConnection();
+//        BookDAO registDAO = new BookDAO();
+//        Menu me = new Menu();
+//        me.choiceMenu();
 
 
     }

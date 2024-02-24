@@ -101,6 +101,8 @@ public class Menu {
             System.out.println("메뉴를 선택하세요");
             System.out.println("1. 도서 검색");
             System.out.println("2. 도서 삭제");
+            System.out.println("3. 조건별 도서 목록 검색");
+            System.out.println("0. 메뉴 선택 프로그램 종료");
             System.out.print("원하시는 메뉴를 입력하세요 : ");
             select = sc.nextInt();
 
@@ -110,9 +112,19 @@ public class Menu {
                     break;
                 case 2:
                     resistBookDAO.deleteBook(conAuto, deleteBookNumber());
+                    break;
+                case 3:
+                    choiceMenu();
+                    break;
+                case 0:
+                    break;
                 default:
                     System.out.println("잘못된 메뉴입니다. 다시 선택해주세요");
                     break;
+            }
+
+            if (select == 0) {
+                break;
             }
         }
     }
