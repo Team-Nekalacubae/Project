@@ -102,6 +102,7 @@ public class Menu {
             System.out.println("1. 도서 검색");
             System.out.println("2. 도서 삭제");
             System.out.println("3. 조건별 도서 목록 검색");
+            System.out.println("4. 도서 추가 요청");
             System.out.println("0. 메뉴 선택 프로그램 종료");
             System.out.print("원하시는 메뉴를 입력하세요 : ");
             select = sc.nextInt();
@@ -115,6 +116,9 @@ public class Menu {
                     break;
                 case 3:
                     choiceMenu();
+                    break;
+                case 4:
+                    addBookInfo();
                     break;
                 case 0:
                     break;
@@ -203,6 +207,24 @@ public class Menu {
 
     }
 
+
+    public void addBookInfo() {
+
+        String[] arr = new String[3];
+        int memberCode = 1;         // MEMBER_CODE 받아와야 함
+
+        System.out.println("도서 추가 요청");
+        System.out.print("추가를 원하는 도서의 제목을 입력하세요(필수) : ");
+        sc.nextLine();
+        arr[0] = sc.nextLine();
+        System.out.print("추가를 원하는 도서의 저자를 입력하세요(필수) : ");
+        arr[1] = sc.nextLine();
+        System.out.print("추가를 원하는 도서의 출판사를 입력하세요(필수) : ");
+        arr[2] = sc.nextLine();
+
+        resistBookDAO.bookRequest(conAuto, arr, memberCode);
+    }
+  
     public void adminLogin() {
 
         String[] loginInfo = new String[2];

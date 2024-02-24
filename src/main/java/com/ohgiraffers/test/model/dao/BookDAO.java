@@ -368,5 +368,38 @@ public class BookDAO {
             System.out.println("book = " + book);
         }
     }
+
+    public void bookRequest(Connection con, String[] arr, int memberCode) {
+
+        PreparedStatement pstmt = null;
+
+        LocalDate now = LocalDate.now();
+
+        int result = 0;
+
+        String query = prop.getProperty("bookAddRequest");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, arr[0]);
+            pstmt.setString(2, arr[1]);
+            pstmt.setString(3, arr[2]);
+            pstmt.setInt(4, memberCode);
+            pstmt.setString(5, String.valueOf(now));
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+
+        if (result > 0) {
+            System.out.println("도서 추가 요청 성공");
+        } else {
+            System.out.println("도서 추가 요청 실패");
+        }
+    }
 }
 
