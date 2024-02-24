@@ -117,7 +117,7 @@ public class MemberDAO {
 
     public int checkMember(Connection con, String memberId, String memberPw) {
 
-        Statement stmt = null;
+        PreparedStatement pstmt = null;
         ResultSet rset = null;
 
         int memberType = 3;
@@ -125,15 +125,20 @@ public class MemberDAO {
         String query = prop.getProperty("checkMember");
 
         try {
-            stmt = con.createStatement();
-            rset = stmt.executeQuery(query);
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, memberId);
+            pstmt.setString(2, memberPw);
+            rset = pstmt.executeQuery();
 
             if (rset.next()) {
-                memberType = rset.getInt("MEMBER_TYPE");
+                memberType =  rset.getInt("MEMBER_TYPE");
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+            close(rset);
         }
 
         return memberType;
@@ -141,10 +146,12 @@ public class MemberDAO {
 
     public int updateMember(Connection con, int memberCode, int memberType) {
 
+        System.out.println("updateMemeber 확인 1");
         MemberDTO changeMember = new MemberDTO();
         changeMember.setMemberCode(memberCode);
         changeMember.setMemberType(memberType);
 
+        System.out.println("updateMemeber 확인 2");
         PreparedStatement pstmt = null;
         int result = 0;
         String query = prop.getProperty("updateMemberType");
@@ -160,6 +167,8 @@ public class MemberDAO {
             close(pstmt);
         }
 
+
+        System.out.println("updateMemeber 확인 3");
         return result;
     }
 }

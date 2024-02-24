@@ -36,6 +36,7 @@ public class Menu {
 
             switch (select) {
                 case 1:
+                    checkMemberType();
                     break;     // 회원 메뉴로
                 case 2:
                     break;     // 비회원 메뉴로
@@ -153,6 +154,7 @@ public class Menu {
     public void checkMemberType() {
         System.out.println("============= 회원 여부 확인 =============");
         System.out.print("회원 아이디를 입력하세요 : ");
+        sc.nextLine();
         String memberId = sc.nextLine();
         System.out.print("회원 비밀번호를 입력하세요 : ");
         String memberPw = sc.nextLine();
@@ -162,10 +164,10 @@ public class Menu {
                 System.out.println("관리자로 확인되었습니다.");
                 System.out.print("관리자 메뉴로 넘어가겠습니까? (예/아니오) : ");
                 String answer = sc.nextLine();
-                if (answer == "예") {
+                if (answer.equals("예")) {
                     System.out.println("관리자 메뉴로 넘어갑니다.");
                     managerMenu();
-                } else if (answer == "아니오") {
+                } else if (answer.equals("아니오")) {
                     System.out.println("도서 메뉴로 넘어갑니다.");
                     menu();
                 } else {
@@ -174,6 +176,7 @@ public class Menu {
                 break;
             case 2 :
                 System.out.println("회원 확인 되었습니다. 도서 메뉴로 넘어갑니다.");
+                menu();
                 break;
             case 3 :
                 System.out.println("비회원 확인 되었습니다. 초기 메뉴로 돌아갑니다.");
@@ -189,6 +192,7 @@ public class Menu {
         System.out.print("삭제 할 회원의 코드를 입력하세요 : ");
         int memberCode = sc.nextInt();
         int memberType = 4;
+        System.out.println("deleteMemeber 확인용");
         int result = registDAO.updateMember(con, memberCode, memberType);
         if (result > 0) {
             System.out.println("회원 유형이 변경 되었습니다.");
