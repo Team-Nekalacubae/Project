@@ -53,7 +53,6 @@ public class Menu {
         }
     }
 
-
     public void choiceMenu() {
         int selct = 0;
         while (true) {
@@ -139,11 +138,11 @@ public class Menu {
         String key = sc.nextLine();
 
         if (select.equals("1") || select.equals("제목")) {
-            resistBookDAO.searchBookByBookName(con, key);
+            resistBookDAO.searchBookByBookName(conAuto, key);
         } else if (select.equals("2") || select.equals("저자")) {
-            resistBookDAO.searchBookByBookAuthor(con, key);
+            resistBookDAO.searchBookByBookAuthor(conAuto, key);
         } else if (select.equals("3") || select.equals("출판사")) {
-            resistBookDAO.searchBookByBookPublisher(con, key);
+            resistBookDAO.searchBookByBookPublisher(conAuto, key);
         }
     }
 
