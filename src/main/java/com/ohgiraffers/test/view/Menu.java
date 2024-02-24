@@ -42,7 +42,8 @@ public class Menu {
                     System.out.println("NeKaRaCuBae-WebBook을 종료합니다.");
                     break;
                 case 27:
-                    break;     // 관리자 메뉴로 (안내문 출력은 없음)
+                    adminLogin();
+                    break;
                 default:
                     System.out.println("잘못된 메뉴입니다. 다시 선택해주세요");
                     break;
@@ -200,6 +201,22 @@ public class Menu {
         for (MemberDTO member : memberList) {
             System.out.println(member);
         }
+
+    }
+
+    public void adminLogin() {
+
+        String[] loginInfo = new String[2];
+
+        System.out.println("관리자 로그인");
+        System.out.print("관리자 ID를 입력하세요 : ");
+        loginInfo[0] = sc.nextLine();
+        System.out.print("비밀번호를 입력하세요 : ");
+        loginInfo[1] = sc.nextLine();
+
+        int num = registDAO.memberIdentification(con, loginInfo);
+
+        System.out.println("num = " + num);
 
     }
 
