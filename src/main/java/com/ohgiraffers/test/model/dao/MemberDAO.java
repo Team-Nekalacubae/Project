@@ -157,4 +157,55 @@ public class MemberDAO {
 
         return memberCode;
     }
+
+    public void signUpRequest(Connection conAuto, String[] signUpInfo) {
+
+        PreparedStatement pstmt = null;
+
+        int result = 0;
+
+        String query = prop.getProperty("signUp");
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("이름을 입력하세요 : ");
+//        sc.nextInt();
+        String name = sc.nextLine();
+        if (name.equals("")) {
+            name = "NULL";
+        }
+        System.out.println("전화번호를 입력하세요(ex : 010-0000-0000) : ");
+        String phone = sc.nextLine();
+        if (phone.equals("")) {
+            phone = "NULL";
+        }
+        System.out.println("이메일 주소를 입력하세요(ex : example@gmail.com) : ");
+        String email = sc.nextLine();
+        if (email.equals("")) {
+            email = "NULL";
+        }
+
+        try {
+            pstmt = conAuto.prepareStatement(query);
+            pstmt.setString(1, signUpInfo[0]);
+            pstmt.setString(2, signUpInfo[1]);
+            pstmt.setString(3, name);
+            pstmt.setString(4, phone);
+            pstmt.setString(5, email);
+            pstmt.setInt(6, 5);         // MEMBER_TYPE 5까지 연장해야함
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+
+        if (result > 0) {
+            System.out.println("회원 가입 요청 완료");
+        } else {
+            System.out.println("회원 가입 요청 실패");
+        }
+    }
+
 }
