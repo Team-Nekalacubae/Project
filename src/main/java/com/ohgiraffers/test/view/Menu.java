@@ -40,7 +40,8 @@ public class Menu {
                     checkMemberType();
                     break;     // 회원 메뉴로
                 case 2:
-                    break;     // 비회원 메뉴로
+                    signUpInfo();
+                    break;
                 case 9:
                     System.out.println("NeKaRaCuBae-WebBook을 종료합니다.");
                     break;
@@ -54,6 +55,23 @@ public class Menu {
             if (select == 9) {
                 break;
             }
+        }
+    }
+
+    public void nonMemberMenu(Connection conAuto) {
+
+        int result = 0;
+        int memberCode = 0;
+
+        System.out.println("비회원 메뉴");
+        System.out.println("1. 계속 이용");
+        System.out.println("2. 회원 가입 요청");
+        System.out.print("원하는 메뉴를 선택하세요 : ");
+        int select = sc.nextInt();
+
+        switch (select) {
+            case 1: memberCode = 1; break;      // 비회원 member_code 로 교체 필요
+            case 2:
         }
     }
 
@@ -334,6 +352,26 @@ public class Menu {
 
     }
 
+
+    public void signUpInfo() {
+
+        String[] signUpInfo = new String[2];
+
+        System.out.println("회원 가입");
+        System.out.println("사용할 ID를 입력하세요 : ");
+        sc.nextLine();
+        signUpInfo[0] = sc.nextLine();
+        System.out.println("사용할 비밀번호를 입력하세요 : ");
+        signUpInfo[1] = sc.nextLine();
+        System.out.println("사용할 비밀번호를 다시 한번 입력하세요 : ");
+        String check = sc.nextLine();
+
+        if (signUpInfo[1].equals(check)) {
+            registDAO.signUpRequest(conAuto, signUpInfo);
+        } else {
+            System.out.println("처음 입력한 비밀번호와 다릅니다.");
+            System.out.println("비밀번호를 다시 확인해주세요.");
+
     public void rentOrBuy() {
 
         System.out.println("해당 도서를 구매 혹은 대여 하시겠습니까? (1. Y / 2. N) : ");
@@ -355,6 +393,7 @@ public class Menu {
         } else if (answer.equals("2") || answer.equals("N") || answer.equals("n")) {
             System.out.println("메뉴로 돌아갑니다.");
             menu();
+
         }
     }
 

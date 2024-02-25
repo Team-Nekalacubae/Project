@@ -58,4 +58,11 @@
         WHERE MEMBER_ID = ?
 
     </entry>
+
+    <entry key="signUp">
+        INSERT INTO MEMBERS
+        (MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL, MEMBER_TYPE)
+        VALUES (?, ?, ?, ?, ?, ?)
+
+    </entry>
 </properties>
