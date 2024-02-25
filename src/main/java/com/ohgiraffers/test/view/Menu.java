@@ -1,12 +1,10 @@
 package com.ohgiraffers.test.view;
 
-
 import com.ohgiraffers.test.model.dao.BookDAO;
 import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,6 +19,7 @@ public class Menu {
    
     BookDAO resistBookDAO = new BookDAO();
     MemberDAO registDAO = new MemberDAO();
+
 
     public Menu() {}
 
@@ -44,12 +43,54 @@ public class Menu {
                     System.out.println("NeKaRaCuBae-WebBook을 종료합니다.");
                     break;
                 case 27:
-                    break;     // 관리자 메뉴로 (안내문 출력은 없음)
+                    adminLogin();
+                    break;
                 default:
                     System.out.println("잘못된 메뉴입니다. 다시 선택해주세요");
                     break;
             }
             if (select == 9) {
+                break;
+            }
+        }
+    }
+
+    public void choiceMenu() {
+        int selct = 0;
+        while (true) {
+            System.out.println("조건별 도서 목록 출력");
+            System.out.println("1. 장르별");
+            System.out.println("2. 종류별");
+            System.out.println("0. 조건별 도서 목록 출력 시스템 종료");
+            System.out.print("원하는 조건을 선택하세요 : ");
+            selct = sc.nextInt();
+
+            switch (selct) {
+                case 1 :
+                    System.out.println("장르 선택");
+                    System.out.println("1. 비문학 | 2. 철학 | 3. 드라마 | 4. 액션 | 5. 무협 | 6. 개그 | 7. 판타지 | 8. 모험 | 9. 아동 | 10. 사회 | 11. 인문");
+                    System.out.print("선택 : ");
+                    int genre = 0;
+                    genre = sc.nextInt();
+                    resistBookDAO.selectGenreBook(con, genre);
+                    break;
+                case 2 :
+                    System.out.println("종류 선택");
+                    System.out.println("1. 수필 | 2. 참고서 | 3. 만화 | 4. 동화 | 5. 자기계발서 | 6. 소설");
+                    System.out.println("선택 : ");
+                    int type = 0;
+                    type = sc.nextInt();
+                    resistBookDAO.selectTypeBook(con, type);
+                    break;
+                default :
+                    if (selct != 0) {
+                        System.out.println("잘못된 선택입니다 다시 골라주세요");
+                        break;
+                    }
+
+            }
+            if (selct == 0) {
+                System.out.println("시스템을 종료합니다.");
                 break;
             }
         }
@@ -61,6 +102,9 @@ public class Menu {
             System.out.println("메뉴를 선택하세요");
             System.out.println("1. 도서 검색");
             System.out.println("2. 도서 삭제");
+            System.out.println("3. 조건별 도서 목록 검색");
+            System.out.println("4. 도서 추가 요청");
+            System.out.println("0. 메뉴 선택 프로그램 종료");
             System.out.print("원하시는 메뉴를 입력하세요 : ");
             select = sc.nextInt();
 
@@ -70,9 +114,22 @@ public class Menu {
                     break;
                 case 2:
                     resistBookDAO.deleteBook(conAuto, deleteBookNumber());
+                    break;
+                case 3:
+                    choiceMenu();
+                    break;
+                case 4:
+                    addBookInfo();
+                    break;
+                case 0:
+                    break;
                 default:
                     System.out.println("잘못된 메뉴입니다. 다시 선택해주세요");
                     break;
+            }
+
+            if (select == 0) {
+                break;
             }
         }
     }
@@ -87,11 +144,11 @@ public class Menu {
         String key = sc.nextLine();
 
         if (select.equals("1") || select.equals("제목")) {
-            resistBookDAO.searchBookByBookName(con, key);
+            resistBookDAO.searchBookByBookName(conAuto, key);
         } else if (select.equals("2") || select.equals("저자")) {
-            resistBookDAO.searchBookByBookAuthor(con, key);
+            resistBookDAO.searchBookByBookAuthor(conAuto, key);
         } else if (select.equals("3") || select.equals("출판사")) {
-            resistBookDAO.searchBookByBookPublisher(con, key);
+            resistBookDAO.searchBookByBookPublisher(conAuto, key);
         }
     }
 
@@ -224,6 +281,40 @@ public class Menu {
                 break;
             }
         }
+
+
+    public void addBookInfo() {
+
+        String[] arr = new String[3];
+        int memberCode = 1;         // MEMBER_CODE 받아와야 함
+
+        System.out.println("도서 추가 요청");
+        System.out.print("추가를 원하는 도서의 제목을 입력하세요(필수) : ");
+        sc.nextLine();
+        arr[0] = sc.nextLine();
+        System.out.print("추가를 원하는 도서의 저자를 입력하세요(필수) : ");
+        arr[1] = sc.nextLine();
+        System.out.print("추가를 원하는 도서의 출판사를 입력하세요(필수) : ");
+        arr[2] = sc.nextLine();
+
+        resistBookDAO.bookRequest(conAuto, arr, memberCode);
+    }
+  
+    public void adminLogin() {
+
+        String[] loginInfo = new String[2];
+
+        System.out.println("관리자 로그인");
+        System.out.print("관리자 ID를 입력하세요 : ");
+        sc.nextLine();
+        loginInfo[0] = sc.nextLine();
+        System.out.print("비밀번호를 입력하세요 : ");
+        loginInfo[1] = sc.nextLine();
+
+        int num = registDAO.memberIdentification(con, loginInfo);
+
+        System.out.println("num = " + num);
+
     }
 
 }

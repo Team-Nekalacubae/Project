@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 import static com.ohgiraffers.test.common.JDBCTemplate.close;
 
@@ -115,12 +116,18 @@ public class MemberDAO {
         return maxMemberCode;
     }
 
-    public int checkMember(Connection con, String memberId, String memberPw) {
+
+
+    public int memberIdentification(Connection con, String[] loginInfo) {
+
 
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
-        int memberType = 3;
+      public int checkMember(Connection con, String memberId, String memberPw) {      
+  PreparedStatement pstmt = null;
+        ResultSet rset = null;
+  int memberType = 3;
 
         String query = prop.getProperty("checkMember");
 
@@ -161,5 +168,6 @@ public class MemberDAO {
             close(pstmt);
         }
         return result;
+
     }
 }
