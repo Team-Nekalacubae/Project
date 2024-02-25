@@ -15,11 +15,5 @@ public class Application {
         Menu menu = new Menu();
         menu.menu();
 
-//        Connection con = getConnection();
-//        BookDAO registDAO = new BookDAO();
-//        Menu me = new Menu();
-//        me.choiceMenu();
-
-
     }
 }

@@ -17,12 +17,13 @@ public class Menu {
     Scanner sc = new Scanner(System.in);
     Connection con = getConnection();
     Connection conAuto = getConnectionAuto();
-   
+
     BookDAO resistBookDAO = new BookDAO();
     MemberDAO registDAO = new MemberDAO();
 
 
-    public Menu() {}
+    public Menu() {
+    }
 
     public void start() {
         int select = 0;
@@ -36,6 +37,7 @@ public class Menu {
 
             switch (select) {
                 case 1:
+                    checkMemberType();
                     break;     // 회원 메뉴로
                 case 2:
                     break;     // 비회원 메뉴로
@@ -66,7 +68,7 @@ public class Menu {
             selct = sc.nextInt();
 
             switch (selct) {
-                case 1 :
+                case 1:
                     System.out.println("장르 선택");
                     System.out.println("1. 비문학 | 2. 철학 | 3. 드라마 | 4. 액션 | 5. 무협 | 6. 개그 | 7. 판타지 | 8. 모험 | 9. 아동 | 10. 사회 | 11. 인문");
                     System.out.print("선택 : ");
@@ -74,7 +76,7 @@ public class Menu {
                     genre = sc.nextInt();
                     resistBookDAO.selectGenreBook(con, genre);
                     break;
-                case 2 :
+                case 2:
                     System.out.println("종류 선택");
                     System.out.println("1. 수필 | 2. 참고서 | 3. 만화 | 4. 동화 | 5. 자기계발서 | 6. 소설");
                     System.out.println("선택 : ");
@@ -82,7 +84,7 @@ public class Menu {
                     type = sc.nextInt();
                     resistBookDAO.selectTypeBook(con, type);
                     break;
-                default :
+                default:
                     if (selct != 0) {
                         System.out.println("잘못된 선택입니다 다시 골라주세요");
                         break;
@@ -183,10 +185,14 @@ public class Menu {
         System.out.print("6. 회원 유형 (관리자/일반회원) :");
         String answerType = sc.nextLine();
 
-        int memeberType =0;
+        int memeberType = 0;
         switch (answerType) {
-            case "관리자" : memeberType = 1; break;
-            case "일반회원" : memeberType = 2; break;
+            case "관리자":
+                memeberType = 1;
+                break;
+            case "일반회원":
+                memeberType = 2;
+                break;
         }
 
         int memberCode = maxMemberCode + 1;
@@ -211,6 +217,88 @@ public class Menu {
 
     }
 
+    public void checkMemberType() {
+        System.out.println("============= 회원 여부 확인 =============");
+        System.out.print("회원 아이디를 입력하세요 : ");
+        sc.nextLine();
+        String memberId = sc.nextLine();
+        System.out.print("회원 비밀번호를 입력하세요 : ");
+        String memberPw = sc.nextLine();
+        int memberType = registDAO.checkMember(con, memberId, memberPw);
+        switch (memberType) {
+            case 1:
+                System.out.println("관리자로 확인되었습니다.");
+                System.out.print("관리자 메뉴로 넘어가겠습니까? (예/아니오) : ");
+                String answer = sc.nextLine();
+                if (answer.equals("예")) {
+                    System.out.println("관리자 메뉴로 넘어갑니다.");
+                    managerMenu();
+                } else if (answer.equals("아니오")) {
+                    System.out.println("도서 메뉴로 넘어갑니다.");
+                    menu();
+                } else {
+                    System.out.println("잘못된 응답입니다. 초기 메뉴로 돌아갑니다.");
+                }
+                break;
+            case 2:
+                System.out.println("회원 확인 되었습니다. 도서 메뉴로 넘어갑니다.");
+                menu();
+                break;
+            case 3:
+                System.out.println("비회원 확인 되었습니다. 초기 메뉴로 돌아갑니다.");
+                break;
+            default:
+                System.out.println("아이디와 패스워드를 확인하세요. 초기 메뉴로 돌아갑니다.");
+        }
+
+    }
+
+    public void deleteMember() {
+        System.out.println("=========== 회원 정보 삭제 =============");
+        System.out.print("삭제 할 회원의 코드를 입력하세요 : ");
+        int memberCode = sc.nextInt();
+        int memberType = 3; //4 현재 멤버타입 1,2,3 으로 제약 되어있어서 추후 논의 후 결정
+        int result = registDAO.updateMember(con, memberCode, memberType);
+        if (result > 0) {
+            System.out.println("회원 유형이 변경 되었습니다.");
+        } else {
+            System.out.println("회원 정보 유형 변경이 실패되었습니다.");
+        }
+    }
+
+    public void managerMenu() {
+        int select = 0;
+        while (true) {
+            System.out.println("============= 관리자 메뉴 ==============");
+            System.out.println("1. 회원 목록 조회");
+            System.out.println("2. 신규 회원 추가");
+            System.out.println("3. 회원 삭제");
+            System.out.println("4. 관리자 메뉴 종료");
+            System.out.print("원하시는 메뉴의 번호를 입력하세요 : ");
+            select = sc.nextInt();
+            switch (select) {
+                case 1:
+                    printAllMember();
+                    break;
+                case 2:
+                    addNewMember();
+                    break;
+                case 3:
+                    deleteMember();
+                    break;
+                case 4:
+                    System.out.println("관리자 메뉴가 종료 됩니다.");
+                    break;
+                default:
+                    System.out.println("잘못된 메뉴입니다. 다시 선택해주세요");
+                    break;
+            }
+            if (select == 4) {
+                break;
+            }
+        }
+    }
+
 
     public void addBookInfo() {
 
@@ -228,7 +316,7 @@ public class Menu {
 
         resistBookDAO.bookRequest(conAuto, arr, memberCode);
     }
-  
+
     public void adminLogin() {
 
         String[] loginInfo = new String[2];
@@ -271,3 +359,4 @@ public class Menu {
     }
 
 }
+
