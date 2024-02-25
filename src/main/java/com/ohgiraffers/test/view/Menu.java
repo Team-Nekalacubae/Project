@@ -426,55 +426,6 @@ public class Menu {
         }
     }
 
-
-    public void nonMemberMenu(Connection conAuto) {
-
-        int result = 0;
-        int memberCode = 0;
-
-        System.out.println("비회원 메뉴");
-        System.out.println("1. 계속 이용");
-        System.out.println("2. 회원 가입 요청");
-        System.out.print("원하는 메뉴를 선택하세요 : ");
-        int select = sc.nextInt();
-
-        switch (select) {
-            case 1:
-                memberCode = 1;
-                break;      // 비회원 member_code 로 교체 필요
-            case 2:
-        }
-    }
-
-
-    public int deleteBookNumber() {
-
-        System.out.println("도서 삭제");
-        System.out.print("삭제할 도서의 도서 번호를 입력하세요 : ");
-        int num = sc.nextInt();
-
-        return num;
-    }
-
-
-    public void adminLogin() {
-
-        String[] loginInfo = new String[2];
-
-        System.out.println("관리자 로그인");
-        System.out.print("관리자 ID를 입력하세요 : ");
-        sc.nextLine();
-        loginInfo[0] = sc.nextLine();
-        System.out.print("비밀번호를 입력하세요 : ");
-        loginInfo[1] = sc.nextLine();
-
-        int num = registMemberDAO.memberIdentification(con, loginInfo);
-
-        System.out.println("num = " + num);
-
-    }
-
-
     public void signUpInfo() {
 
         String[] signUpInfo = new String[2];
@@ -495,7 +446,55 @@ public class Menu {
             System.out.println("비밀번호를 다시 확인해주세요.");
         }
     }
-
+//
+//
+//    public void nonMemberMenu(Connection conAuto) {
+//
+//        int result = 0;
+//        int memberCode = 0;
+//
+//        System.out.println("비회원 메뉴");
+//        System.out.println("1. 계속 이용");
+//        System.out.println("2. 회원 가입 요청");
+//        System.out.print("원하는 메뉴를 선택하세요 : ");
+//        int select = sc.nextInt();
+//
+//        switch (select) {
+//            case 1:
+//                memberCode = 1;
+//                break;      // 비회원 member_code 로 교체 필요
+//            case 2:
+//        }
+//    }
+//
+//
+//    public int deleteBookNumber() {
+//
+//        System.out.println("도서 삭제");
+//        System.out.print("삭제할 도서의 도서 번호를 입력하세요 : ");
+//        int num = sc.nextInt();
+//
+//        return num;
+//    }
+//
+//
+//    public void adminLogin() {
+//
+//        String[] loginInfo = new String[2];
+//
+//        System.out.println("관리자 로그인");
+//        System.out.print("관리자 ID를 입력하세요 : ");
+//        sc.nextLine();
+//        loginInfo[0] = sc.nextLine();
+//        System.out.print("비밀번호를 입력하세요 : ");
+//        loginInfo[1] = sc.nextLine();
+//
+//        int num = registMemberDAO.memberIdentification(con, loginInfo);
+//
+//        System.out.println("num = " + num);
+//
+//    }
+//
 
 }
 
