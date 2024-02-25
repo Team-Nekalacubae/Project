@@ -54,5 +54,15 @@
         (MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL, MEMBER_TYPE)
         VALUES (?, ?, ?, ?, ?, ?)
     </entry>
+    <entry key="selectRequestMember">
+        SELECT *
+          FROM MEMBERS
+         WHERE MEMBER_TYPE = 5
+    </entry>
+    <entry key="updateRequestMember">
+        UPDATE MEMBERS
+           SET MEMBER_TYPE = 2
+         WHERE MEMBER_TYPE = 5
+    </entry>
 
 </properties>
