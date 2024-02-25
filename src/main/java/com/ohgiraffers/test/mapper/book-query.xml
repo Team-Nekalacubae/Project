@@ -50,4 +50,16 @@
         VALUES (?, ?, ?, ?, ?)
     </entry>
 
+    <entry key="insertIntoBoxToRent">
+        INSERT INTO BOX
+        (MEMBER_CODE, BOOK_CODE, RENTAL, RENTAL_DATE, END_DATE, BUY_DATE)
+        VALUES (?, ?, TRUE, ?, ADDDATE(?, INTERVAL 2 DAY), NULL)
+    </entry>
+
+    <entry key="insertIntoBoxToBuy">
+        INSERT INTO BOX
+        (MEMBER_CODE, BOOK_CODE, RENTAL, RENTAL_DATE, END_DATE, BUY_DATE)
+        VALUES (?, ?, FALSE, NULL, NULL, ?)
+    </entry>
+
 </properties>

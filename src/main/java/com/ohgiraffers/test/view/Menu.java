@@ -2,6 +2,7 @@ package com.ohgiraffers.test.view;
 
 import com.ohgiraffers.test.model.dao.BookDAO;
 import com.ohgiraffers.test.model.dao.MemberDAO;
+import com.ohgiraffers.test.model.dto.BookDTO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
 
 import java.sql.Connection;
@@ -105,6 +106,7 @@ public class Menu {
             System.out.println("2. 도서 삭제");
             System.out.println("3. 조건별 도서 목록 검색");
             System.out.println("4. 도서 추가 요청");
+            System.out.println("5. 대여 및 구매");
             System.out.println("0. 메뉴 선택 프로그램 종료");
             System.out.print("원하시는 메뉴를 입력하세요 : ");
             select = sc.nextInt();
@@ -122,6 +124,8 @@ public class Menu {
                 case 4:
                     addBookInfo();
                     break;
+                case 5:
+                    rentOrBuy();
                 case 0:
                     break;
                 default:
@@ -330,6 +334,29 @@ public class Menu {
 
     }
 
+    public void rentOrBuy() {
+
+        System.out.println("해당 도서를 구매 혹은 대여 하시겠습니까? (1. Y / 2. N) : ");
+        sc.nextLine();
+        String answer = sc.nextLine();
+
+        if (answer.equals("Y") || answer.equals("1") || answer.equals("y")) {
+            System.out.println("구매 옵션 선택");
+            System.out.println("1. 대여");
+            System.out.println("2. 구매");
+            System.out.println("구매 옵션을 선택하세요 : ");
+            String select = sc.nextLine();
+
+            if (select.equals("1") || select.equals("대여")) {
+                resistBookDAO.insertBookBoxToRent(conAuto, 1, 1);
+            } else if (select.equals("2") || select.equals("구매")) {
+                resistBookDAO.insertBookBoxToBuy(conAuto, 1, 1);
+            }
+        } else if (answer.equals("2") || answer.equals("N") || answer.equals("n")) {
+            System.out.println("메뉴로 돌아갑니다.");
+            menu();
+        }
+    }
 
 }
 
