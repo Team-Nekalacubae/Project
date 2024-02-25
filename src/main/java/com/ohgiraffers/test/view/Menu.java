@@ -119,6 +119,7 @@ public class Menu {
             System.out.println("1. 회원 목록 조회");
             System.out.println("2. 신규 회원 추가");
             System.out.println("3. 회원 삭제");
+            System.out.println("4. 회원 가입 승인");
             System.out.println("0. 관리자 메뉴 종료");
             System.out.print("원하시는 메뉴의 번호를 입력하세요 : ");
             select = sc.nextInt();
@@ -131,6 +132,9 @@ public class Menu {
                     break;
                 case 3:
                     deleteMember();
+                    break;
+                case 4 :
+                    approveMember();
                     break;
                 case 0:
                     System.out.println("관리자 메뉴가 종료 됩니다.");
@@ -495,6 +499,38 @@ public class Menu {
 //
 //    }
 //
+
+    public void approveMember() {
+        System.out.println("=========회원가입 승인 요청 목록 조회===========");
+        List<MemberDTO> requestList = registMemberDAO.selectRequestList(con);
+
+        if (!requestList.isEmpty()) {
+            for (MemberDTO requestMember : requestList) {
+                System.out.println(requestMember);
+            }
+
+            int result = 0;
+            System.out.print("회원 가입 승인 하시겠습니까 ? (1. 예 / 2. 아니오) : ");
+            sc.nextLine();
+            String answer = sc.nextLine();
+            if (answer.equals("1") || answer.equals("예")) {
+                result = registMemberDAO.updateRequestMember(con);
+                if (result > 0) {
+                    System.out.println("회원 가입 승인이 완료되었습니다.");
+                } else {
+                    System.out.println("회원 가입 승인이 실패되었습니다.");
+                }
+            } else if (answer.equals("2") || answer.equals("아니오")) {
+                System.out.println("관리자 메뉴로 돌아갑니다.");
+            } else {
+                System.out.println("잘 못 응답 하셨습니다.");
+                System.out.println("관리자 메뉴로 돌아갑니다.");
+            }
+        } else {
+            System.out.println("회원 가입 요청 목록이 비었습니다.");
+            System.out.println("관리자 메뉴로 돌아갑니다.");
+        }
+    }
 
 }
 

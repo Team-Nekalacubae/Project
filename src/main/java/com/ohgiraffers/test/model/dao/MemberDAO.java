@@ -278,5 +278,59 @@ public class MemberDAO {
         }
     }
 
+    public List<MemberDTO> selectRequestList(Connection con) {
+
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        MemberDTO requestMember = null;
+
+        List<MemberDTO> requestList = null;
+
+        String query = prop.getProperty("selectRequestMember");
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            requestList = new ArrayList<>();
+
+            while (rset.next()) {
+                requestMember = new MemberDTO();
+                requestMember.setMemberCode(rset.getInt("MEMBER_CODE"));
+                requestMember.setMemberId(rset.getString("MEMBER_ID"));
+                requestMember.setMemberPw(rset.getString("MEMBER_PW"));
+                requestMember.setMemberName(rset.getString("MEMBER_NAME"));
+                requestMember.setMemberPhone(rset.getString("MEMBER_PHONE"));
+                requestMember.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+                requestMember.setMemberType(rset.getInt("MEMBER_TYPE"));
+
+                requestList.add(requestMember);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+
+        return requestList;
+    }
+
+    public int updateRequestMember(Connection con) {
+        PreparedStatement pstmt = null;
+
+        int result = 0;
+        String query = prop.getProperty("updateRequestMember");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
 
 }
