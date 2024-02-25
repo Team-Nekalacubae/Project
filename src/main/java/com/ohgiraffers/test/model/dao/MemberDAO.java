@@ -116,45 +116,58 @@ public class MemberDAO {
         return maxMemberCode;
     }
 
+
+
     public int memberIdentification(Connection con, String[] loginInfo) {
+
 
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
-        String id = null;
-        int memberCode = 0;
+      public int checkMember(Connection con, String memberId, String memberPw) {      
+  PreparedStatement pstmt = null;
+        ResultSet rset = null;
+  int memberType = 3;
 
-        String query = prop.getProperty("pwCheck");
+        String query = prop.getProperty("checkMember");
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1, loginInfo[0]);
-
+            pstmt.setString(1, memberId);
+            pstmt.setString(2, memberPw);
             rset = pstmt.executeQuery();
 
-            while (rset.next()) {
-
-                if (rset.getString("MEMBER_PW").equals(loginInfo[1])) {
-
-                    if (rset.getInt("MEMBER_TYPE") == 1) {
-
-                        id = rset.getString("MEMBER_ID");
-                        System.out.println("접속을 환영합니다. 관리자 " + id + " 님");
-                        memberCode = rset.getInt("MEMBER_CODE");
-                    } else {
-                        System.out.println("정상적인 접속 경로가 아닙니다.");
-                    }
-                } else {
-                    System.out.println("비밀번호가 일치하지 않습니다.");
-                }
+            if (rset.next()) {
+                memberType =  rset.getInt("MEMBER_TYPE");
             }
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             close(pstmt);
             close(rset);
         }
 
-        return memberCode;
+        return memberType;
+    }
+
+    public int updateMember(Connection con, int memberCode, int memberType) {
+
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("updateMemberType");
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, memberType);
+            pstmt.setInt(2, memberCode);
+
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+        return result;
+
     }
 }
