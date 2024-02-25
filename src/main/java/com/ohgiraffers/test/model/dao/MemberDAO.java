@@ -197,6 +197,20 @@ public class MemberDAO {
 
             result = pstmt.executeUpdate();
 
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    } finally {
+        close(pstmt);
+    }
+
+
+        if (result > 0) {
+        System.out.println("회원 가입 요청 완료");
+    } else {
+        System.out.println("회원 가입 요청 실패");
+    }
+}
+
 
     public int checkMember(Connection con, String memberId, String memberPw) {
         PreparedStatement pstmt = null;
@@ -249,7 +263,7 @@ public class MemberDAO {
         } else {
             System.out.println("회원 가입 요청 실패");
         }
-    }
+
 
 
         return result;
