@@ -3,18 +3,6 @@
 <properties>
     <comment/>
 
-    <entry key="selectGenreBook">
-        SELECT B.*
-            FROM BOOKS B
-            WHERE B.BOOK_GENRE LIKE CONCAT(?, '%')
-    </entry>
-
-    <entry key="selectTypeBook">
-        SELECT B.*
-        FROM BOOKS B
-        WHERE B.BOOK_Type LIKE CONCAT(?, '%')
-    </entry>
-
     <entry key="searchBookByBookName">
         SELECT *
         FROM BOOKS
@@ -33,15 +21,27 @@
         WHERE BOOK_PUBLISHER LIKE ?
     </entry>
 
+    <entry key="insertSearchedBook">
+        INSERT INTO SEARCH
+        (SEARCH_ELEMENT, SEARCH_NAME, SEARCH_DATE, MEMBER_CODE, BOOK_CODE)
+        VALUES (?, ?, ?, ?, ?)
+    </entry>
+
     <entry key="deleteBook">
         DELETE FROM BOOKS
         WHERE BOOK_CODE = ?
     </entry>
 
-    <entry key="insertSearchedBook">
-        INSERT INTO SEARCH
-        (SEARCH_ELEMENT, SEARCH_NAME, SEARCH_DATE, MEMBER_CODE, BOOK_CODE)
-        VALUES (?, ?, ?, ?, ?)
+    <entry key="selectGenreBook">
+        SELECT B.*
+        FROM BOOKS B
+        WHERE B.BOOK_GENRE LIKE CONCAT(?, '%')
+    </entry>
+
+    <entry key="selectTypeBook">
+        SELECT B.*
+        FROM BOOKS B
+        WHERE B.BOOK_Type LIKE CONCAT(?, '%')
     </entry>
 
     <entry key="bookAddRequest">
@@ -49,6 +49,7 @@
         (REQUEST_TITLE, REQUEST_AUTHOR, REQUEST_PUBLISHER, MEMBER_CODE, REQUEST_DATE)
         VALUES (?, ?, ?, ?, ?)
     </entry>
+
 
     <entry key="insertIntoBoxToRent">
         INSERT INTO BOX

@@ -24,37 +24,56 @@ public class MemberDAO {
         }
     }
 
-    public int insertNewMember(Connection con, MemberDTO newMember) {
-
+    public String callPassword(Connection con, String signInInfoId) {
         PreparedStatement pstmt = null;
-        System.out.println("newMember = " + newMember);
-        int result = 0;
-        String query = prop.getProperty("insertMember");
+        ResultSet rset = null;
+
+        String password = "";
+        String query = prop.getProperty("checkMember");
 
         try {
             pstmt = con.prepareStatement(query);
+            pstmt.setString(1, signInInfoId);
+            rset = pstmt.executeQuery();
 
-            pstmt.setInt(1, newMember.getMemberCode());
-            pstmt.setString(2, newMember.getMemberId());
-            pstmt.setString(3, newMember.getMemberPw());
-            pstmt.setString(4, newMember.getMemberName());
-            pstmt.setString(5, newMember.getMemberPhone());
-            pstmt.setString(6, newMember.getMemberEmail());
-            pstmt.setInt(7, newMember.getMemberType());
-
-            result = pstmt.executeUpdate();
-
+            if (rset.next()) {
+                password = rset.getString("MEMBER_PW");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             close(pstmt);
+            close(rset);
         }
+        return password;
+    }
 
-        return result;
+    public int[] callMemberInfo(Connection con, String signInInfoId) {
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        int[] memberInfo = new int[2];
+        String query = prop.getProperty("callMemberInfo");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, signInInfoId);
+            rset = pstmt.executeQuery();
+
+            if (rset.next()) {
+                memberInfo[0] = rset.getInt("MEMBER_CODE");
+                memberInfo[1] = rset.getInt("MEMBER_TYPE");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+            close(rset);
+        }
+        return memberInfo;
     }
 
     public List<MemberDTO> selectAllMember(Connection con) {
-
         Statement stmt = null;
         ResultSet rset = null;
 
@@ -88,6 +107,54 @@ public class MemberDAO {
             close(rset);
         }
         return memberList;
+    }
+
+    public int updateMemberType(Connection con, int memberType, int memberCode) {
+        PreparedStatement pstmt = null;
+
+        int result = 0;
+        String query = prop.getProperty("updateMemberType");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, memberType);
+            pstmt.setInt(2, memberCode);
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+        return result;
+    }
+
+    public int insertNewMember(Connection con, MemberDTO newMember) {
+
+        PreparedStatement pstmt = null;
+        System.out.println("newMember = " + newMember);
+        int result = 0;
+        String query = prop.getProperty("insertMember");
+
+        try {
+            pstmt = con.prepareStatement(query);
+
+            pstmt.setInt(1, newMember.getMemberCode());
+            pstmt.setString(2, newMember.getMemberId());
+            pstmt.setString(3, newMember.getMemberPw());
+            pstmt.setString(4, newMember.getMemberName());
+            pstmt.setString(5, newMember.getMemberPhone());
+            pstmt.setString(6, newMember.getMemberEmail());
+            pstmt.setInt(7, newMember.getMemberType());
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+
+        return result;
     }
 
     public int selectLastMemberCode(Connection con) {
@@ -159,7 +226,7 @@ public class MemberDAO {
         return memberCode;
     }
 
-  
+
     public void signUpRequest(Connection conAuto, String[] signUpInfo) {
 
         PreparedStatement pstmt = null;
@@ -197,60 +264,6 @@ public class MemberDAO {
 
             result = pstmt.executeUpdate();
 
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    } finally {
-        close(pstmt);
-    }
-
-
-        if (result > 0) {
-        System.out.println("회원 가입 요청 완료");
-    } else {
-        System.out.println("회원 가입 요청 실패");
-    }
-}
-
-
-    public int checkMember(Connection con, String memberId, String memberPw) {
-        PreparedStatement pstmt = null;
-        ResultSet rset = null;
-        int memberType = 3;
-
-        String query = prop.getProperty("checkMember");
-
-        try {
-            pstmt = con.prepareStatement(query);
-            pstmt.setString(1, memberId);
-            pstmt.setString(2, memberPw);
-            rset = pstmt.executeQuery();
-
-            if (rset.next()) {
-                memberType = rset.getInt("MEMBER_TYPE");
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(pstmt);
-            close(rset);
-        }
-
-        return memberType;
-    }
-
-    public int updateMember(Connection con, int memberCode, int memberType) {
-
-        PreparedStatement pstmt = null;
-        int result = 0;
-        String query = prop.getProperty("updateMemberType");
-        try {
-            pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, memberType);
-            pstmt.setInt(2, memberCode);
-
-            result = pstmt.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -263,10 +276,7 @@ public class MemberDAO {
         } else {
             System.out.println("회원 가입 요청 실패");
         }
-
-
-
-        return result;
-
     }
+
+
 }
