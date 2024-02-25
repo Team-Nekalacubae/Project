@@ -70,7 +70,9 @@ public class Menu {
         int select = sc.nextInt();
 
         switch (select) {
-            case 1: memberCode = 1; break;      // 비회원 member_code 로 교체 필요
+            case 1:
+                memberCode = 1;
+                break;      // 비회원 member_code 로 교체 필요
             case 2:
         }
     }
@@ -371,6 +373,9 @@ public class Menu {
         } else {
             System.out.println("처음 입력한 비밀번호와 다릅니다.");
             System.out.println("비밀번호를 다시 확인해주세요.");
+        }
+    }
+
 
     public void rentOrBuy() {
 
@@ -393,9 +398,9 @@ public class Menu {
         } else if (answer.equals("2") || answer.equals("N") || answer.equals("n")) {
             System.out.println("메뉴로 돌아갑니다.");
             menu();
-
         }
     }
 
 }
+
 
