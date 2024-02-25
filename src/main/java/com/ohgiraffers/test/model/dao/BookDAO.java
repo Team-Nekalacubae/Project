@@ -28,15 +28,15 @@ public class BookDAO {
         }
     }
 
-    public void searchBookByBookName(Connection con, String key) {
-        System.out.println("key = " + key);
+    public List<BookDTO> searchBookByBookName(Connection con, String key, int memberCode) {
         PreparedStatement pstmt1 = null;
         PreparedStatement pstmt2 = null;
         ResultSet rset = null;
 
-        BookDTO book = null;
-        int result = 0;
         LocalDate now = LocalDate.now();
+
+        BookDTO book = null;
+        List<BookDTO> bookList = null;
 
         String query1 = prop.getProperty("searchBookByBookName");
         String query2 = prop.getProperty("insertSearchedBook");
@@ -47,9 +47,11 @@ public class BookDAO {
 
             rset = pstmt1.executeQuery();
 
-            book = new BookDTO();
+            bookList = new ArrayList<>();
 
             while (rset.next()) {
+                book = new BookDTO();
+
                 book.setBookCode(rset.getInt("BOOK_CODE"));
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
@@ -57,22 +59,16 @@ public class BookDAO {
                 book.setBookType(rset.getString("BOOK_TYPE"));
                 book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
 
-                System.out.println("book = " + book);
+                bookList.add(book);
 
                 pstmt2 = con.prepareStatement(query2);
                 pstmt2.setString(1, "제목");
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
-                pstmt2.setInt(4, 1);            // MEMBERS에 없는 MEMBER_CODE 입력 불가능 >> 비회원도 MEMBER_CODE 할당해야 될거 같습니다
+                pstmt2.setInt(4, memberCode);
                 pstmt2.setInt(5, rset.getInt("BOOK_CODE"));
 
-                result = pstmt2.executeUpdate();
-
-                if (result > 0) {
-                    System.out.println("추가 완료");
-                } else {
-                    System.out.println("추가 실패");
-                }
+                pstmt2.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,19 +77,19 @@ public class BookDAO {
             close(pstmt2);
             close(rset);
         }
-
-//        return book;
+        return bookList;
     }
 
-    public BookDTO searchBookByBookAuthor(Connection con, String key) {
-        System.out.println("key = " + key);
+    public List<BookDTO> searchBookByBookAuthor(Connection con, String key, int memberCode) {
         PreparedStatement pstmt1 = null;
         PreparedStatement pstmt2 = null;
         ResultSet rset = null;
 
-        BookDTO book = null;
-        int result = 0;
         LocalDate now = LocalDate.now();
+
+        BookDTO book = null;
+        List<BookDTO> bookList = null;
+        int result = 0;
 
         String query1 = prop.getProperty("searchBookByBookAuthor");
         String query2 = prop.getProperty("insertSearchedBook");
@@ -104,9 +100,11 @@ public class BookDAO {
 
             rset = pstmt1.executeQuery();
 
-            book = new BookDTO();
+            bookList = new ArrayList<>();
 
             while (rset.next()) {
+                book = new BookDTO();
+
                 book.setBookCode(rset.getInt("BOOK_CODE"));
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
@@ -114,22 +112,16 @@ public class BookDAO {
                 book.setBookType(rset.getString("BOOK_TYPE"));
                 book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
 
-                System.out.println("book = " + book);
+                bookList.add(book);
 
                 pstmt2 = con.prepareStatement(query2);
                 pstmt2.setString(1, "제목");
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
-                pstmt2.setInt(4, 1);            // MEMBERS에 없는 MEMBER_CODE 입력 불가능 >> 비회원도 MEMBER_CODE 할당해야 될거 같습니다
+                pstmt2.setInt(4, memberCode);
                 pstmt2.setInt(5, rset.getInt("BOOK_CODE"));
 
-                result = pstmt2.executeUpdate();
-
-                if (result > 0) {
-                    System.out.println("추가 완료");
-                } else {
-                    System.out.println("추가 실패");
-                }
+                pstmt2.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -138,19 +130,20 @@ public class BookDAO {
             close(pstmt2);
             close(rset);
         }
-
-        return book;
+        return bookList;
     }
 
-    public BookDTO searchBookByBookPublisher(Connection con, String key) {
-        System.out.println("key = " + key);
+    public List<BookDTO> searchBookByBookPublisher(Connection con, String key, int memberCode) {
         PreparedStatement pstmt1 = null;
         PreparedStatement pstmt2 = null;
+
         ResultSet rset = null;
 
-        BookDTO book = null;
-        int result = 0;
         LocalDate now = LocalDate.now();
+
+        BookDTO book = null;
+        List<BookDTO> bookList = null;
+        int result = 0;
 
         String query1 = prop.getProperty("searchBookByBookPublisher");
         String query2 = prop.getProperty("insertSearchedBook");
@@ -161,9 +154,11 @@ public class BookDAO {
 
             rset = pstmt1.executeQuery();
 
-            book = new BookDTO();
+            bookList = new ArrayList<>();
 
             while (rset.next()) {
+                book = new BookDTO();
+
                 book.setBookCode(rset.getInt("BOOK_CODE"));
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
@@ -171,22 +166,16 @@ public class BookDAO {
                 book.setBookType(rset.getString("BOOK_TYPE"));
                 book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
 
-                System.out.println("book = " + book);
+                bookList.add(book);
 
                 pstmt2 = con.prepareStatement(query2);
                 pstmt2.setString(1, "제목");
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
-                pstmt2.setInt(4, 1);            // MEMBERS에 없는 MEMBER_CODE 입력 불가능 >> 비회원도 MEMBER_CODE 할당해야 될거 같습니다
+                pstmt2.setInt(4, memberCode);
                 pstmt2.setInt(5, rset.getInt("BOOK_CODE"));
 
-                result = pstmt2.executeUpdate();
-
-                if (result > 0) {
-                    System.out.println("추가 완료");
-                } else {
-                    System.out.println("추가 실패");
-                }
+                pstmt2.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -195,101 +184,55 @@ public class BookDAO {
             close(pstmt2);
             close(rset);
         }
-
-        return book;
+        return bookList;
     }
 
-    public int deleteBook(Connection con, int i) {
-
+    public int deleteBook(Connection con, int bookCode) {
         PreparedStatement pstmt = null;
 
         int result = 0;
-//        int bookCode = book.getBookCode();
-
         String query = prop.getProperty("deleteBook");
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, i);
-
+            pstmt.setInt(1, bookCode);
             result = pstmt.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             close(pstmt);
         }
-
         return result;
     }
 
-    public void selectGenreBook(Connection con, int genre) {
-
+    public List<BookDTO> selectGenreBook(Connection con, String bookGenre) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
         String query = prop.getProperty("selectGenreBook");
 
-        BookDTO row = null;
+        BookDTO book = null;
         List<BookDTO> genreList = null;
-        String bon = "";
-
-        switch (genre) {
-            case 1:
-                bon = "비문학";
-                break;
-            case 2:
-                bon = "철학";
-                break;
-            case 3:
-                bon = "드라마";
-                break;
-            case 4:
-                bon = "액션";
-                break;
-            case 5:
-                bon = "무협";
-                break;
-            case 6:
-                bon = "개그";
-                break;
-            case 7:
-                bon = "판타지";
-                break;
-            case 8:
-                bon = "모험";
-                break;
-            case 9:
-                bon = "아동";
-                break;
-            case 10:
-                bon = "사회";
-                break;
-            case 11:
-                bon = "인문";
-                break;
-        }
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1, bon);
+            pstmt.setString(1, bookGenre);
 
             rset = pstmt.executeQuery();
 
             genreList = new ArrayList<>();
 
             while (rset.next()) {
+                book = new BookDTO();
 
-                row = new BookDTO();
+                book.setBookCode(rset.getInt("BOOK_CODE"));
+                book.setBookName(rset.getString("BOOK_NAME"));
+                book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
+                book.setBookGenre(rset.getString("BOOK_GENRE"));
+                book.setBookType(rset.getString("BOOK_TYPE"));
+                book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
 
-                row.setBookCode(rset.getInt("BOOK_CODE"));
-                row.setBookName(rset.getString("BOOK_NAME"));
-                row.setBookAuthor(rset.getString("BOOK_AUTHOR"));
-                row.setBookGenre(rset.getString("BOOK_GENRE"));
-                row.setBookType(rset.getString("BOOK_TYPE"));
-                row.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
-
-                genreList.add(row);
+                genreList.add(book);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -297,65 +240,37 @@ public class BookDAO {
             close(rset);
             close(pstmt);
         }
-
-        for (BookDTO book : genreList) {
-            System.out.println("book = " + book);
-        }
+        return genreList;
     }
 
-
-    public void selectTypeBook(Connection con, int type) {
-
+    public List<BookDTO> selectTypeBook(Connection con, String bookType) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
         String query = prop.getProperty("selectTypeBook");
 
-        BookDTO row = null;
+        BookDTO book = null;
         List<BookDTO> typeList = null;
-        String bon = "";
-
-        switch (type) {
-            case 1:
-                bon = "수필";
-                break;
-            case 2:
-                bon = "참고서";
-                break;
-            case 3:
-                bon = "만화";
-                break;
-            case 4:
-                bon = "동화";
-                break;
-            case 5:
-                bon = "자기계발서";
-                break;
-            case 6:
-                bon = "소설";
-                break;
-        }
 
         try {
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1, bon);
+            pstmt.setString(1, bookType);
 
             rset = pstmt.executeQuery();
 
             typeList = new ArrayList<>();
 
             while (rset.next()) {
+                book = new BookDTO();
 
-                row = new BookDTO();
+                book.setBookCode(rset.getInt("BOOK_CODE"));
+                book.setBookName(rset.getString("BOOK_NAME"));
+                book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
+                book.setBookGenre(rset.getString("BOOK_GENRE"));
+                book.setBookType(rset.getString("BOOK_TYPE"));
+                book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
 
-                row.setBookCode(rset.getInt("BOOK_CODE"));
-                row.setBookName(rset.getString("BOOK_NAME"));
-                row.setBookAuthor(rset.getString("BOOK_AUTHOR"));
-                row.setBookGenre(rset.getString("BOOK_GENRE"));
-                row.setBookType(rset.getString("BOOK_TYPE"));
-                row.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
-
-                typeList.add(row);
+                typeList.add(book);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -363,20 +278,15 @@ public class BookDAO {
             close(rset);
             close(pstmt);
         }
-
-        for (BookDTO book : typeList) {
-            System.out.println("book = " + book);
-        }
+        return typeList;
     }
 
-    public void bookRequest(Connection con, String[] arr, int memberCode) {
-
+    public int bookRequest(Connection con, String[] arr, int memberCode) {
         PreparedStatement pstmt = null;
 
         LocalDate now = LocalDate.now();
 
         int result = 0;
-
         String query = prop.getProperty("bookAddRequest");
 
         try {
@@ -394,27 +304,40 @@ public class BookDAO {
         } finally {
             close(pstmt);
         }
-
-        if (result > 0) {
-            System.out.println("도서 추가 요청 성공");
-        } else {
-            System.out.println("도서 추가 요청 실패");
-        }
+        return result;
     }
 
-    public void insertBookBoxToRent(Connection con, int memberCode, int bookCode) {
-
+    public int insertBookBoxToBuy(Connection con, int memberCode, int bookCode) {
         PreparedStatement pstmt = null;
-
-        int result = 0;
 
         LocalDate now = LocalDate.now();
 
-        String query = prop.getProperty("insertIntoBoxToRent");
-        String expDate = "ADDDATE('" + String.valueOf(now) + "', INTERVAL 3 DAY)";
-        System.out.println("expDate = " + expDate);
+        int result = 0;
+        String query = prop.getProperty("insertIntoBoxToBuy");
 
-        System.out.println("query = " + query);
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, memberCode);
+            pstmt.setInt(2, bookCode);
+            pstmt.setString(3, String.valueOf(now));
+
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+        }
+        return result;
+    }
+
+    public int insertBookBoxToRent(Connection con, int memberCode, int bookCode) {
+        PreparedStatement pstmt = null;
+
+        LocalDate now = LocalDate.now();
+
+        int result = 0;
+        String query = prop.getProperty("insertIntoBoxToRent");
+        String expDate = "ADDDATE('" + String.valueOf(now) + "', INTERVAL 2 DAY)";
 
         try {
             pstmt = con.prepareStatement(query);
@@ -424,51 +347,12 @@ public class BookDAO {
             pstmt.setString(4, String.valueOf(now));
 
             result = pstmt.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             close(pstmt);
         }
-
-        if (result > 0) {
-            System.out.println("소장 요청 성공");
-        } else {
-            System.out.println("소장 요청 실패");
-        }
-    }
-
-    public void insertBookBoxToBuy(Connection con, int memberCode, int bookCode) {
-
-        PreparedStatement pstmt = null;
-
-        int result = 0;
-
-        LocalDate now = LocalDate.now();
-
-        String query = prop.getProperty("insertIntoBoxToBuy");
-
-        System.out.println("query = " + query);
-
-        try {
-            pstmt = con.prepareStatement(query);
-            pstmt.setInt(1, memberCode);
-            pstmt.setInt(2, bookCode);
-            pstmt.setString(3, String.valueOf(now));
-
-            result = pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close(pstmt);
-        }
-
-        if (result > 0) {
-            System.out.println("소장 요청 성공");
-        } else {
-            System.out.println("소장 요청 실패");
-        }
+        return result;
     }
 }
 
