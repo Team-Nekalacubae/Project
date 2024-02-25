@@ -40,10 +40,23 @@
           FROM MEMBERS A
     </entry>
 
+    <entry key="checkMember">
+        SELECT MEMBER_TYPE
+          FROM MEMBERS
+         WHERE MEMBER_ID = ? AND
+               MEMBER_PW = ?
+    </entry>
+    <entry key="updateMemberType">
+        UPDATE MEMBERS
+           SET MEMBER_TYPE = ?
+         WHERE MEMBER_CODE = ?
+</entry>
+
     <entry key="pwCheck">
         SELECT *
         FROM MEMBERS
         WHERE MEMBER_ID = ?
+
     </entry>
 
     <entry key="signUp">

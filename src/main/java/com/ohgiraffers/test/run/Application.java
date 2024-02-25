@@ -13,13 +13,7 @@ public class Application {
     public static void main(String[] args) {
 
         Menu menu = new Menu();
-        menu.start();
-
-//        Connection con = getConnection();
-//        BookDAO registDAO = new BookDAO();
-//        Menu me = new Menu();
-//        me.choiceMenu();
-
+        menu.menu();
 
     }
 }

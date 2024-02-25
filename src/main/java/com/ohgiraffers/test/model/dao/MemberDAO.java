@@ -116,6 +116,7 @@ public class MemberDAO {
         return maxMemberCode;
     }
 
+
     public int memberIdentification(Connection con, String[] loginInfo) {
 
         PreparedStatement pstmt = null;
@@ -158,6 +159,7 @@ public class MemberDAO {
         return memberCode;
     }
 
+  
     public void signUpRequest(Connection conAuto, String[] signUpInfo) {
 
         PreparedStatement pstmt = null;
@@ -195,11 +197,52 @@ public class MemberDAO {
 
             result = pstmt.executeUpdate();
 
+
+    public int checkMember(Connection con, String memberId, String memberPw) {
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        int memberType = 3;
+
+        String query = prop.getProperty("checkMember");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, memberId);
+            pstmt.setString(2, memberPw);
+            rset = pstmt.executeQuery();
+
+            if (rset.next()) {
+                memberType = rset.getInt("MEMBER_TYPE");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+            close(rset);
+        }
+
+        return memberType;
+    }
+
+    public int updateMember(Connection con, int memberCode, int memberType) {
+
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = prop.getProperty("updateMemberType");
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, memberType);
+            pstmt.setInt(2, memberCode);
+
+            result = pstmt.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             close(pstmt);
         }
+
 
         if (result > 0) {
             System.out.println("회원 가입 요청 완료");
@@ -208,4 +251,8 @@ public class MemberDAO {
         }
     }
 
+
+        return result;
+
+    }
 }
