@@ -1,6 +1,7 @@
 package com.ohgiraffers.test.model.dao;
 
 import com.ohgiraffers.test.model.dto.MemberDTO;
+import com.ohgiraffers.test.model.dto.OutMemberDTO;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -278,5 +279,96 @@ public class MemberDAO {
         }
     }
 
+    public List<MemberDTO> selectRequestList(Connection con) {
 
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        MemberDTO requestMember = null;
+
+        List<MemberDTO> requestList = null;
+
+        String query = prop.getProperty("selectRequestMember");
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            requestList = new ArrayList<>();
+
+            while (rset.next()) {
+                requestMember = new MemberDTO();
+                requestMember.setMemberCode(rset.getInt("MEMBER_CODE"));
+                requestMember.setMemberId(rset.getString("MEMBER_ID"));
+                requestMember.setMemberPw(rset.getString("MEMBER_PW"));
+                requestMember.setMemberName(rset.getString("MEMBER_NAME"));
+                requestMember.setMemberPhone(rset.getString("MEMBER_PHONE"));
+                requestMember.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+                requestMember.setMemberType(rset.getInt("MEMBER_TYPE"));
+
+                requestList.add(requestMember);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+
+        return requestList;
+    }
+
+    public int updateRequestMember(Connection con) {
+        PreparedStatement pstmt = null;
+
+        int result = 0;
+        String query = prop.getProperty("updateRequestMember");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+        return result;
+    }
+
+    public List<OutMemberDTO> outMember(Connection con) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        String query = "SELECT A.*, B.OUT_DATE FROM MEMBERS A JOIN OUT_MEMBER B USING(MEMBER_CODE)";
+
+        OutMemberDTO member = null;
+        List<OutMemberDTO> memberList = null;
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            memberList = new ArrayList<>();
+            while (rset.next()) {
+                member = new OutMemberDTO();
+                member.setMemberCode(rset.getInt("MEMBER_CODE"));
+                member.setMemberId(rset.getString("MEMBER_ID"));
+                member.setMemberPw(rset.getString("MEMBER_PW"));
+                member.setMemberName(rset.getString("MEMBER_NAME"));
+                member.setMemberPhone(rset.getString("MEMBER_PHONE"));
+                member.setMemberPhone(rset.getString("MEMBER_EMAIL"));
+                member.setMemberType(rset.getInt("MEMBER_TYPE"));
+                member.setOutDate(rset.getDate("OUT_DATE"));
+
+                memberList.add(member);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return memberList;
+    }
 }
