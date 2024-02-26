@@ -84,13 +84,21 @@ public class BoxDTO extends BookDTO implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() + "BoxDTO{" +
-                "memberCode=" + memberCode +
-                ", bookCode=" + bookCode +
-                ", rental=" + rental +
-                ", rentalDate=" + rentalDate +
-                ", endDate=" + endDate +
-                ", buyDate=" + buyDate +
-                '}';
+        String superStr = super.toString();
+        String str = "";
+        if (rental) {
+            str = "BoxDTO{" +
+                    ", bookCode=" + bookCode +
+                    ", rentalDate=" + rentalDate +
+                    ", endDate=" + endDate +
+                    '}';
+        } else {
+            str = "BoxDTO{" +
+                    ", bookCode=" + bookCode +
+                    ", buyDate=" + buyDate +
+                    '}';
+        }
+
+        return superStr + str;
     }
 }
