@@ -97,4 +97,15 @@
 
     </entry>
 
+    <entry key="insertBook">
+        INSERT INTO BOOKS
+        (BOOK_CODE, BOOK_NAME, BOOK_AUTHOR, BOOK_GENRE, BOOK_TYPE, BOOK_PUBLISHER)
+        VALUES (?, ?, ?, ?, ?, ?)
+    </entry>
+
+    <entry key="selectLastBookCode">
+        SELECT MAX(A.BOOK_CODE)
+        FROM BOOKS A;
+    </entry>
+
 </properties>

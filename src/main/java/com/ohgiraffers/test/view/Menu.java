@@ -680,6 +680,34 @@ public class Menu {
             System.out.println("잘 못 응답 하셨습니다.");
         }
     }
+
+
+    public void insertBook() {
+        int maxBookCode = registBookDAO.selectLastBookCode(con);
+
+        System.out.println("===== 도서 입력 =====");
+        System.out.print("입력할 도서의 제목을 적어주세요 : ");
+        String bookName = sc.nextLine();
+        System.out.print("입력할 도서의 저자를 적어주세요 : ");
+        String bookAuthor = sc.nextLine();
+        System.out.print("입력할 도서의 장르를 적어주세요 : ");
+        String bookGenre = sc.nextLine();
+        System.out.print("입력할 도서의 종류를 적어주세요 : ");
+        String bookType = sc.nextLine();
+        System.out.print("입력할 도서의 출판사를 적어주세요 : ");
+        String bookPublisher = sc.nextLine();
+
+        BookDTO newBook = new BookDTO(bookName, bookAuthor, bookGenre, bookType, bookPublisher);
+        int result = registBookDAO.insertNewBook(con, newBook);
+
+        if (result > 0) {
+            System.out.println("신규 책 정보가 입력되었습니다.");
+        } else {
+            System.out.println("신규 책 정보가 입력이 실패 되었습니다.");
+        }
+    }
+
+
     public void grantManager() {
         System.out.println("=============관리자 권한 부여============");
         System.out.println("관리자 권한을 부여할 회원의 코드를 입력하세요");
@@ -693,6 +721,7 @@ public class Menu {
             System.out.println("관리자 권한 부여가 실패 되었습니다.");
         }
     }
+
 }
 
 
