@@ -209,4 +209,12 @@ public class Manager {
 
         return result;
     }
+
+    public BookDTO bookInfo(Connection con, int bookCode) {
+        BookDTO book = new BookDTO();
+
+        book = registBookDAO.bookInfo(con,bookCode);
+
+        return book;
+    }
 }
