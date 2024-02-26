@@ -66,6 +66,8 @@
     <entry key="searchHistory">
         SELECT *
         FROM SEARCH
+        INNER JOIN BOOKS
+        ON SEARCH.BOOK_CODE = BOOKS.BOOK_CODE
         ORDER BY SEARCH_DATE DESC
         LIMIT 5
     </entry>
