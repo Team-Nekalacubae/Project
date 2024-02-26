@@ -172,4 +172,11 @@ public class Manager {
 
         return bookList;
     }
+
+    public int updateManger(Connection con, int memberCode) {
+        int result = 0;
+        int memberType = 1;
+        result = registMemberDAO.updateMemberType(con, memberType, memberCode);
+        return result;
+    }
 }
