@@ -6,6 +6,7 @@ import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.BookDTO;
 import com.ohgiraffers.test.model.dto.BoxDTO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
+import com.ohgiraffers.test.model.dto.OutMemberDTO;
 import com.ohgiraffers.test.model.dto.RequestDTO;
 
 import javax.swing.*;
@@ -325,6 +326,9 @@ public class Menu {
                     break;
                 case 0:
                     break;
+                case 12:
+                    searchAllOutMemberMenu();
+                    break;
                 default:
                     System.out.println("잘못된 메뉴입니다. 다시 선택해주세요.");
                     break;
@@ -332,6 +336,19 @@ public class Menu {
             if (select == 0) {
                 break;
             }
+        }
+    }
+
+
+    private void searchAllOutMemberMenu() {
+        List<OutMemberDTO> memberList = new ArrayList<>();
+
+        System.out.println("탈퇴 회원 목록 조회");
+
+        memberList = manager.searchAllOutMember(con);
+
+        for (OutMemberDTO member : memberList) {
+            System.out.println(member);
         }
     }
 
@@ -356,6 +373,7 @@ public class Menu {
             }
         } else if (buyList.isEmpty()) {
             System.out.println("소장중인 도서가 없습니다.");
+
         }
     }
 
@@ -642,5 +660,6 @@ public class Menu {
     }
 
 }
+
 
 

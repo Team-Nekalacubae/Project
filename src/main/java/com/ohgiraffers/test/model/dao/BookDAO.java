@@ -387,7 +387,9 @@ public class BookDAO {
                 book.setRentalDate(rset.getDate("RENTAL_DATE"));
                 book.setEndDate(rset.getDate("END_DATE"));
 
+                System.out.println("book = " + book);
                 bookList.add(book);
+                System.out.println("bookList = " + bookList);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

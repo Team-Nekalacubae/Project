@@ -3,7 +3,9 @@ package com.ohgiraffers.test.control;
 import com.ohgiraffers.test.model.dao.BookDAO;
 import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.BookDTO;
+import com.ohgiraffers.test.model.dto.OutMemberDTO;
 import com.ohgiraffers.test.model.dto.BoxDTO;
+
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -145,6 +147,15 @@ public class Manager {
 
     }
 
+
+
+    public List<OutMemberDTO> searchAllOutMember(Connection con) {
+        List<OutMemberDTO> memberList = new ArrayList<>();
+
+        memberList = registMemberDAO.outMember(con);
+
+        return memberList;
+    }
 
     public List<BoxDTO> rentBox(Connection con, int memberCode) {
         List<BoxDTO> bookList = new ArrayList<>();

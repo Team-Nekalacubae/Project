@@ -80,6 +80,7 @@
         WHERE MEMBER_CODE = ? AND B.RENTAL = FALSE
         ORDER BY END_DATE;
     </entry>
+
     <entry key="selectRequest">
         SELECT *
           FROM REQUEST;
