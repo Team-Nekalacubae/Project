@@ -200,6 +200,7 @@ public class Manager {
         } else if (choice == 2) {
             result = registBookDAO.insertBookBoxToRent(con, memberCode, bookCode);
         }
+        return result;
     }
     public int updateManger(Connection con, int memberCode) {
         int result = 0;
