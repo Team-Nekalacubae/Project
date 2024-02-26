@@ -3,7 +3,7 @@ package com.ohgiraffers.test.model.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class OutMemberDTO implements Serializable {
+public class OutMemberDTO extends MemberDTO implements Serializable {
 
     private Date outDate;
     private int memberCode;
@@ -14,6 +14,12 @@ public class OutMemberDTO implements Serializable {
     public OutMemberDTO(Date outDate, int memberCode) {
         this.outDate = outDate;
         this.memberCode = memberCode;
+    }
+
+    public OutMemberDTO(int memberCode, String memberId, String memberPw, String memberName, String memberPhone, String memberEmail, int memberType, Date outDate, int memberCode1) {
+        super(memberCode, memberId, memberPw, memberName, memberPhone, memberEmail, memberType);
+        this.outDate = outDate;
+        this.memberCode = memberCode1;
     }
 
     public Date getOutDate() {
@@ -34,7 +40,8 @@ public class OutMemberDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "OutMemberDTO{" +
+        return super.toString() +
+                "OutMemberDTO{" +
                 "outDate=" + outDate +
                 ", memberCode=" + memberCode +
                 '}';

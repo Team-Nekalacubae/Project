@@ -5,6 +5,7 @@ import com.ohgiraffers.test.model.dao.BookDAO;
 import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.BookDTO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
+import com.ohgiraffers.test.model.dto.OutMemberDTO;
 import com.ohgiraffers.test.model.dto.RequestDTO;
 
 import java.sql.Connection;
@@ -232,6 +233,7 @@ public class Menu {
                 System.out.println("7. 회원 목록 조회");
                 System.out.println("8. 신규 회원 추가");
                 System.out.println("9. 회원 삭제");
+                System.out.println("12. 탈퇴 회원 목록 조회");
             }
             if (memberInfo[1] > 2) {
                 System.out.println("10. 회원 가입");
@@ -304,6 +306,9 @@ public class Menu {
                     }
                 case 0:
                     break;
+                case 12:
+                    searchAllOutMemberMenu();
+                    break;
                 default:
                     System.out.println("잘못된 메뉴입니다. 다시 선택해주세요");
                     break;
@@ -311,6 +316,18 @@ public class Menu {
             if (select == 0) {
                 break;
             }
+        }
+    }
+
+    private void searchAllOutMemberMenu() {
+        List<OutMemberDTO> memberList = new ArrayList<>();
+
+        System.out.println("탈퇴 회원 목록 조회");
+
+        memberList = manager.searchAllOutMember(con);
+
+        for (OutMemberDTO member : memberList) {
+            System.out.println(member);
         }
     }
 
