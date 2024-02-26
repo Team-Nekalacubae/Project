@@ -40,7 +40,7 @@ public class MemberDAO {
                 password = rset.getString("MEMBER_PW");
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } finally {
             close(pstmt);
             close(rset);

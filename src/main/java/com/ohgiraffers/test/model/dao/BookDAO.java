@@ -1,6 +1,8 @@
 package com.ohgiraffers.test.model.dao;
 
 import com.ohgiraffers.test.model.dto.BookDTO;
+import com.ohgiraffers.test.model.dto.MemberDTO;
+import com.ohgiraffers.test.model.dto.SearchDTO;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -355,15 +357,15 @@ public class BookDAO {
         return result;
     }
 
-    public List<BookDTO> searchHistory (Connection con) {
+    public List<SearchDTO> searchHistory (Connection con) {
 
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
         String query = prop.getProperty("searchHistory");
 
-        BookDTO book = null;
-        List<BookDTO> searchHistoryList = null;
+        SearchDTO book = null;
+        List<SearchDTO> searchHistoryList = null;
 
         try {
             pstmt = con.prepareStatement(query);
@@ -371,14 +373,13 @@ public class BookDAO {
 
             searchHistoryList = new ArrayList<>();
             while (rset.next()) {
-                book = new BookDTO();
+                book = new SearchDTO();
 
                 book.setBookCode(rset.getInt("BOOK_CODE"));
-                book.setBookName(rset.getString("BOOK_NAME"));
-                book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
-                book.setBookGenre(rset.getString("BOOK_GENRE"));
-                book.setBookType(rset.getString("BOOK_TYPE"));
-                book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
+                book.setMemberCode(rset.getInt("MEMBER_CODE"));
+                book.setSearchName(rset.getString("SEARCH_NAME"));
+                book.setSearchDate(rset.getDate("SEARCH_DATE"));
+                book.setSearchElement(rset.getString("SEARCH_ELEMENT"));
 
                 searchHistoryList.add(book);
             }
