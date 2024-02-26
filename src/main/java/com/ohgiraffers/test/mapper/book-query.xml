@@ -63,6 +63,16 @@
         VALUES (?, ?, FALSE, NULL, NULL, ?)
     </entry>
 
+
+    <entry key="searchHistory">
+        SELECT *
+        FROM SEARCH
+        INNER JOIN BOOKS
+        ON SEARCH.BOOK_CODE = BOOKS.BOOK_CODE
+        ORDER BY SEARCH_DATE DESC
+        LIMIT 5
+  </entry>
+
     <entry key="searchBookBoxRental">
         SELECT
         A.BOOK_CODE, A.BOOK_NAME, A.BOOK_AUTHOR, A.BOOK_PUBLISHER, A.BOOK_GENRE, A.BOOK_TYPE, B.RENTAL_DATE, B.END_DATE
@@ -84,6 +94,7 @@
     <entry key="selectRequest">
         SELECT *
           FROM REQUEST;
+
     </entry>
 
 </properties>

@@ -6,14 +6,25 @@ import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.BookDTO;
 import com.ohgiraffers.test.model.dto.BoxDTO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
+
+import com.ohgiraffers.test.model.dto.SearchDTO;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import com.ohgiraffers.test.model.dto.OutMemberDTO;
 import com.ohgiraffers.test.model.dto.RequestDTO;
 
 import javax.swing.*;
 import java.awt.print.Book;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 import static com.ohgiraffers.test.common.JDBCTemplate.getConnection;
@@ -265,6 +276,7 @@ public class Menu {
                 System.out.println("9. 회원 가입");
             }
             System.out.println("0. 메뉴 선택 프로그램 종료");
+            System.out.println("11. 최근 검색 확인");
             System.out.print("원하시는 메뉴를 입력하세요 : ");
             select = sc.nextInt();
 
@@ -324,6 +336,7 @@ public class Menu {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해주세요.");
                     }
                     break;
+
                 case 0:
                     break;
                 case 12:
@@ -598,6 +611,15 @@ public class Menu {
 //    }
 //
 
+
+    public void searchHistory () {
+        System.out.println("최근 검색한 5개의 도서를 출력합니다.");
+        List<SearchDTO> searchHistory = registBookDAO.searchHistory(con);
+        for (SearchDTO history : searchHistory) {
+            System.out.println(history);
+        }
+    }
+
     public void approveMember() {
         System.out.println("=========회원가입 승인 요청 목록 조회===========");
         List<MemberDTO> requestList = registMemberDAO.selectRequestList(con);
@@ -658,6 +680,7 @@ public class Menu {
             System.out.println("잘 못 응답 하셨습니다.");
         }
     }
+
 
 }
 

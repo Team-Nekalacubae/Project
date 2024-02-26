@@ -1,6 +1,8 @@
 package com.ohgiraffers.test.model.dao;
 
 import com.ohgiraffers.test.model.dto.BookDTO;
+import com.ohgiraffers.test.model.dto.MemberDTO;
+import com.ohgiraffers.test.model.dto.SearchDTO;
 
 import com.ohgiraffers.test.model.dto.BoxDTO;
 
@@ -359,6 +361,43 @@ public class BookDAO {
     }
 
 
+    public List<SearchDTO> searchHistory (Connection con) {
+
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        String query = prop.getProperty("searchHistory");
+
+        SearchDTO book = null;
+        List<SearchDTO> searchHistoryList = null;
+
+        try {
+            pstmt = con.prepareStatement(query);
+            rset = pstmt.executeQuery();
+
+            searchHistoryList = new ArrayList<>();
+            while (rset.next()) {
+                book = new SearchDTO();
+
+                book.setBookCode(rset.getInt("BOOK_CODE"));
+                book.setMemberCode(rset.getInt("MEMBER_CODE"));
+                book.setSearchName(rset.getString("SEARCH_NAME"));
+                book.setSearchDate(rset.getDate("SEARCH_DATE"));
+                book.setSearchElement(rset.getString("SEARCH_ELEMENT"));
+
+                searchHistoryList.add(book);
+            }
+           } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+           close(rset);
+            close(pstmt);
+        }
+
+        return searchHistoryList;
+}
+
+
     public List<BoxDTO> searchBookBoxRental(Connection con, int memberCode) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
@@ -390,10 +429,14 @@ public class BookDAO {
                 System.out.println("book = " + book);
                 bookList.add(book);
                 System.out.println("bookList = " + bookList);
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
+
+           
+
             close(pstmt);
             close(rset);
         }
@@ -469,6 +512,7 @@ public class BookDAO {
             close(stmt);
         }
         return requestList;
+
     }
 }
 
