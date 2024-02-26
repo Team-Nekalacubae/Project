@@ -1,8 +1,13 @@
 package com.ohgiraffers.test.model.dao;
 
 import com.ohgiraffers.test.model.dto.BookDTO;
+
+import com.ohgiraffers.test.model.dto.BoxDTO;
+
 import com.ohgiraffers.test.model.dto.RequestDTO;
 
+
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -353,6 +358,84 @@ public class BookDAO {
         return result;
     }
 
+
+    public List<BoxDTO> searchBookBoxRental(Connection con, int memberCode) {
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        String query = prop.getProperty("searchBookBoxRental");
+
+        BoxDTO book = null;
+        List<BoxDTO> bookList = null;
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, memberCode);
+            rset = pstmt.executeQuery();
+
+            bookList = new ArrayList<>();
+
+            while (rset.next()) {
+                book = new BoxDTO();
+
+                book.setBookCode(rset.getInt("BOOK_CODE"));
+                book.setBookName(rset.getString("BOOK_NAME"));
+                book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
+                book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
+                book.setBookGenre(rset.getString("BOOK_GENRE"));
+                book.setBookType(rset.getString("BOOK_TYPE"));
+                book.setRentalDate(rset.getDate("RENTAL_DATE"));
+                book.setEndDate(rset.getDate("END_DATE"));
+
+                bookList.add(book);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+            close(rset);
+        }
+        return bookList;
+    }
+
+    public List<BoxDTO> searchBookBoxBuy(Connection con, int memberCode) {
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        String query = prop.getProperty("searchBookBoxBuy");
+
+        BoxDTO book = null;
+        List<BoxDTO> bookList = null;
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, memberCode);
+            rset = pstmt.executeQuery();
+
+            bookList = new ArrayList<>();
+
+            while (rset.next()) {
+                book = new BoxDTO();
+
+                book.setBookCode(rset.getInt("BOOK_CODE"));
+                book.setBookName(rset.getString("BOOK_NAME"));
+                book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
+                book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
+                book.setBookGenre(rset.getString("BOOK_GENRE"));
+                book.setBookType(rset.getString("BOOK_TYPE"));
+                book.setBuyDate(rset.getDate("BUY_DATE"));
+
+                bookList.add(book);
+               }
+            } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+           close(pstmt);
+           close(rset);
+        }
+        return bookList;
+    }
+
     public List<RequestDTO> selectRequestBook(Connection con) {
         Statement stmt = null;
         ResultSet rset = null;
@@ -375,6 +458,7 @@ public class BookDAO {
                 rquestBook.setRequestDate(rset.getDate("REQUEST_DATE"));
 
                 requestList.add(rquestBook);
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
