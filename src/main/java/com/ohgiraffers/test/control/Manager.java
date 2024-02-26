@@ -155,6 +155,7 @@ public class Manager {
         memberList = registMemberDAO.outMember(con);
 
         return memberList;
+    }
 
     public List<BoxDTO> rentBox(Connection con, int memberCode) {
         List<BoxDTO> bookList = new ArrayList<>();

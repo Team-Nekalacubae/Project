@@ -339,6 +339,8 @@ public class Menu {
 
         for (OutMemberDTO member : memberList) {
             System.out.println(member);
+        }
+    }
 
     private void bookBoxMenu() {
         List<BoxDTO> rentList = new ArrayList<>();
@@ -648,5 +650,6 @@ public class Menu {
     }
 
 }
+
 
 
