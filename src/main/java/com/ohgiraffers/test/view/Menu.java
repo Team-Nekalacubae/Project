@@ -312,6 +312,7 @@ public class Menu {
     }
 
     public void bookSearchMenu() {
+        int answer = 0;
         String[] bookSearchInfo = new String[2];
         List<BookDTO> bookList = new ArrayList<>();
 
@@ -326,6 +327,37 @@ public class Menu {
 
         for (BookDTO book : bookList) {
             System.out.println(book);
+        }
+
+        if (!bookList.isEmpty()) {
+            if (memberInfo[1] == 1) {
+                System.out.print("검색된 도서를 삭제 하시겠습니까 (1. 예 / 2. 아니오) : ");
+                answer = sc.nextInt();
+                if (answer == 1) {
+                    bookDeleteMenu();
+                }
+            } else if (memberInfo[1] == 2) {
+                System.out.print("검색된 도서를 구매 혹은 대여하시겠습니까 (1. 예 / 2. 아니오) : ");
+                answer = sc.nextInt();
+                if (answer == 1) {
+                    bookRentMenu();
+                }
+            }
+        } else if (bookList.isEmpty()) {
+            System.out.println("조건에 맞는 도서가 검색되지 않습니다.");
+            if (memberInfo[1] == 1) {
+                System.out.print("도서를 추가 하시겠습니까? (1. 예 / 2. 아니오) : ");
+                answer = sc.nextInt();
+                if (answer == 1) {
+                    System.out.println("아직 구현되지 않은 기능입니다.");        // 도서 구현 메뉴로 수정
+                }
+            } else if (memberInfo[1] == 2) {
+                System.out.print("도서 추가 요청을 하시겠습니까? (1. 예 / 2. 아니오) : ");
+                answer = sc.nextInt();
+                if (answer == 1) {
+                    addBookRequestMenu();
+                }
+            }
         }
     }
 
