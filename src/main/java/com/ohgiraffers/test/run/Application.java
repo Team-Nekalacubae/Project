@@ -8,5 +8,7 @@ public class Application {
 
         Menu menu = new Menu();
         menu.start();
+
+
     }
 }
