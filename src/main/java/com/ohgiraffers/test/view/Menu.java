@@ -173,10 +173,10 @@ public class Menu {
                     deleteMember();
                     break;
                 case 25 :
-                    System.out.println("탈퇴 회원 목록 조회로....");
+                    searchAllOutMemberMenu();
                     break;
                 case 26 :
-                    System.out.println("관리자 권한 부여로...");
+                    grantManager();
                     break;
                 case 0:
                     System.out.println("관리자 메뉴가 종료 됩니다.");
@@ -680,8 +680,19 @@ public class Menu {
             System.out.println("잘 못 응답 하셨습니다.");
         }
     }
-
-
+    public void grantManager() {
+        System.out.println("=============관리자 권한 부여============");
+        System.out.println("관리자 권한을 부여할 회원의 코드를 입력하세요");
+        System.out.print("회원 코드 : ");
+        int memberCode = sc.nextInt();
+        int result =  0;
+        result = manager.updateManger(con, memberCode);
+        if (result > 0) {
+            System.out.println("'회원 코드 = " + memberCode + "'에게 관리자 권한이 부여되었습니다.");
+        } else {
+            System.out.println("관리자 권한 부여가 실패 되었습니다.");
+        }
+    }
 }
 
 
