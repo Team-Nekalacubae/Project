@@ -6,6 +6,7 @@ import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.BookDTO;
 import com.ohgiraffers.test.model.dto.BoxDTO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
+import com.ohgiraffers.test.model.dto.RequestDTO;
 
 import javax.swing.*;
 import java.awt.print.Book;
@@ -123,6 +124,8 @@ public class Menu {
             System.out.println("2. 신규 회원 추가");
             System.out.println("3. 회원 삭제");
             System.out.println("4. 회원 가입 승인");
+            System.out.println("5. 도서 요청 목록 조회");
+            System.out.println("6. 관리자 권한 부여");
             System.out.println("0. 관리자 메뉴 종료");
             System.out.print("원하시는 메뉴의 번호를 입력하세요 : ");
             select = sc.nextInt();
@@ -595,6 +598,35 @@ public class Menu {
         } else {
             System.out.println("회원 가입 요청 목록이 비었습니다.");
             System.out.println("관리자 메뉴로 돌아갑니다.");
+        }
+    }
+
+    public void printRequestBook() {
+        System.out.println("==========도서 추가 요청 목록 조회==========");
+        List<RequestDTO> requestList = registBookDAO.selectRequestBook(con);
+        for (RequestDTO request : requestList) {
+            System.out.println(request);
+        }
+
+    }
+
+    public void deleteId() {
+        System.out.println("========회원 탈퇴 메뉴========");
+        System.out.print("정말 탈퇴 하시겠습니까? (1. 예 / 2. 아니오) : ");
+        sc.nextLine();
+        String answer = sc.nextLine();
+        int result = 0;
+        if (answer.equals("1") || answer.equals("예")) {
+            result = registMemberDAO.updateMemberType(con, memberInfo[1], memberInfo[0]);
+            if (result > 0) {
+                System.out.println("정상적으로 회원 탈퇴 되었습니다.");
+            } else {
+                System.out.println("회원 탈퇴가 실패 되었습니다.");
+            }
+        } else if (answer.equals("2") || answer.equals("아니오")) {
+            System.out.println("회원 탈퇴를 종료 합니다.");
+        } else {
+            System.out.println("잘 못 응답 하셨습니다.");
         }
     }
 

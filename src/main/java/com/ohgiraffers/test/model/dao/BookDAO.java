@@ -1,15 +1,16 @@
 package com.ohgiraffers.test.model.dao;
 
 import com.ohgiraffers.test.model.dto.BookDTO;
+
 import com.ohgiraffers.test.model.dto.BoxDTO;
+
+import com.ohgiraffers.test.model.dto.RequestDTO;
+
 
 import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.Properties;
 
@@ -357,6 +358,7 @@ public class BookDAO {
         return result;
     }
 
+
     public List<BoxDTO> searchBookBoxRental(Connection con, int memberCode) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
@@ -424,14 +426,47 @@ public class BookDAO {
                 book.setBuyDate(rset.getDate("BUY_DATE"));
 
                 bookList.add(book);
+               }
+            } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+           close(pstmt);
+           close(rset);
+        }
+        return bookList;
+    }
+
+    public List<RequestDTO> selectRequestBook(Connection con) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        RequestDTO rquestBook = null;
+        List<RequestDTO> requestList = null;
+        String query = prop.getProperty("selectRequest");
+        requestList = new ArrayList<>();
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            while (rset.next()) {
+                rquestBook = new RequestDTO();
+                rquestBook.setRequestTitle(rset.getString("REQUEST_TITLE"));
+                rquestBook.setRequestAuthor(rset.getString("REQUEST_AUTHOR"));
+                rquestBook.setRequestPublisher(rset.getString("REQUEST_PUBLISHER"));
+                rquestBook.setMemberCode(rset.getInt("MEMBER_CODE"));
+                rquestBook.setRequestDate(rset.getDate("REQUEST_DATE"));
+
+                requestList.add(rquestBook);
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            close(pstmt);
             close(rset);
+            close(stmt);
         }
-        return bookList;
+        return requestList;
     }
 }
 

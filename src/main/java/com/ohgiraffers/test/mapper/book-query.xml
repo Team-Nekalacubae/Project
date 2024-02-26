@@ -79,6 +79,10 @@
         JOIN BOX B USING(BOOK_CODE)
         WHERE MEMBER_CODE = ? AND B.RENTAL = FALSE
         ORDER BY END_DATE;
+
+    <entry key="selectRequest">
+        SELECT *
+          FROM REQUEST;
     </entry>
 
 </properties>
