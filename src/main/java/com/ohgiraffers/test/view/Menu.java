@@ -115,32 +115,56 @@ public class Menu {
 //        }
     }
 
-    public void managerMenu() {
+    public void managerMenu(int selectNumber) {
         int select = 0;
 
         while (true) {
             System.out.println("============= 관리자 메뉴 ==============");
-            System.out.println("1. 회원 목록 조회");
-            System.out.println("2. 신규 회원 추가");
-            System.out.println("3. 회원 삭제");
-            System.out.println("4. 회원 가입 승인");
-            System.out.println("5. 도서 요청 목록 조회");
-            System.out.println("6. 관리자 권한 부여");
+            if (selectNumber == 10) {
+                System.out.println("-------------도서 관리 메뉴-------------");
+                System.out.println("11. 도서 입력");
+                System.out.println("12. 도서 삭제");
+                System.out.println("13. 도서 요청 목록 조회");
+            }
+            if (selectNumber == 20) {
+                System.out.println("-------------회원 관리 메뉴-------------");
+                System.out.println("21. 회원 목록 조회");
+                System.out.println("22. 신규 회원 추가");
+                System.out.println("23. 회원 가입 승인");
+                System.out.println("24. 회원 삭제");
+                System.out.println("25. 탈퇴 회원 목록 조회");
+                System.out.println("26. 관리자 권한 부여");
+            }
             System.out.println("0. 관리자 메뉴 종료");
             System.out.print("원하시는 메뉴의 번호를 입력하세요 : ");
             select = sc.nextInt();
             switch (select) {
-                case 1:
+                case 11:
+                    System.out.println("도서 입력으로...");
+                    break;
+                case 12:
+                    bookDeleteMenu();
+                    break;
+                case 13:
+                    printRequestBook();
+                    break;
+                case 21 :
                     printAllMember();
                     break;
-                case 2:
+                case 22 :
                     addNewMember();
                     break;
-                case 3:
+                case 23 :
+                    approveMember();
+                    break;
+                case 24 :
                     deleteMember();
                     break;
-                case 4 :
-                    approveMember();
+                case 25 :
+                    System.out.println("탈퇴 회원 목록 조회로....");
+                    break;
+                case 26 :
+                    System.out.println("관리자 권한 부여로...");
                     break;
                 case 0:
                     System.out.println("관리자 메뉴가 종료 됩니다.");
@@ -233,8 +257,8 @@ public class Menu {
             }
             if (memberInfo[1] == 1) {
                 System.out.println("-------관리자 전용 메뉴-------");
-                System.out.println("11. 도서 관리");
-                System.out.println("12. 회원 관리");
+                System.out.println("10. 도서 관리");
+                System.out.println("20. 회원 관리");
             }
             if (memberInfo[1] > 2) {
                 System.out.println("9. 회원 가입");
@@ -285,16 +309,16 @@ public class Menu {
                         System.out.println("이미 회원입니다. 다시 선택해주세요.");
                     }
                     break;
-                case 11:
+                case 10:
                     if (memberInfo[1] == 1) {
-                        System.out.println("도서 관리 메뉴로...");
+                        managerMenu(10);
                     } else {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해주세요.");
                     }
                     break;
-                case 12:
+                case 20:
                     if (memberInfo[1] == 1) {
-                        System.out.println("회원 관리 메뉴로...");
+                        managerMenu(20);
                     } else {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해주세요.");
                     }
