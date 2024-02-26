@@ -474,6 +474,7 @@ public class Menu {
     private void DirectBookDeleteMenu(int bookCode) {
         int result = 0;
 
+        System.out.println(manager.bookInfo(con, bookCode));
         result = manager.directBookDelete(conAuto, bookCode);
 
         if (result > 0) {
@@ -485,9 +486,11 @@ public class Menu {
 
     public void bookDeleteMenu() {
         int result = 0;
+        BookDTO book = new BookDTO();
         System.out.print("삭제할 도서의 도서 번호를 입력하세요 : ");
         int bookCode = sc.nextInt();
 
+        System.out.println(manager.bookInfo(con, bookCode));
         result = manager.bookDelete(conAuto, bookCode);
 
         if (result > 0) {

@@ -639,5 +639,35 @@ public class BookDAO {
         }
         return bookCode;
     }
+
+    public BookDTO bookInfo(Connection con, int bookCode) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        String query = "SELECT * FROM BOOKS WHERE BOOK_CODE = " + bookCode;
+
+        BookDTO book = null;
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            while (rset.next()) {
+                book = new BookDTO();
+                book.setBookCode(bookCode);
+                book.setBookName(rset.getString("BOOK_NAME"));
+                book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
+                book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
+                book.setBookGenre(rset.getString("BOOK_GENRE"));
+                book.setBookType(rset.getString("BOOK_TYPE"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return book;
+    }
 }
 
