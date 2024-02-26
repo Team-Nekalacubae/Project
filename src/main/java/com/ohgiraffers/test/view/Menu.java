@@ -5,6 +5,7 @@ import com.ohgiraffers.test.model.dao.BookDAO;
 import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.BookDTO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
+import com.ohgiraffers.test.model.dto.RequestDTO;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -562,6 +563,15 @@ public class Menu {
             System.out.println("회원 가입 요청 목록이 비었습니다.");
             System.out.println("관리자 메뉴로 돌아갑니다.");
         }
+    }
+
+    public void printRequestBook() {
+        System.out.println("==========도서 추가 요청 목록 조회==========");
+        List<RequestDTO> requestList = registBookDAO.selectRequestBook(con);
+        for (RequestDTO request : requestList) {
+            System.out.println(request);
+        }
+
     }
 
 }

@@ -1,13 +1,11 @@
 package com.ohgiraffers.test.model.dao;
 
 import com.ohgiraffers.test.model.dto.BookDTO;
+import com.ohgiraffers.test.model.dto.RequestDTO;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.Properties;
 
@@ -353,6 +351,38 @@ public class BookDAO {
             close(pstmt);
         }
         return result;
+    }
+
+    public List<RequestDTO> selectRequestBook(Connection con) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        RequestDTO rquestBook = null;
+        List<RequestDTO> requestList = null;
+        String query = prop.getProperty("selectRequest");
+        requestList = new ArrayList<>();
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            while (rset.next()) {
+                rquestBook = new RequestDTO();
+                rquestBook.setRequestTitle(rset.getString("REQUEST_TITLE"));
+                rquestBook.setRequestAuthor(rset.getString("REQUEST_AUTHOR"));
+                rquestBook.setRequestPublisher(rset.getString("REQUEST_PUBLISHER"));
+                rquestBook.setMemberCode(rset.getInt("MEMBER_CODE"));
+                rquestBook.setRequestDate(rset.getDate("REQUEST_DATE"));
+
+                requestList.add(rquestBook);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rset);
+            close(stmt);
+        }
+        return requestList;
     }
 }
 

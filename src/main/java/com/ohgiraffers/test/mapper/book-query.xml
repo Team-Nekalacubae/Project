@@ -63,4 +63,9 @@
         VALUES (?, ?, FALSE, NULL, NULL, ?)
     </entry>
 
+    <entry key="selectRequest">
+        SELECT *
+          FROM REQUEST;
+    </entry>
+
 </properties>
