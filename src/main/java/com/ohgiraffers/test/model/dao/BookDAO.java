@@ -423,6 +423,7 @@ public class BookDAO {
                 book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
                 book.setBookType(rset.getString("BOOK_TYPE"));
+                book.setRental(rset.getBoolean("RENTAL"));
                 book.setRentalDate(rset.getDate("RENTAL_DATE"));
                 book.setEndDate(rset.getDate("END_DATE"));
 
@@ -465,6 +466,7 @@ public class BookDAO {
                 book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
                 book.setBookType(rset.getString("BOOK_TYPE"));
+                book.setRental(rset.getBoolean("RENTAL"));
                 book.setBuyDate(rset.getDate("BUY_DATE"));
 
                 bookList.add(book);
