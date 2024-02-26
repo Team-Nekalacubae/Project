@@ -130,6 +130,9 @@ public class Menu {
     public void managerMenu(int selectNumber) {
         int select = 0;
 
+        System.out.println("=========================");
+        System.out.println();
+        System.out.println();
         while (true) {
             System.out.println("============= 관리자 메뉴 ==============");
             if (selectNumber == 10) {
@@ -257,10 +260,14 @@ public class Menu {
     public void menu() {
         int select = 0;
 
+        System.out.println("=========================");
+        System.out.println();
+        System.out.println();
+
         while (true) {
             System.out.println("===========메뉴 선택===========");
             System.out.println("1. 도서 검색");
-            System.out.println("2. 조건별 도서 목록 검색");
+            System.out.println("2. 조건별 도서 목록 조회");
             if (memberInfo[1] < 3) {
                 System.out.println("3. 도서 추가 요청");
                 System.out.println("4. 대여 및 구매");
@@ -276,12 +283,12 @@ public class Menu {
                 System.out.println("9. 회원 가입");
             }
             System.out.println("0. 메뉴 선택 프로그램 종료");
-            System.out.println("11. 최근 검색 확인");
             System.out.print("원하시는 메뉴를 입력하세요 : ");
             select = sc.nextInt();
 
             switch (select) {
                 case 1:
+                    searchHistory();
                     bookSearchMenu();
                     break;
                 case 2:
@@ -309,7 +316,7 @@ public class Menu {
                     }
                     break;
                 case 6:
-                    if (memberInfo[1] < 1) {
+                    if (memberInfo[1] < 3) {
                         deleteId();
                     } else {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해주세요.");
