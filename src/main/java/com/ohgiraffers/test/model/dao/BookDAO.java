@@ -354,5 +354,42 @@ public class BookDAO {
         }
         return result;
     }
+
+    public List<BookDTO> searchHistory (Connection con) {
+
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        String query = prop.getProperty("searchHistory");
+
+        BookDTO book = null;
+        List<BookDTO> searchHistoryList = null;
+
+        try {
+            pstmt = con.prepareStatement(query);
+            rset = pstmt.executeQuery();
+
+            searchHistoryList = new ArrayList<>();
+            while (rset.next()) {
+                book = new BookDTO();
+
+                book.setBookCode(rset.getInt("BOOK_CODE"));
+                book.setBookName(rset.getString("BOOK_NAME"));
+                book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
+                book.setBookGenre(rset.getString("BOOK_GENRE"));
+                book.setBookType(rset.getString("BOOK_TYPE"));
+                book.setBookPublisher(rset.getString("BOOK_PUBLISHER"));
+
+                searchHistoryList.add(book);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rset);
+            close(pstmt);
+        }
+
+        return searchHistoryList;
+    }
 }
 

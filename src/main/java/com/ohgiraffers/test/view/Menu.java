@@ -6,9 +6,15 @@ import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.BookDTO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 import static com.ohgiraffers.test.common.JDBCTemplate.getConnection;
@@ -496,6 +502,9 @@ public class Menu {
 //    }
 //
 
+    public void searchHistory () {
+        registBookDAO.searchHistory(con);
+    }
 }
 
 
