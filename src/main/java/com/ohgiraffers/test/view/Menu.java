@@ -392,6 +392,7 @@ public class Menu {
 
     public void bookSearchMenu() {
         int answer = 0;
+        int bookCode = 0;
         String[] bookSearchInfo = new String[2];
         List<BookDTO> bookList = new ArrayList<>();
 
@@ -402,7 +403,8 @@ public class Menu {
         System.out.print("검색 키워드를 입력하세요 : ");
         bookSearchInfo[1] = sc.nextLine();
 
-        bookList = manager.bookSearch(conAuto, bookSearchInfo, memberInfo[0]);
+        bookCode = manager.bookCode(conAuto, bookSearchInfo, memberInfo[0]);
+        bookList = manager.bookSearch(conAuto, bookSearchInfo, memberInfo[0], bookCode);
 
         for (BookDTO book : bookList) {
             System.out.println(book);
@@ -413,13 +415,13 @@ public class Menu {
                 System.out.print("검색된 도서를 삭제 하시겠습니까 (1. 예 / 2. 아니오) : ");
                 answer = sc.nextInt();
                 if (answer == 1) {
-                    bookDeleteMenu();
+                    DirectBookDeleteMenu(bookCode);
                 }
             } else if (memberInfo[1] == 2) {
                 System.out.print("검색된 도서를 구매 혹은 대여하시겠습니까 (1. 예 / 2. 아니오) : ");
                 answer = sc.nextInt();
                 if (answer == 1) {
-                    bookRentMenu();
+                    directBookRentMenu(bookCode);
                 }
             }
         } else if (bookList.isEmpty()) {
@@ -437,6 +439,40 @@ public class Menu {
                     addBookRequestMenu();
                 }
             }
+        }
+    }
+
+    private void directBookRentMenu(int bookCode) {
+        int result = 0;
+
+        System.out.print("구매 혹은 대여를 선택하세요 (1. 구매 / 2. 대여) : ");
+        sc.nextLine();
+        String answer = sc.nextLine();
+        int choice = 0;
+        if (answer.equals("1") || answer.equals("구매")) {
+            choice = 1;
+        } else if (answer.equals("2") || answer.equals("대여")) {
+            choice = 2;
+        }
+
+        result = manager.bookRent(conAuto, memberInfo[0], bookCode, choice);
+
+        if (result > 0) {
+            System.out.println("도서 대여(구매) 완료");
+        } else {
+            System.out.println("도서 대여(구매) 실패");
+        }
+    }
+
+    private void DirectBookDeleteMenu(int bookCode) {
+        int result = 0;
+
+        result = manager.directBookDelete(conAuto, bookCode);
+
+        if (result > 0) {
+            System.out.println("도서 삭제 완료");
+        } else {
+            System.out.println("도서 삭제 실패");
         }
     }
 

@@ -1,13 +1,12 @@
 package com.ohgiraffers.test.control;
 
+
 import com.ohgiraffers.test.model.dao.BookDAO;
 import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.BookDTO;
-import com.ohgiraffers.test.model.dto.OutMemberDTO;
 import com.ohgiraffers.test.model.dto.BoxDTO;
+import com.ohgiraffers.test.model.dto.OutMemberDTO;
 
-
-import javax.swing.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +33,15 @@ public class Manager {
         return result;
     }
 
-    public List<BookDTO> bookSearch(Connection con, String[] bookSearchInfo, int memberCode) {
+    public List<BookDTO> bookSearch(Connection con, String[] bookSearchInfo, int memberCode, int bookCode) {
         List<BookDTO> bookList = new ArrayList<>();
 
         if (bookSearchInfo[0].equals("1") || bookSearchInfo[0].equals("제목")) {
-            bookList = registBookDAO.searchBookByBookName(con, bookSearchInfo[1], memberCode);
+            bookList = registBookDAO.searchBookByBookName(con, bookSearchInfo[1], memberCode, bookCode);
         } else if (bookSearchInfo[0].equals("2") || bookSearchInfo[0].equals("저자")) {
-            bookList = registBookDAO.searchBookByBookAuthor(con, bookSearchInfo[1], memberCode);
+            bookList = registBookDAO.searchBookByBookAuthor(con, bookSearchInfo[1], memberCode, bookCode);
         } else if (bookSearchInfo[0].equals("3") || bookSearchInfo[0].equals("출판사")) {
-            bookList = registBookDAO.searchBookByBookPublisher(con, bookSearchInfo[1], memberCode);
+            bookList = registBookDAO.searchBookByBookPublisher(con, bookSearchInfo[1], memberCode,bookCode);
         }
         return bookList;
     }
@@ -173,10 +172,40 @@ public class Manager {
         return bookList;
     }
 
+
+    public int bookCode(Connection con, String[] bookSearchInfo, int memberCode) {
+        int bookCode = 0;
+
+        if (bookSearchInfo[0].equals("1") || bookSearchInfo[0].equals("제목")) {
+            bookCode = registBookDAO.searchBookCodeByBookName(con, bookSearchInfo[1], memberCode);
+        } else if (bookSearchInfo[0].equals("2") || bookSearchInfo[0].equals("저자")) {
+            bookCode = registBookDAO.searchBookCodeByBookAuthor(con, bookSearchInfo[1], memberCode);
+        } else if (bookSearchInfo[0].equals("3") || bookSearchInfo[0].equals("출판사")) {
+            bookCode = registBookDAO.searchBookCodeByBookPublisher(con, bookSearchInfo[1], memberCode);
+        }
+        return bookCode;
+    }
+
+    public int directBookDelete(Connection con, int bookCode) {
+        int result = registBookDAO.deleteBook(con, bookCode);
+
+        return result;
+    }
+
+    public int directBookRent(Connection con, int memberCode, int bookCode, int choice) {
+        int result = 0;
+
+        if (choice == 1) {
+            result = registBookDAO.insertBookBoxToBuy(con, memberCode, bookCode);
+        } else if (choice == 2) {
+            result = registBookDAO.insertBookBoxToRent(con, memberCode, bookCode);
+        }
+    }
     public int updateManger(Connection con, int memberCode) {
         int result = 0;
         int memberType = 1;
         result = registMemberDAO.updateMemberType(con, memberType, memberCode);
+
         return result;
     }
 }
