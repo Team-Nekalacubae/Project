@@ -33,7 +33,7 @@ public class BookDAO {
         }
     }
 
-    public List<BookDTO> searchBookByBookName(Connection con, String key, int memberCode) {
+    public List<BookDTO> searchBookByBookName(Connection con, String key, int memberCode, int bookCode) {
         PreparedStatement pstmt1 = null;
         PreparedStatement pstmt2 = null;
         ResultSet rset = null;
@@ -57,7 +57,7 @@ public class BookDAO {
             while (rset.next()) {
                 book = new BookDTO();
 
-                book.setBookCode(rset.getInt("BOOK_CODE"));
+                book.setBookCode(bookCode);
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
@@ -71,7 +71,7 @@ public class BookDAO {
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
                 pstmt2.setInt(4, memberCode);
-                pstmt2.setInt(5, rset.getInt("BOOK_CODE"));
+                pstmt2.setInt(5, bookCode);
 
                 pstmt2.executeUpdate();
             }
@@ -85,7 +85,7 @@ public class BookDAO {
         return bookList;
     }
 
-    public List<BookDTO> searchBookByBookAuthor(Connection con, String key, int memberCode) {
+    public List<BookDTO> searchBookByBookAuthor(Connection con, String key, int memberCode, int bookCode) {
         PreparedStatement pstmt1 = null;
         PreparedStatement pstmt2 = null;
         ResultSet rset = null;
@@ -110,7 +110,7 @@ public class BookDAO {
             while (rset.next()) {
                 book = new BookDTO();
 
-                book.setBookCode(rset.getInt("BOOK_CODE"));
+                book.setBookCode(bookCode);
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
@@ -124,7 +124,7 @@ public class BookDAO {
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
                 pstmt2.setInt(4, memberCode);
-                pstmt2.setInt(5, rset.getInt("BOOK_CODE"));
+                pstmt2.setInt(5, bookCode);
 
                 pstmt2.executeUpdate();
             }
@@ -138,7 +138,7 @@ public class BookDAO {
         return bookList;
     }
 
-    public List<BookDTO> searchBookByBookPublisher(Connection con, String key, int memberCode) {
+    public List<BookDTO> searchBookByBookPublisher(Connection con, String key, int memberCode, int bookCode) {
         PreparedStatement pstmt1 = null;
         PreparedStatement pstmt2 = null;
 
@@ -164,7 +164,7 @@ public class BookDAO {
             while (rset.next()) {
                 book = new BookDTO();
 
-                book.setBookCode(rset.getInt("BOOK_CODE"));
+                book.setBookCode(bookCode);
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
@@ -178,7 +178,7 @@ public class BookDAO {
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
                 pstmt2.setInt(4, memberCode);
-                pstmt2.setInt(5, rset.getInt("BOOK_CODE"));
+                pstmt2.setInt(5, bookCode);
 
                 pstmt2.executeUpdate();
             }
@@ -426,10 +426,7 @@ public class BookDAO {
                 book.setRentalDate(rset.getDate("RENTAL_DATE"));
                 book.setEndDate(rset.getDate("END_DATE"));
 
-                System.out.println("book = " + book);
                 bookList.add(book);
-                System.out.println("bookList = " + bookList);
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -513,6 +510,81 @@ public class BookDAO {
         }
         return requestList;
 
+    }
+
+    public int searchBookCodeByBookName(Connection con, String key, int memberCode) {
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        int bookCode = 0;
+        String query = prop.getProperty("searchBookByBookName");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, '%' + key + '%');
+
+            rset = pstmt.executeQuery();
+
+            while (rset.next()) {
+                bookCode = rset.getInt("BOOK_CODE");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+            close(rset);
+        }
+        return bookCode;
+    }
+
+    public int searchBookCodeByBookAuthor(Connection con, String key, int memberCode) {
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        int bookCode = 0;
+        String query = prop.getProperty("searchBookByBookAuthor");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, '%' + key + '%');
+
+            rset = pstmt.executeQuery();
+
+            while (rset.next()) {
+                bookCode = rset.getInt("BOOK_CODE");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+            close(rset);
+        }
+        return bookCode;
+    }
+
+    public int searchBookCodeByBookPublisher(Connection con, String key, int memberCode) {
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        int bookCode = 0;
+        String query = prop.getProperty("searchBookByBookPublisher");
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, '%' + key + '%');
+
+            rset = pstmt.executeQuery();
+
+            while (rset.next()) {
+                bookCode = rset.getInt("BOOK_CODE");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+            close(rset);
+        }
+        return bookCode;
     }
 }
 
