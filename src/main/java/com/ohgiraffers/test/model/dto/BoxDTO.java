@@ -3,7 +3,7 @@ package com.ohgiraffers.test.model.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class BoxDTO implements Serializable {
+public class BoxDTO extends BookDTO implements Serializable {
 
     private int memberCode;
     private int bookCode;
@@ -18,6 +18,16 @@ public class BoxDTO implements Serializable {
     public BoxDTO(int memberCode, int bookCode, boolean rental, Date rentalDate, Date endDate, Date buyDate) {
         this.memberCode = memberCode;
         this.bookCode = bookCode;
+        this.rental = rental;
+        this.rentalDate = rentalDate;
+        this.endDate = endDate;
+        this.buyDate = buyDate;
+    }
+
+    public BoxDTO(int bookCode, String bookName, String bookAuthor, String bookGenre, String bookType, String bookPublisher, int memberCode, int bookCode1, boolean rental, Date rentalDate, Date endDate, Date buyDate) {
+        super(bookCode, bookName, bookAuthor, bookGenre, bookType, bookPublisher);
+        this.memberCode = memberCode;
+        this.bookCode = bookCode1;
         this.rental = rental;
         this.rentalDate = rentalDate;
         this.endDate = endDate;
@@ -74,7 +84,7 @@ public class BoxDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "BoxDTO{" +
+        return super.toString() + "BoxDTO{" +
                 "memberCode=" + memberCode +
                 ", bookCode=" + bookCode +
                 ", rental=" + rental +

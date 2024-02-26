@@ -4,8 +4,11 @@ import com.ohgiraffers.test.control.Manager;
 import com.ohgiraffers.test.model.dao.BookDAO;
 import com.ohgiraffers.test.model.dao.MemberDAO;
 import com.ohgiraffers.test.model.dto.BookDTO;
+import com.ohgiraffers.test.model.dto.BoxDTO;
 import com.ohgiraffers.test.model.dto.MemberDTO;
 
+import javax.swing.*;
+import java.awt.print.Book;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -222,6 +225,7 @@ public class Menu {
             if (memberInfo[1] < 3) {
                 System.out.println("3. 도서 추가 요청");
                 System.out.println("4. 대여 및 구매");
+                System.out.println("11. 개인 대여/소장 목록 조회");
             }
             if (memberInfo[1] == 1) {
                 System.out.println("5. 도서 입력");
@@ -299,6 +303,12 @@ public class Menu {
                     } else {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해주세요");
                     }
+                case 11:
+                    if (memberInfo[1] < 3) {
+                        bookBoxMenu();
+                    } else {
+                        System.out.println("잘못된 메뉴입니다. 다시 선택해주세요");
+                    }
                 case 0:
                     break;
                 default:
@@ -308,6 +318,30 @@ public class Menu {
             if (select == 0) {
                 break;
             }
+        }
+    }
+
+    private void bookBoxMenu() {
+        List<BoxDTO> rentList = new ArrayList<>();
+        List<BoxDTO> buyList = new ArrayList<>();
+
+        rentList = manager.rentBox(con, memberInfo[0]);
+        buyList = manager.buyBox(con,memberInfo[0]);
+
+        if (!rentList.isEmpty()) {
+            for (BoxDTO book : rentList) {
+                System.out.println(book);
+            }
+        } else if (rentList.isEmpty()) {
+            System.out.println("대여중인 도서가 없습니다.");
+        }
+        System.out.println();
+        if (!buyList.isEmpty()) {
+            for (BoxDTO book : buyList) {
+                System.out.println(book);
+            }
+        } else if (buyList.isEmpty()) {
+            System.out.println("소장중인 도서가 없습니다.");
         }
     }
 
