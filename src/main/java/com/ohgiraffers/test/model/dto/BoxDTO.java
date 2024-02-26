@@ -25,7 +25,7 @@ public class BoxDTO extends BookDTO implements Serializable {
     }
 
     public BoxDTO(int bookCode, String bookName, String bookAuthor, String bookGenre, String bookType, String bookPublisher, int memberCode, int bookCode1, boolean rental, Date rentalDate, Date endDate, Date buyDate) {
-        super(bookCode, bookName, bookAuthor, bookGenre, bookType, bookPublisher);
+        super(bookName, bookAuthor, bookGenre, bookType, bookPublisher);
         this.memberCode = memberCode;
         this.bookCode = bookCode1;
         this.rental = rental;

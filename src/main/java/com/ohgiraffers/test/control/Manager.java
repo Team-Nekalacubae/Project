@@ -172,6 +172,7 @@ public class Manager {
         return bookList;
     }
 
+
     public int bookCode(Connection con, String[] bookSearchInfo, int memberCode) {
         int bookCode = 0;
 
@@ -199,6 +200,12 @@ public class Manager {
         } else if (choice == 2) {
             result = registBookDAO.insertBookBoxToRent(con, memberCode, bookCode);
         }
+    }
+    public int updateManger(Connection con, int memberCode) {
+        int result = 0;
+        int memberType = 1;
+        result = registMemberDAO.updateMemberType(con, memberType, memberCode);
+
         return result;
     }
 }

@@ -509,7 +509,60 @@ public class BookDAO {
             close(stmt);
         }
         return requestList;
+    }
 
+    public int insertNewBook(Connection con, BookDTO newbook) {
+
+        PreparedStatement pstmt = null;
+        System.out.println("newbook = " + newbook);
+        int result = 0;
+        String query = prop.getProperty("insertBook");
+
+        try {
+            pstmt = con.prepareStatement(query);
+
+            pstmt.setInt(1,newbook.getBookCode());
+            pstmt.setString(2,newbook.getBookName());
+            pstmt.setString(3,newbook.getBookAuthor());
+            pstmt.setString(4,newbook.getBookGenre());
+            pstmt.setString(5,newbook.getBookType());
+            pstmt.setString(6,newbook.getBookPublisher());
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+
+        return result;
+    }
+
+    public int selectLastBookCode(Connection con) {
+
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        int maxBookCode = 0;
+
+        String query = prop.getProperty("selectLastBookCode");
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            if (rset.next()) {
+                maxBookCode = rset.getInt("MAX(A.BOOK_CODE)");
+            }
+            System.out.println("maxBookCode = " + maxBookCode);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return maxBookCode;
     }
 
     public int searchBookCodeByBookName(Connection con, String key, int memberCode) {
