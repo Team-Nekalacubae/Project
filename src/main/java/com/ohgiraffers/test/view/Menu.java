@@ -130,6 +130,9 @@ public class Menu {
     public void managerMenu(int selectNumber) {
         int select = 0;
 
+        System.out.println("=========================");
+        System.out.println();
+        System.out.println();
         while (true) {
             System.out.println("============= 관리자 메뉴 ==============");
             if (selectNumber == 10) {
@@ -313,7 +316,7 @@ public class Menu {
                     }
                     break;
                 case 6:
-                    if (memberInfo[1] < 1) {
+                    if (memberInfo[1] < 3) {
                         deleteId();
                     } else {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해주세요.");
