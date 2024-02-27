@@ -668,6 +668,7 @@ public class BookDAO {
         return book;
     }
 
+
     public ArrayList<Integer> callBoxBookNumber(Connection con, int memberCode) {
         Statement stmt = null;
         ResultSet rset = null;
@@ -675,11 +676,9 @@ public class BookDAO {
         String query = "SELECT BOOK_CODE FROM BOX WHERE MEMBER_CODE = " + memberCode;
 
         ArrayList<Integer> bookNumberList = null;
-
         try {
             stmt = con.createStatement();
             rset = stmt.executeQuery(query);
-
             bookNumberList = new ArrayList<>();
 
             while (rset.next()) {
@@ -692,5 +691,32 @@ public class BookDAO {
             close(rset);
         }
         return bookNumberList;
+    }
+
+    public ArrayList<String> callBookName(Connection con) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        String query = "SELECT BOOK_NAME FROM BOOKS";
+
+        ArrayList<String> bookNameList = null;
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            bookNameList = new ArrayList<>();
+
+            while (rset.next()) {
+                bookNameList.add(rset.getString("BOOK_NAME"));
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return bookNameList;
     }
 }

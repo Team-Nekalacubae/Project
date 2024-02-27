@@ -260,8 +260,22 @@ public class Manager {
         return result;
     }
 
+
     public boolean boxDuplicateCheck(Connection con, int memberCode, int bookCode) {
         boolean isTrue = !registBookDAO.callBoxBookNumber(con, memberCode).contains(bookCode);
+      
+        return isTrue;
+    }
+
+
+    public boolean isUniqueTitle(Connection con, String bookName) {
+        boolean isTrue = !registBookDAO.callBookName(con).contains(bookName);
+      
+        return isTrue;
+    }
+
+    public boolean isUniqueId(Connection con, String memberId) {
+        boolean isTrue = !registMemberDAO.callMemberId(con).contains(memberId);
 
         return isTrue;
     }

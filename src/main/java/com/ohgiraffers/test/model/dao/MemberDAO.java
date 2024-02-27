@@ -265,4 +265,29 @@ public class MemberDAO {
         }
         return memberList;
     }
+
+    public ArrayList<String> callMemberId(Connection con) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        String query = "SELECT MEMBER_ID FROM MEMBERS";
+
+        ArrayList<String> memberIdList = null;
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            memberIdList = new ArrayList<>();
+            while (rset.next()) {
+                memberIdList.add(rset.getString("MEMBER_ID"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return memberIdList;
+    }
 }
