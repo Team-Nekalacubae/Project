@@ -3,9 +3,7 @@ package com.ohgiraffers.test.control;
 
 import com.ohgiraffers.test.model.dao.BookDAO;
 import com.ohgiraffers.test.model.dao.MemberDAO;
-import com.ohgiraffers.test.model.dto.BookDTO;
-import com.ohgiraffers.test.model.dto.BoxDTO;
-import com.ohgiraffers.test.model.dto.OutMemberDTO;
+import com.ohgiraffers.test.model.dto.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ public class Manager {
     BookDAO registBookDAO = new BookDAO();
     MemberDAO registMemberDAO = new MemberDAO();
 
-    public int[] signInCheck(Connection con, String[] signInInfo) {
+    public int[] signIn(Connection con, String[] signInInfo) {
         int[] memberInfo = new int[2];
 
         String password = registMemberDAO.callPassword(con, signInInfo[0]);
@@ -27,8 +25,8 @@ public class Manager {
         return memberInfo;
     }
 
-    public int deleteMemberUpdate(Connection con, int memberCode) {
-        int result = registMemberDAO.updateMemberType(con, 4, memberCode);
+    public int deleteMember(Connection con, int memberCode) {
+        int result = registMemberDAO.updateMemberType(con, memberCode, 4);
 
         return result;
     }
@@ -52,7 +50,7 @@ public class Manager {
         return result;
     }
 
-    public List<BookDTO> bookChoiceByGenre(Connection con, int genre) {
+    public List<BookDTO> bookSortByGenre(Connection con, int genre) {
         List<BookDTO> genreList = new ArrayList<>();
 
         String bookGenre = "";
@@ -91,11 +89,11 @@ public class Manager {
                 bookGenre = "인문";
                 break;
         }
-        genreList = registBookDAO.selectGenreBook(con, bookGenre);
+        genreList = registBookDAO.callBookByGenre(con, bookGenre);
         return genreList;
     }
 
-    public List<BookDTO> bookChoiceByType(Connection con, int type) {
+    public List<BookDTO> bookSortByType(Connection con, int type) {
         List<BookDTO> typeList = new ArrayList<>();
 
         String bookType = "";
@@ -119,34 +117,28 @@ public class Manager {
                 bookType = "소설";
                 break;
         }
-        typeList = registBookDAO.selectTypeBook(con, bookType);
+        typeList = registBookDAO.callBookByType(con, bookType);
         return typeList;
     }
 
     public int addBookRequest(Connection con, String[] request, int memberCode) {
         int result = 0;
 
-        result = registBookDAO.bookRequest(con, request, memberCode);
+        result = registBookDAO.inputBookRequest(con, request, memberCode);
 
         return result;
     }
 
-    public int bookRent(Connection con, int memberCode, int bookCode, int choice) {
+    public int bookRent(Connection con, int memberCode, int bookCode, int answer) {
         int result = 0;
 
-        if (choice == 1) {
-            result = registBookDAO.insertBookBoxToBuy(con, memberCode, bookCode);
-        } else if (choice == 2) {
-            result = registBookDAO.insertBookBoxToRent(con, memberCode, bookCode);
+        if (answer == 1) {
+            result = registBookDAO.insertBuyBox(con, memberCode, bookCode);
+        } else if (answer == 2) {
+            result = registBookDAO.insertRentBox(con, memberCode, bookCode);
         }
         return result;
     }
-
-    public void approveRequestMember() {
-
-    }
-
-
 
     public List<OutMemberDTO> searchAllOutMember(Connection con) {
         List<OutMemberDTO> memberList = new ArrayList<>();
@@ -159,7 +151,7 @@ public class Manager {
     public List<BoxDTO> rentBox(Connection con, int memberCode) {
         List<BoxDTO> bookList = new ArrayList<>();
 
-        bookList = registBookDAO.searchBookBoxRental(con, memberCode);
+        bookList = registBookDAO.callRentBox(con, memberCode);
 
         return bookList;
     }
@@ -167,11 +159,10 @@ public class Manager {
     public List<BoxDTO> buyBox(Connection con, int memberCode) {
         List<BoxDTO> bookList = new ArrayList<>();
 
-        bookList = registBookDAO.searchBookBoxBuy(con, memberCode);
+        bookList = registBookDAO.callBuyBox(con, memberCode);
 
         return bookList;
     }
-
 
     public int bookCode(Connection con, String[] bookSearchInfo, int memberCode) {
         int bookCode = 0;
@@ -192,20 +183,8 @@ public class Manager {
         return result;
     }
 
-    public int directBookRent(Connection con, int memberCode, int bookCode, int choice) {
-        int result = 0;
-
-        if (choice == 1) {
-            result = registBookDAO.insertBookBoxToBuy(con, memberCode, bookCode);
-        } else if (choice == 2) {
-            result = registBookDAO.insertBookBoxToRent(con, memberCode, bookCode);
-        }
-        return result;
-    }
-    public int updateManger(Connection con, int memberCode) {
-        int result = 0;
-        int memberType = 1;
-        result = registMemberDAO.updateMemberType(con, memberType, memberCode);
+    public int updateManger(Connection con, int memberCode, int memberType) {
+        int result = registMemberDAO.updateMemberType(con, memberCode, memberType);
 
         return result;
     }
@@ -213,8 +192,72 @@ public class Manager {
     public BookDTO bookInfo(Connection con, int bookCode) {
         BookDTO book = new BookDTO();
 
-        book = registBookDAO.bookInfo(con,bookCode);
+        book = registBookDAO.callBookInfo(con, bookCode);
 
         return book;
+    }
+
+    public List<SearchDTO> searchHistory(Connection con) {
+        List<SearchDTO> searchHistoryList = new ArrayList<>();
+
+        searchHistoryList = registBookDAO.callSearchHistory(con);
+
+        return searchHistoryList;
+    }
+
+    public int addNewBook(Connection con, String bookName, String bookAuthor, String bookGenre, String bookType, String bookPublisher) {
+        int result = 0;
+
+        BookDTO book = new BookDTO(bookName, bookAuthor, bookGenre, bookType, bookPublisher);
+
+        result = registBookDAO.insertNewBook(con, book);
+
+        return result;
+    }
+
+    public int updateMemberType(Connection con, int memberCode, int memberType) {
+        int result = 0;
+
+        result = registMemberDAO.updateMemberType(con, memberCode, memberType);
+
+        return result;
+    }
+
+    public int signUp(Connection con, String[] signUpInfo, String[] signUpAddInfo) {
+        int result = 0;
+
+        result = registMemberDAO.insertSignUp(con, signUpInfo, signUpAddInfo);
+
+        return result;
+    }
+
+    public List<RequestDTO> printRequestBook(Connection con) {
+        List<RequestDTO> requestList = registBookDAO.callRequestBook(con);
+
+        return requestList;
+    }
+
+    public List<MemberDTO> printAllMember(Connection con) {
+        List<MemberDTO> memberList = registMemberDAO.selectAllMember(con);
+
+        return memberList;
+    }
+
+    public int addNewMember(Connection con, MemberDTO newMember) {
+        int result = registMemberDAO.insertNewMember(con, newMember);
+
+        return result;
+    }
+
+    public List<MemberDTO> printRequestMember(Connection con) {
+        List<MemberDTO> requestList = registMemberDAO.selectRequestList(con);
+
+        return requestList;
+    }
+
+    public int approveMember(Connection con) {
+        int result = registMemberDAO.updateAllRequestMember(con);
+
+        return result;
     }
 }

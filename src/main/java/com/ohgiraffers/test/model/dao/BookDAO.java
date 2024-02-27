@@ -1,15 +1,10 @@
 package com.ohgiraffers.test.model.dao;
 
 import com.ohgiraffers.test.model.dto.BookDTO;
-import com.ohgiraffers.test.model.dto.MemberDTO;
+import com.ohgiraffers.test.model.dto.BoxDTO;
+import com.ohgiraffers.test.model.dto.RequestDTO;
 import com.ohgiraffers.test.model.dto.SearchDTO;
 
-import com.ohgiraffers.test.model.dto.BoxDTO;
-
-import com.ohgiraffers.test.model.dto.RequestDTO;
-
-
-import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
@@ -17,7 +12,6 @@ import java.time.LocalDate;
 import java.util.Properties;
 
 import java.util.*;
-
 
 import static com.ohgiraffers.test.common.JDBCTemplate.close;
 
@@ -196,7 +190,7 @@ public class BookDAO {
         PreparedStatement pstmt = null;
 
         int result = 0;
-        String query = prop.getProperty("deleteBook");
+        String query = prop.getProperty("deleteBookByCode");
 
         try {
             pstmt = con.prepareStatement(query);
@@ -210,11 +204,11 @@ public class BookDAO {
         return result;
     }
 
-    public List<BookDTO> selectGenreBook(Connection con, String bookGenre) {
+    public List<BookDTO> callBookByGenre(Connection con, String bookGenre) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
-        String query = prop.getProperty("selectGenreBook");
+        String query = prop.getProperty("callBookByGenre");
 
         BookDTO book = null;
         List<BookDTO> genreList = null;
@@ -248,11 +242,11 @@ public class BookDAO {
         return genreList;
     }
 
-    public List<BookDTO> selectTypeBook(Connection con, String bookType) {
+    public List<BookDTO> callBookByType(Connection con, String bookType) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
-        String query = prop.getProperty("selectTypeBook");
+        String query = prop.getProperty("callBookByType");
 
         BookDTO book = null;
         List<BookDTO> typeList = null;
@@ -286,13 +280,13 @@ public class BookDAO {
         return typeList;
     }
 
-    public int bookRequest(Connection con, String[] arr, int memberCode) {
+    public int inputBookRequest(Connection con, String[] arr, int memberCode) {
         PreparedStatement pstmt = null;
 
         LocalDate now = LocalDate.now();
 
         int result = 0;
-        String query = prop.getProperty("bookAddRequest");
+        String query = prop.getProperty("inputBookRequest");
 
         try {
             pstmt = con.prepareStatement(query);
@@ -312,7 +306,7 @@ public class BookDAO {
         return result;
     }
 
-    public int insertBookBoxToBuy(Connection con, int memberCode, int bookCode) {
+    public int insertBuyBox(Connection con, int memberCode, int bookCode) {
         PreparedStatement pstmt = null;
 
         LocalDate now = LocalDate.now();
@@ -335,7 +329,7 @@ public class BookDAO {
         return result;
     }
 
-    public int insertBookBoxToRent(Connection con, int memberCode, int bookCode) {
+    public int insertRentBox(Connection con, int memberCode, int bookCode) {
         PreparedStatement pstmt = null;
 
         LocalDate now = LocalDate.now();
@@ -360,9 +354,7 @@ public class BookDAO {
         return result;
     }
 
-
-    public List<SearchDTO> searchHistory (Connection con) {
-
+    public List<SearchDTO> callSearchHistory(Connection con) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
@@ -387,18 +379,16 @@ public class BookDAO {
 
                 searchHistoryList.add(book);
             }
-           } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-           close(rset);
+            close(rset);
             close(pstmt);
         }
-
         return searchHistoryList;
-}
+    }
 
-
-    public List<BoxDTO> searchBookBoxRental(Connection con, int memberCode) {
+    public List<BoxDTO> callRentBox(Connection con, int memberCode) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
@@ -433,7 +423,6 @@ public class BookDAO {
             throw new RuntimeException(e);
         } finally {
 
-           
 
             close(pstmt);
             close(rset);
@@ -441,7 +430,7 @@ public class BookDAO {
         return bookList;
     }
 
-    public List<BoxDTO> searchBookBoxBuy(Connection con, int memberCode) {
+    public List<BoxDTO> callBuyBox(Connection con, int memberCode) {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
@@ -470,23 +459,24 @@ public class BookDAO {
                 book.setBuyDate(rset.getDate("BUY_DATE"));
 
                 bookList.add(book);
-               }
-            } catch (SQLException e) {
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-           close(pstmt);
-           close(rset);
+            close(pstmt);
+            close(rset);
         }
         return bookList;
     }
 
-    public List<RequestDTO> selectRequestBook(Connection con) {
+    public List<RequestDTO> callRequestBook(Connection con) {
         Statement stmt = null;
         ResultSet rset = null;
 
+        String query = prop.getProperty("selectAllRequest");
+
         RequestDTO rquestBook = null;
         List<RequestDTO> requestList = null;
-        String query = prop.getProperty("selectRequest");
         requestList = new ArrayList<>();
 
         try {
@@ -502,7 +492,6 @@ public class BookDAO {
                 rquestBook.setRequestDate(rset.getDate("REQUEST_DATE"));
 
                 requestList.add(rquestBook);
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -513,31 +502,27 @@ public class BookDAO {
         return requestList;
     }
 
-    public int insertNewBook(Connection con, BookDTO newbook) {
-
+    public int insertNewBook(Connection con, BookDTO book) {
         PreparedStatement pstmt = null;
-        System.out.println("newbook = " + newbook);
+
         int result = 0;
-        String query = prop.getProperty("insertBook");
+        String query = prop.getProperty("insertNewBook");
 
         try {
             pstmt = con.prepareStatement(query);
-
-            pstmt.setInt(1,newbook.getBookCode());
-            pstmt.setString(2,newbook.getBookName());
-            pstmt.setString(3,newbook.getBookAuthor());
-            pstmt.setString(4,newbook.getBookGenre());
-            pstmt.setString(5,newbook.getBookType());
-            pstmt.setString(6,newbook.getBookPublisher());
+            pstmt.setInt(1, book.getBookCode());
+            pstmt.setString(2, book.getBookName());
+            pstmt.setString(3, book.getBookAuthor());
+            pstmt.setString(4, book.getBookGenre());
+            pstmt.setString(5, book.getBookType());
+            pstmt.setString(6, book.getBookPublisher());
 
             result = pstmt.executeUpdate();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             close(pstmt);
         }
-
         return result;
     }
 
@@ -642,7 +627,7 @@ public class BookDAO {
         return bookCode;
     }
 
-    public BookDTO bookInfo(Connection con, int bookCode) {
+    public BookDTO callBookInfo(Connection con, int bookCode) {
         Statement stmt = null;
         ResultSet rset = null;
 
@@ -672,4 +657,3 @@ public class BookDAO {
         return book;
     }
 }
-

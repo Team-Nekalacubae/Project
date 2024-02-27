@@ -32,39 +32,10 @@ public class JDBCTemplate {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        return con;
-    }
-
-    public static Connection getConnectionAuto() {
-
-        Connection con = null;
-
-        Properties prop = new Properties();
-
-        try {
-            prop.load(new FileReader("src/main/java/com/ohgiraffers/test/config/connection-info.properties"));
-
-            String driver = prop.getProperty("Driver");
-            String url = prop.getProperty("url");
-
-            Class.forName(driver);
-
-            con = DriverManager.getConnection(url, prop);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
         return con;
     }
 
     public static void close(Connection con) {
-
         try {
             if (con != null & !con.isClosed()) {
                 con.close();
@@ -75,7 +46,6 @@ public class JDBCTemplate {
     }
 
     public static void close(Statement stmt) {
-
         try {
             if (stmt != null & !stmt.isClosed()) {
                 stmt.close();
@@ -83,12 +53,10 @@ public class JDBCTemplate {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NullPointerException e) {
-
         }
     }
 
     public static void close(ResultSet rset) {
-
         try {
             if (rset != null & !rset.isClosed()) {
                 rset.close();
