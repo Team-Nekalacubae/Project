@@ -1,6 +1,7 @@
 package com.ohgiraffers.test.model.dto;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 
 public class SearchDTO implements Serializable {
@@ -10,16 +11,18 @@ public class SearchDTO implements Serializable {
     private Date searchDate;
     private int memberCode;
     private int bookCode;
+    private Time searchTime;
 
     public SearchDTO() {
     }
 
-    public SearchDTO(String searchElement, String searchName, Date searchDate, int memberCode, int bookCode) {
+    public SearchDTO(String searchElement, String searchName, Date searchDate, int memberCode, int bookCode, Time searchTime) {
         this.searchElement = searchElement;
         this.searchName = searchName;
         this.searchDate = searchDate;
         this.memberCode = memberCode;
         this.bookCode = bookCode;
+        this.searchTime = searchTime;
     }
 
     public String getSearchElement() {
@@ -62,6 +65,14 @@ public class SearchDTO implements Serializable {
         this.bookCode = bookCode;
     }
 
+    public Time getSearchTime() {
+        return searchTime;
+    }
+
+    public void setSearchTime(Time searchTime) {
+        this.searchTime = searchTime;
+    }
+
     @Override
     public String toString() {
         return "SearchDTO{" +
@@ -70,6 +81,7 @@ public class SearchDTO implements Serializable {
                 ", searchDate=" + searchDate +
                 ", memberCode=" + memberCode +
                 ", bookCode=" + bookCode +
+                ", searchTime=" + searchTime +
                 '}';
     }
 }

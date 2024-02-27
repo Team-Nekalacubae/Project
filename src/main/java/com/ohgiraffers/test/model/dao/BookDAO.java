@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Properties;
 
 import java.util.*;
@@ -33,6 +34,7 @@ public class BookDAO {
         ResultSet rset = null;
 
         LocalDate now = LocalDate.now();
+        LocalTime now2 = LocalTime.now();
 
         BookDTO book = null;
         List<BookDTO> bookList = null;
@@ -64,8 +66,9 @@ public class BookDAO {
                 pstmt2.setString(1, "제목");
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
-                pstmt2.setInt(4, memberCode);
-                pstmt2.setInt(5, bookCode);
+                pstmt2.setString(4,String.valueOf(now2));
+                pstmt2.setInt(5, memberCode);
+                pstmt2.setInt(6, rset.getInt("BOOK_CODE"));
 
                 pstmt2.executeUpdate();
             }
@@ -85,6 +88,7 @@ public class BookDAO {
         ResultSet rset = null;
 
         LocalDate now = LocalDate.now();
+        LocalTime now2 = LocalTime.now();
 
         BookDTO book = null;
         List<BookDTO> bookList = null;
@@ -117,8 +121,9 @@ public class BookDAO {
                 pstmt2.setString(1, "제목");
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
-                pstmt2.setInt(4, memberCode);
-                pstmt2.setInt(5, bookCode);
+                pstmt2.setString(4,String.valueOf(now2));
+                pstmt2.setInt(5, memberCode);
+                pstmt2.setInt(6, rset.getInt("BOOK_CODE"));
 
                 pstmt2.executeUpdate();
             }
@@ -139,6 +144,7 @@ public class BookDAO {
         ResultSet rset = null;
 
         LocalDate now = LocalDate.now();
+        LocalTime now2 = LocalTime.now();
 
         BookDTO book = null;
         List<BookDTO> bookList = null;
@@ -171,8 +177,9 @@ public class BookDAO {
                 pstmt2.setString(1, "제목");
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
-                pstmt2.setInt(4, memberCode);
-                pstmt2.setInt(5, bookCode);
+                pstmt2.setString(4,String.valueOf(now2));
+                pstmt2.setInt(5, memberCode);
+                pstmt2.setInt(6, rset.getInt("BOOK_CODE"));
 
                 pstmt2.executeUpdate();
             }
@@ -360,6 +367,7 @@ public class BookDAO {
 
         String query = prop.getProperty("searchHistory");
 
+
         SearchDTO book = null;
         List<SearchDTO> searchHistoryList = null;
 
@@ -372,12 +380,14 @@ public class BookDAO {
                 book = new SearchDTO();
 
                 book.setBookCode(rset.getInt("BOOK_CODE"));
-                book.setMemberCode(rset.getInt("MEMBER_CODE"));
                 book.setSearchName(rset.getString("SEARCH_NAME"));
                 book.setSearchDate(rset.getDate("SEARCH_DATE"));
+                book.setSearchTime(rset.getTime("SEARCH_TIME"));
                 book.setSearchElement(rset.getString("SEARCH_ELEMENT"));
 
-                searchHistoryList.add(book);
+                    searchHistoryList.add(book);
+
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
