@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment/>
+
+    <entry key="searchBookByBookName">
+        SELECT *
+        FROM BOOKS
+        WHERE BOOK_NAME LIKE ?
+    </entry>
+
+    <entry key="searchBookByBookAuthor">
+        SELECT *
+        FROM BOOKS
+        WHERE BOOK_AUTHOR LIKE ?
+    </entry>
+
+    <entry key="searchBookByBookPublisher">
+        SELECT *
+        FROM BOOKS
+        WHERE BOOK_PUBLISHER LIKE ?
+    </entry>
+
+    <entry key="insertSearchedBook">
+        INSERT INTO SEARCH
+        (SEARCH_ELEMENT, SEARCH_NAME, SEARCH_DATE, SEARCH_TIME, MEMBER_CODE, BOOK_CODE)
+        VALUES (?, ?, ?, ?, ?, ?)
+    </entry>
+
+    <entry key="deleteBookByCode">
+        DELETE FROM BOOKS
+        WHERE BOOK_CODE = ?
+    </entry>
+
+    <entry key="callBookByGenre">
+        SELECT B.*
+        FROM BOOKS B
+        WHERE B.BOOK_GENRE LIKE CONCAT(?, '%')
+    </entry>
+
+    <entry key="callBookByType">
+        SELECT B.*
+        FROM BOOKS B
+        WHERE B.BOOK_Type LIKE CONCAT(?, '%')
+    </entry>
+
+    <entry key="inputBookRequest">
+        INSERT INTO REQUEST
+        (REQUEST_TITLE, REQUEST_AUTHOR, REQUEST_PUBLISHER, MEMBER_CODE, REQUEST_DATE)
+        VALUES (?, ?, ?, ?, ?)
+    </entry>
+
+
+    <entry key="insertRentBox">
+        INSERT INTO BOX
+        (MEMBER_CODE, BOOK_CODE, RENTAL, RENTAL_DATE, END_DATE, BUY_DATE)
+        VALUES (?, ?, TRUE, ?, ADDDATE(?, INTERVAL 2 DAY), NULL)
+    </entry>
+
+    <entry key="insertBuyBox">
+        INSERT INTO BOX
+        (MEMBER_CODE, BOOK_CODE, RENTAL, RENTAL_DATE, END_DATE, BUY_DATE)
+        VALUES (?, ?, FALSE, NULL, NULL, ?)
+    </entry>
+
+
+    <entry key="searchHistory">
+        SELECT
+            BOOK_CODE,
+            SEARCH_ELEMENT,
+            SEARCH_NAME,
+            SEARCH_DATE,
+            SEARCH_TIME
+        FROM SEARCH
+        ORDER BY SEARCH_DATE DESC,
+                 SEARCH_TIME DESC
+        LIMIT 5;
+  </entry>
+
+    <entry key="callRentBox">
+        SELECT
+        A.BOOK_CODE, A.BOOK_NAME, A.BOOK_AUTHOR, A.BOOK_PUBLISHER, A.BOOK_GENRE, A.BOOK_TYPE, B.RENTAL, B.RENTAL_DATE, B.END_DATE
+        FROM BOOKS A
+        JOIN BOX B USING(BOOK_CODE)
+        WHERE MEMBER_CODE = ? AND B.RENTAL = TRUE
+        ORDER BY END_DATE;
+    </entry>
+
+    <entry key="callBuyBox">
+        SELECT
+        A.BOOK_CODE, A.BOOK_NAME, A.BOOK_AUTHOR, A.BOOK_PUBLISHER, A.BOOK_GENRE, A.BOOK_TYPE, B.RENTAL, B.BUY_DATE
+        FROM BOOKS A
+        JOIN BOX B USING(BOOK_CODE)
+        WHERE MEMBER_CODE = ? AND B.RENTAL = FALSE
+        ORDER BY END_DATE;
+    </entry>
+
+    <entry key="selectAllRequest">
+        SELECT *
+          FROM REQUEST;
+
+    </entry>
+
+    <entry key="insertNewBook">
+        INSERT INTO BOOKS
+        (BOOK_CODE, BOOK_NAME, BOOK_AUTHOR, BOOK_GENRE, BOOK_TYPE, BOOK_PUBLISHER)
+        VALUES (?, ?, ?, ?, ?, ?)
+    </entry>
+
+    <entry key="selectLastBookCode">
+        SELECT MAX(A.BOOK_CODE)
+        FROM BOOKS A;
+    </entry>
+
+</properties>

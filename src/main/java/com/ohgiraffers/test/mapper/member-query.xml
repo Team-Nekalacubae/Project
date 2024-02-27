@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment/>
+
+    <entry key="selectFromMemberId">
+        SELECT *
+        FROM MEMBERS
+        WHERE MEMBER_ID = ?
+    </entry>
+
+    <entry key="selectAllMember">
+        SELECT *
+        FROM MEMBERS
+        WHERE MEMBER_TYPE = 2
+    </entry>
+
+    <entry key="updateMemberType">
+        UPDATE MEMBERS
+        SET MEMBER_TYPE = ?
+        WHERE MEMBER_CODE = ?
+    </entry>
+
+    <entry key="insertNewMember">
+        INSERT INTO MEMBERS
+        (MEMBER_CODE, MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL, MEMBER_TYPE)
+        VALUES (NULL, ?, ?, ?, ?, ?, ?)
+    </entry>
+
+    <entry key="selectLastMemberCode">
+        SELECT MAX(A.MEMBER_CODE)
+          FROM MEMBERS A
+    </entry>
+
+    <entry key="pwCheck">
+        SELECT *
+        FROM MEMBERS
+        WHERE MEMBER_ID = ?
+    </entry>
+
+    <entry key="signUp">
+        INSERT INTO MEMBERS
+        (MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL, MEMBER_TYPE)
+        VALUES (?, ?, ?, ?, ?, ?)
+    </entry>
+    <entry key="selectRequestMember">
+        SELECT *
+          FROM MEMBERS
+         WHERE MEMBER_TYPE = 5
+    </entry>
+
+    <entry key="updateRequestMember">
+        UPDATE MEMBERS
+           SET MEMBER_TYPE = 2
+         WHERE MEMBER_TYPE = 5
+    </entry>
+
+</properties>
