@@ -190,25 +190,29 @@ public class Menu {
         System.out.print("1. 아이디 : ");
         sc.nextLine();
         String memberId = sc.nextLine();
-        System.out.print("2. 비밀번호 : ");
-        String memberPw = sc.nextLine();
-        System.out.print("3. 성명 : ");
-        String memberName = sc.nextLine();
-        System.out.print("4. 전화번호 : ");
-        String memberPhone = sc.nextLine();
-        System.out.print("5. 이메일 : ");
-        String memberEmail = sc.nextLine();
-        System.out.print("6. 회원 유형 : ");
-        int memeberType = sc.nextInt();
-        System.out.println();
+        if (manager.isUniqueId(con, memberId)) {
+            System.out.print("2. 비밀번호 : ");
+            String memberPw = sc.nextLine();
+            System.out.print("3. 성명 : ");
+            String memberName = sc.nextLine();
+            System.out.print("4. 전화번호 : ");
+            String memberPhone = sc.nextLine();
+            System.out.print("5. 이메일 : ");
+            String memberEmail = sc.nextLine();
+            System.out.print("6. 회원 유형 : ");
+            int memeberType = sc.nextInt();
+            System.out.println();
 
-        MemberDTO newMember = new MemberDTO(0, memberId, memberPw, memberName, memberPhone, memberEmail, memeberType);
-        int result = manager.addNewMember(con, newMember);
+            MemberDTO newMember = new MemberDTO(0, memberId, memberPw, memberName, memberPhone, memberEmail, memeberType);
+            int result = manager.addNewMember(con, newMember);
 
-        if (result > 0) {
-            System.out.println("신규 회원 정보 입력에 성공했습니다.\n");
+            if (result > 0) {
+                System.out.println("신규 회원 정보 입력에 성공했습니다.\n");
+            } else {
+                System.out.println("신규 회원 정보 입력에 실패했습니다.\n");
+            }
         } else {
-            System.out.println("신규 회원 정보 입력에 실패했습니다.\n");
+            System.out.println("중복된 아이디를 입력했습니다.");
         }
     }
 
@@ -572,16 +576,20 @@ public class Menu {
         System.out.print("아이디를 입력하세요 : ");
         sc.nextLine();
         signUpInfo[0] = sc.nextLine();
-        System.out.print("비밀번호를 입력하세요 : ");
-        signUpInfo[1] = sc.nextLine();
-        System.out.print("비밀번호를 다시 한번 입력하세요 : ");
-        String check = sc.nextLine();
+        if (manager.isUniqueId(con, signUpInfo[0])) {
+            System.out.print("비밀번호를 입력하세요 : ");
+            signUpInfo[1] = sc.nextLine();
+            System.out.print("비밀번호를 다시 한번 입력하세요 : ");
+            String check = sc.nextLine();
 
-        if (signUpInfo[1].equals(check)) {
-            signUpExpansionMenu(signUpInfo);
+            if (signUpInfo[1].equals(check)) {
+                signUpExpansionMenu(signUpInfo);
+            } else {
+                System.out.println("처음 입력한 비밀번호와 다릅니다.");
+                System.out.println("비밀번호를 다시 확인해주세요.\n");
+            }
         } else {
-            System.out.println("처음 입력한 비밀번호와 다릅니다.");
-            System.out.println("비밀번호를 다시 확인해주세요.\n");
+            System.out.println("중복된 아이디를 입력했습니다.");
         }
     }
 

@@ -259,4 +259,10 @@ public class Manager {
 
         return result;
     }
+
+    public boolean isUniqueId(Connection con, String memberId) {
+        boolean isTrue = !registMemberDAO.callMemberId(con).contains(memberId);
+
+        return isTrue;
+    }
 }
