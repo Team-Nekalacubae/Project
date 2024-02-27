@@ -532,18 +532,22 @@ public class Menu {
         System.out.print("추가를 원하는 도서의 제목을 입력하세요(필수) : ");
         sc.nextLine();
         request[0] = sc.nextLine();
-        System.out.print("추가를 원하는 도서의 저자를 입력하세요(필수) : ");
-        request[1] = sc.nextLine();
-        System.out.print("추가를 원하는 도서의 출판사를 입력하세요(필수) : ");
-        request[2] = sc.nextLine();
-        System.out.println();
+        if (manager.isUniqueTitle(con, request[0])) {
+            System.out.print("추가를 원하는 도서의 저자를 입력하세요(필수) : ");
+            request[1] = sc.nextLine();
+            System.out.print("추가를 원하는 도서의 출판사를 입력하세요(필수) : ");
+            request[2] = sc.nextLine();
+            System.out.println();
 
-        result = manager.addBookRequest(con, request, memberInfo[0]);
+            result = manager.addBookRequest(con, request, memberInfo[0]);
 
-        if (result > 0) {
-            System.out.println("입력된 도서의 등록 추가 요청이 성공되었습니다.\n");
+            if (result > 0) {
+                System.out.println("입력된 도서의 등록 추가 요청이 성공되었습니다.\n");
+            } else {
+                System.out.println("도서의 등록 추가 요청이 실패되었습니다.\n");
+            }
         } else {
-            System.out.println("도서의 등록 추가 요청이 실패되었습니다.\n");
+            System.out.println("이미 도서 목록에 존재하는 도서 입니다.");
         }
     }
 
@@ -701,22 +705,26 @@ public class Menu {
         System.out.print("도서의 제목을 입력하세요 : ");
         sc.nextLine();
         String bookName = sc.nextLine();
-        System.out.print("도서의 저자를 입력하세요 : ");
-        String bookAuthor = sc.nextLine();
-        System.out.print("도서의 장르를 입력하세요 : ");
-        String bookGenre = sc.nextLine();
-        System.out.print("도서의 종류를 입력하세요 : ");
-        String bookType = sc.nextLine();
-        System.out.print("도서의 출판사를 입력하세요 : ");
-        String bookPublisher = sc.nextLine();
-        System.out.println();
+        if (manager.isUniqueTitle(con, bookName)) {
+            System.out.print("도서의 저자를 입력하세요 : ");
+            String bookAuthor = sc.nextLine();
+            System.out.print("도서의 장르를 입력하세요 : ");
+            String bookGenre = sc.nextLine();
+            System.out.print("도서의 종류를 입력하세요 : ");
+            String bookType = sc.nextLine();
+            System.out.print("도서의 출판사를 입력하세요 : ");
+            String bookPublisher = sc.nextLine();
+            System.out.println();
 
-        result = manager.addNewBook(con, bookName, bookAuthor, bookGenre, bookType, bookPublisher);
+            result = manager.addNewBook(con, bookName, bookAuthor, bookGenre, bookType, bookPublisher);
 
-        if (result > 0) {
-            System.out.println("신규 도서 정보 입력에 성공했습니다.\n");
+            if (result > 0) {
+                System.out.println("신규 도서 정보 입력에 성공했습니다.\n");
+            } else {
+                System.out.println("신규 도서 정보 입력에 실패했습니다.\n");
+            }
         } else {
-            System.out.println("신규 도서 정보 입력에 실패했습니다.\n");
+            System.out.println("이미 도서 목록에 존재하는 도서 입니다.");
         }
     }
 
