@@ -259,4 +259,10 @@ public class Manager {
 
         return result;
     }
+
+    public boolean boxDuplicateCheck(Connection con, int memberCode, int bookCode) {
+        boolean isTrue = !registBookDAO.callBoxBookNumber(con, memberCode).contains(bookCode);
+
+        return isTrue;
+    }
 }

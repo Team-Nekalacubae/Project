@@ -396,10 +396,14 @@ public class Menu {
                     directBookDeleteMenu(bookCode);
                 }
             } else if (memberInfo[1] == 2) {
-                System.out.print("검색된 도서를 대여, 혹은 소장하시겠습니까? (1. 예 / 2. 아니오) : ");
-                answer = sc.nextInt();
-                if (answer == 1) {
-                    directBookRentMenu(bookCode);
+                if (manager.boxDuplicateCheck(con, memberInfo[0], bookCode)) {
+                    System.out.print("검색된 도서를 대여, 혹은 소장하시겠습니까? (1. 예 / 2. 아니오) : ");
+                    answer = sc.nextInt();
+                    if (answer == 1) {
+                        directBookRentMenu(bookCode);
+                    }
+                } else {
+                    System.out.println("이미 대여(소장) 중인 도서입니다.");
                 }
             }
         } else if (bookList.isEmpty()) {
@@ -552,16 +556,20 @@ public class Menu {
 
         System.out.print("대여 혹은 소장을 원하는 도서의 도서 코드를 입력하세요 : ");
         int bookCode = sc.nextInt();
-        System.out.print("대여 혹은 소장을 선택하세요 (1. 대여 / 2. 소장) : ");
-        int answer = sc.nextInt();
-        System.out.println();
+        if (manager.boxDuplicateCheck(con, memberInfo[0], bookCode)) {
+            System.out.print("대여 혹은 소장을 선택하세요 (1. 대여 / 2. 소장) : ");
+            int answer = sc.nextInt();
+            System.out.println();
 
-        result = manager.bookRent(con, memberInfo[0], bookCode, answer);
+            result = manager.bookRent(con, memberInfo[0], bookCode, answer);
 
-        if (result > 0) {
-            System.out.println("도서 대여(소장)가 완료되었습니다.");
+            if (result > 0) {
+                System.out.println("도서 대여(소장)가 완료되었습니다.");
+            } else {
+                System.out.println("도서 대여(소장)가 실패되었습니다.");
+            }
         } else {
-            System.out.println("도서 대여(소장)가 실패되었습니다.");
+            System.out.println("이미 대여(소장) 중인 도서입니다.");
         }
     }
 

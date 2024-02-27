@@ -667,4 +667,30 @@ public class BookDAO {
         }
         return book;
     }
+
+    public ArrayList<Integer> callBoxBookNumber(Connection con, int memberCode) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        String query = "SELECT BOOK_CODE FROM BOX WHERE MEMBER_CODE = " + memberCode;
+
+        ArrayList<Integer> bookNumberList = null;
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            bookNumberList = new ArrayList<>();
+
+            while (rset.next()) {
+                bookNumberList.add(rset.getInt("BOOK_CODE"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return bookNumberList;
+    }
 }
