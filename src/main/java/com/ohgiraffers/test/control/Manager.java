@@ -260,8 +260,13 @@ public class Manager {
         return result;
     }
 
+
     public boolean isUniqueTitle(Connection con, String bookName) {
         boolean isTrue = !registBookDAO.callBookName(con).contains(bookName);
+
+    public boolean isUniqueId(Connection con, String memberId) {
+        boolean isTrue = !registMemberDAO.callMemberId(con).contains(memberId);
+
 
         return isTrue;
     }
