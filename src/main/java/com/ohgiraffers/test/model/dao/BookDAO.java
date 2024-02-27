@@ -667,4 +667,30 @@ public class BookDAO {
         }
         return book;
     }
+
+    public ArrayList<String> callBookName(Connection con) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        String query = "SELECT BOOK_NAME FROM BOOKS";
+
+        ArrayList<String> bookNameList = null;
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            bookNameList = new ArrayList<>();
+
+            while (rset.next()) {
+                bookNameList.add(rset.getString("BOOK_NAME"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return bookNameList;
+    }
 }
