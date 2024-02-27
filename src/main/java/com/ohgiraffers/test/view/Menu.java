@@ -283,6 +283,7 @@ public class Menu {
             switch (select) {
                 case 1:
                     bookSearchMenu();
+                    searchHistory();
                     break;
                 case 2:
                     bookChoiceMenu();
@@ -614,7 +615,7 @@ public class Menu {
 
     public void searchHistory () {
         System.out.println("최근 검색한 5개의 도서를 출력합니다.");
-        List<SearchDTO> searchHistory = registBookDAO.searchHistory(con);
+        List<SearchDTO> searchHistory = registBookDAO.searchHistory(conAuto);
         for (SearchDTO history : searchHistory) {
             System.out.println(history);
         }

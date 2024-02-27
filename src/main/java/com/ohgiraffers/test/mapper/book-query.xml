@@ -23,8 +23,8 @@
 
     <entry key="insertSearchedBook">
         INSERT INTO SEARCH
-        (SEARCH_ELEMENT, SEARCH_NAME, SEARCH_DATE, MEMBER_CODE, BOOK_CODE)
-        VALUES (?, ?, ?, ?, ?)
+        (SEARCH_ELEMENT, SEARCH_NAME, SEARCH_DATE, SEARCH_TIME, MEMBER_CODE, BOOK_CODE)
+        VALUES (?, ?, ?, ?, ?, ?)
     </entry>
 
     <entry key="deleteBook">
@@ -65,12 +65,16 @@
 
 
     <entry key="searchHistory">
-        SELECT *
+        SELECT
+            BOOK_CODE,
+            SEARCH_ELEMENT,
+            SEARCH_NAME,
+            SEARCH_DATE,
+            SEARCH_TIME
         FROM SEARCH
-        INNER JOIN BOOKS
-        ON SEARCH.BOOK_CODE = BOOKS.BOOK_CODE
-        ORDER BY SEARCH_DATE DESC
-        LIMIT 5
+        ORDER BY SEARCH_DATE DESC,
+                 SEARCH_TIME DESC
+        LIMIT 5;
   </entry>
 
     <entry key="searchBookBoxRental">
