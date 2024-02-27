@@ -133,9 +133,9 @@ public class Manager {
         int result = 0;
 
         if (answer == 1) {
-            result = registBookDAO.insertBuyBox(con, memberCode, bookCode);
-        } else if (answer == 2) {
             result = registBookDAO.insertRentBox(con, memberCode, bookCode);
+        } else if (answer == 2) {
+            result = registBookDAO.insertBuyBox(con, memberCode, bookCode);
         }
         return result;
     }
