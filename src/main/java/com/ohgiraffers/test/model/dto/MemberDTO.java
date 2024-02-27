@@ -79,14 +79,20 @@ public class MemberDTO implements java.io.Serializable {
 
         @Override
         public String toString() {
-            return "MemberDTO{" +
-                    "memberCode=" + memberCode +
-                    ", memberId='" + memberId + '\'' +
-                    ", memberPw='" + memberPw + '\'' +
-                    ", memberName='" + memberName + '\'' +
-                    ", memberPhone='" + memberPhone + '\'' +
-                    ", memberEmail='" + memberEmail + '\'' +
-                    ", memberType=" + memberType +
-                    '}';
+            String type = "";
+            switch (memberType) {
+                case 1: type = "관리자"; break;
+                case 2: type = "회원"; break;
+                case 3: type = "비회원"; break;
+                case 4: type = "탈퇴회원"; break;
+                case 5: type = "회원가입신청"; break;
+            }
+            return  "사용자 번호 : " + memberCode +
+                    ", 아이디 : " + memberId + '\'' +
+                    ", 비밀번호 : " + memberPw + '\'' +
+                    ", 이름 : " + memberName + '\'' +
+                    ", 전화번호 : " + memberPhone + '\'' +
+                    ", 메일주소 : " + memberEmail + '\'' +
+                    ", 회원 구분 : " + type;
         }
     }

@@ -41,9 +41,6 @@ public class OutMemberDTO extends MemberDTO implements Serializable {
     @Override
     public String toString() {
         return super.toString() +
-                "OutMemberDTO{" +
-                "outDate=" + outDate +
-                ", memberCode=" + memberCode +
-                '}';
+                ", 탈퇴 일자 : " + outDate;
     }
 }

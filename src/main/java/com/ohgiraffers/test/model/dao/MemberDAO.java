@@ -79,6 +79,7 @@ public class MemberDAO {
 
         String query = prop.getProperty("selectAllMember");
 
+                MemberDTO members = null;
         List<MemberDTO> memberList = null;
         try {
             stmt = con.createStatement();
@@ -87,15 +88,14 @@ public class MemberDAO {
             memberList = new ArrayList<>();
 
             while (rset.next()) {
-                int idx = 1;
-                MemberDTO members = new MemberDTO(
-                        rset.getInt(idx++),
-                        rset.getString(idx++),
-                        rset.getString(idx++),
-                        rset.getString(idx++),
-                        rset.getString(idx++),
-                        rset.getString(idx++),
-                        rset.getInt(idx++));
+                members = new MemberDTO();
+                members.setMemberCode(rset.getInt("MEMBER_CODE"));
+                members.setMemberId(rset.getString("MEMBER_ID"));
+                members.setMemberPw(rset.getString("MEMBER_PW"));
+                members.setMemberName(rset.getNString("MEMBER_NAME"));
+                members.setMemberPhone(rset.getString("MEMBER_PHONE"));
+                members.setMemberEmail(rset.getString("MEMBER_EMAIL"));
+                members.setMemberType(rset.getInt("MEMBER_TYPE"));
 
                 memberList.add(members);
             }

@@ -118,7 +118,7 @@ public class BookDAO {
                 bookList.add(book);
 
                 pstmt2 = con.prepareStatement(query2);
-                pstmt2.setString(1, "제목");
+                pstmt2.setString(1, "저자");
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
                 pstmt2.setString(4,String.valueOf(now2));
@@ -174,7 +174,7 @@ public class BookDAO {
                 bookList.add(book);
 
                 pstmt2 = con.prepareStatement(query2);
-                pstmt2.setString(1, "제목");
+                pstmt2.setString(1, "출판사");
                 pstmt2.setString(2, key);
                 pstmt2.setString(3, String.valueOf(now));
                 pstmt2.setString(4,String.valueOf(now2));
@@ -319,7 +319,7 @@ public class BookDAO {
         LocalDate now = LocalDate.now();
 
         int result = 0;
-        String query = prop.getProperty("insertIntoBoxToBuy");
+        String query = prop.getProperty("insertBuyBox");
 
         try {
             pstmt = con.prepareStatement(query);
@@ -342,9 +342,8 @@ public class BookDAO {
         LocalDate now = LocalDate.now();
 
         int result = 0;
-        String query = prop.getProperty("insertIntoBoxToRent");
+        String query = prop.getProperty("insertRentBox");
         String expDate = "ADDDATE('" + String.valueOf(now) + "', INTERVAL 2 DAY)";
-
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setInt(1, memberCode);
@@ -402,7 +401,7 @@ public class BookDAO {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
-        String query = prop.getProperty("searchBookBoxRental");
+        String query = prop.getProperty("callRentBox");
 
         BoxDTO book = null;
         List<BoxDTO> bookList = null;
@@ -444,7 +443,7 @@ public class BookDAO {
         PreparedStatement pstmt = null;
         ResultSet rset = null;
 
-        String query = prop.getProperty("searchBookBoxBuy");
+        String query = prop.getProperty("callBuyBox");
 
         BoxDTO book = null;
         List<BoxDTO> bookList = null;

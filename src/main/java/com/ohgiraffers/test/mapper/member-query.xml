@@ -12,6 +12,7 @@
     <entry key="selectAllMember">
         SELECT *
         FROM MEMBERS
+        WHERE MEMBER_TYPE = 2
     </entry>
 
     <entry key="updateMemberType">
@@ -24,17 +25,6 @@
         INSERT INTO MEMBERS
         (MEMBER_CODE, MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL, MEMBER_TYPE)
         VALUES (NULL, ?, ?, ?, ?, ?, ?)
-    </entry>
-
-    <entry key="selectAllMember">
-        SELECT A.MEMBER_CODE
-             , A.MEMBER_ID
-             , A.MEMBER_PW
-             , A.MEMBER_NAME
-             , A.MEMBER_PHONE
-             , A.MEMBER_EMAIL
-             , A.MEMBER_TYPE
-          FROM MEMBERS A
     </entry>
 
     <entry key="selectLastMemberCode">
