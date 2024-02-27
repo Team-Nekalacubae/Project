@@ -87,12 +87,12 @@ public class MemberDTO implements java.io.Serializable {
                 case 4: type = "탈퇴회원"; break;
                 case 5: type = "회원가입신청"; break;
             }
-            return  "사용자 번호 : " + memberCode +
-                    ", 아이디 : " + memberId + '\'' +
-                    ", 비밀번호 : " + memberPw + '\'' +
-                    ", 이름 : " + memberName + '\'' +
-                    ", 전화번호 : " + memberPhone + '\'' +
-                    ", 메일주소 : " + memberEmail + '\'' +
-                    ", 회원 구분 : " + type;
+            return  "[ 사용자 번호 : " + memberCode +
+                    " | 아이디 : " + memberId +
+                    " | 비밀번호 : " + memberPw +
+                    " | 이름 : " + memberName +
+                    " | 전화번호 : " + memberPhone +
+                    " | 메일주소 : " + memberEmail +
+                    " | 회원 구분 : " + type + " ]";
         }
     }

@@ -32,7 +32,10 @@ public class Menu {
         int select = 0;
 
         while (true) {
-            System.out.println("============= NEKALAeBOOK =============");
+            System.out.println("\n=======================================");
+            System.out.println("|             NEKALAeBOOK             |");
+            System.out.println("=======================================");
+
             System.out.println("1. 회원으로 이용");
             System.out.println("2. 비회원으로 이용");
             System.out.println("0. 프로그램 종료");
@@ -51,6 +54,7 @@ public class Menu {
                     menu();
                     break;
                 case 0:
+                    System.out.println(". . .");
                     System.out.println("NEKALAeBOOK을 종료합니다.");
                     break;
                 default:
@@ -88,8 +92,8 @@ public class Menu {
         int select = 0;
 
         while (true) {
-            System.out.println("============== 관리 메뉴 ==============");
-            System.out.println("---------------- 도서 ----------------");
+            System.out.println("\n=============== 관리 메뉴 ===============");
+            System.out.println("--------------- 도서 관리 ---------------");
             System.out.println("1. 도서 추가 요청 목록 조회");
             System.out.println("2. 도서 신규 입력");
             System.out.println("3. 도서 삭제");
@@ -124,8 +128,8 @@ public class Menu {
         int select = 0;
 
         while (true) {
-            System.out.println("============== 관리 메뉴 ==============");
-            System.out.println("---------------- 도서 ----------------");
+            System.out.println("\n=============== 관리 메뉴 ===============");
+            System.out.println("--------------- 회원 관리 ---------------");
             System.out.println("1. 회원 목록 조회");
             System.out.println("2. 회원 정보 추가");
             System.out.println("3. 회원 정보 삭제");
@@ -227,7 +231,7 @@ public class Menu {
         int select = 0;
 
         while (true) {
-            System.out.println("=============== 메뉴 선택 ===============");
+            System.out.println("\n=============== 메뉴 선택 ===============");
             System.out.println("1. 도서 키워드 검색");
             System.out.println("2. 조건별 도서 목록 조회");
             if (memberInfo[1] < 3) {
@@ -241,7 +245,7 @@ public class Menu {
             }
             System.out.println("0. 메뉴 선택 프로그램 종료");
             if (memberInfo[1] == 1) {
-                System.out.println("-------------- 관리자 전용 메뉴 --------------");
+                System.out.println("------------ 관리자 전용 메뉴 ------------");
                 System.out.println("10. 도서 관리");
                 System.out.println("20. 회원 관리");
             }
@@ -346,7 +350,7 @@ public class Menu {
                 System.out.println(book);
             }
         } else if (rentList.isEmpty()) {
-            System.out.println("대여 중인 도서가 없습니다.");
+            System.out.println("대여 중인 도서가 없습니다.\n");
         }
         System.out.println("소장 도서 목록\n");
         if (!buyList.isEmpty()) {
@@ -434,9 +438,9 @@ public class Menu {
         result = manager.bookRent(con, memberInfo[0], bookCode, choice);
 
         if (result > 0) {
-            System.out.println("도서 대여(소장) 완료");
+            System.out.println("도서 대여(소장)가 완료되었습니다.");
         } else {
-            System.out.println("도서 대여(소장) 실패");
+            System.out.println("도서 대여(소장)가 실패되었습니다.");
         }
     }
 
@@ -447,9 +451,9 @@ public class Menu {
         result = manager.directBookDelete(con, bookCode);
 
         if (result > 0) {
-            System.out.println("도서 삭제 완료\n");
+            System.out.println("도서가 삭제 되었습니다.\n");
         } else {
-            System.out.println("도서 삭제 실패\n");
+            System.out.println("도서가 삭제 되지 않았습니다.\n");
         }
     }
 
@@ -464,9 +468,9 @@ public class Menu {
         result = manager.bookDelete(con, bookCode);
 
         if (result > 0) {
-            System.out.println("도서 삭제 완료\n");
+            System.out.println("도서가 삭제 되었습니다.\n");
         } else {
-            System.out.println("도서 삭제 실패\n");
+            System.out.println("도서가 삭제 되지 않았습니다.\n");
         }
     }
 
@@ -489,8 +493,8 @@ public class Menu {
         List<BookDTO> bookList = new ArrayList<>();
 
         System.out.println("================ 조건 선택 ================");
-        System.out.println("1. 비문학 | 2. 철학 | 3. 드라마 | 4. 액션 | 5. 무협 | 6. 개그");
-        System.out.println("7. 판타지 | 8. 모험 | 9. 아동  | 10. 사회 | 11. 인문");
+        System.out.println("1. 비문학 | 2. 철학 | 3. 드라마 | 4. 액션  | 5. 무협 | 6. 개그");
+        System.out.println("7. 판타지 | 8. 모험 | 9. 아동   | 10. 사회 | 11. 인문");
         System.out.print("조회 하려는 장르를 선택하세요 : ");
         int genre = sc.nextInt();
         System.out.println();
@@ -537,9 +541,9 @@ public class Menu {
         result = manager.addBookRequest(con, request, memberInfo[0]);
 
         if (result > 0) {
-            System.out.println("도서 추가 요청 성공\n");
+            System.out.println("입력된 도서의 등록 추가 요청이 성공되었습니다.\n");
         } else {
-            System.out.println("도서 추가 요청 실패\n");
+            System.out.println("도서의 등록 추가 요청이 실패되었습니다.\n");
         }
     }
 
@@ -555,9 +559,9 @@ public class Menu {
         result = manager.bookRent(con, memberInfo[0], bookCode, answer);
 
         if (result > 0) {
-            System.out.println("도서 대여(소장) 완료");
+            System.out.println("도서 대여(소장)가 완료되었습니다.");
         } else {
-            System.out.println("도서 대여(소장) 실패");
+            System.out.println("도서 대여(소장)가 실패되었습니다.");
         }
     }
 
@@ -596,9 +600,9 @@ public class Menu {
         result = manager.signUp(con, signUpInfo, signUpAddInfo);
 
         if (result > 0) {
-            System.out.println("회원 가입 신청 완료\n");
+            System.out.println("회원 가입 신청이 완료되었습니다.\n");
         } else {
-            System.out.println("회원 가입 신청 실패\n");
+            System.out.println("회원 가입 신청이 실패되었습니다.\n");
         }
     }
 
@@ -656,7 +660,7 @@ public class Menu {
     }
 
     public void printRequestBookMenu() {
-        System.out.println("============ 도서 추가 요청 목록 ============\n");
+        System.out.println("========== 도서 추가 요청 목록 ==========\n");
 
         List<RequestDTO> requestList = manager.printRequestBook(con);
 

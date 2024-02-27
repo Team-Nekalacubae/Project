@@ -76,10 +76,10 @@ public class SearchDTO implements Serializable {
     @Override
     public String toString() {
         return
-                "검색 주제 : " + searchElement +
-                ", 검색 내용 : " + searchName +
-                ", 도서 번호 : " + bookCode +
-                ", 검색 시간 : " + searchDate +
-                ", " + searchTime;
+                "[ 검색 주제 : " + searchElement +
+                " | 검색 내용 : " + searchName +
+                " | 도서 번호 : " + bookCode +
+                " | 검색 시간 : " + searchDate +
+                " " + searchTime + " ]";
     }
 }

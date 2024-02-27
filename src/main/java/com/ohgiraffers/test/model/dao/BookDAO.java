@@ -53,7 +53,7 @@ public class BookDAO {
             while (rset.next()) {
                 book = new BookDTO();
 
-                book.setBookCode(bookCode);
+                book.setBookCode(rset.getInt("BOOK_CODE"));
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
@@ -108,7 +108,8 @@ public class BookDAO {
             while (rset.next()) {
                 book = new BookDTO();
 
-                book.setBookCode(bookCode);
+//                book.setBookCode(bookCode);
+                book.setBookCode(rset.getInt("BOOK_CODE"));
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
@@ -164,7 +165,8 @@ public class BookDAO {
             while (rset.next()) {
                 book = new BookDTO();
 
-                book.setBookCode(bookCode);
+//                book.setBookCode(bookCode);
+                book.setBookCode(rset.getInt("BOOK_CODE"));
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
