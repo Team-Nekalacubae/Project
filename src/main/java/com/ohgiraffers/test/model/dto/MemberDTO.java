@@ -9,8 +9,7 @@ public class MemberDTO implements java.io.Serializable {
         private String memberEmail;       // 이메일
         private int memberType;           // 사용자 권한 구분
 
-        public MemberDTO() {
-        }
+        public MemberDTO() {}
 
         public MemberDTO(int memberCode, String memberId, String memberPw, String memberName, String memberPhone, String memberEmail, int memberType) {
             this.memberCode = memberCode;

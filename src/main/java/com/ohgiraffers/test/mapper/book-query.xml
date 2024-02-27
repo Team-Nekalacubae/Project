@@ -27,37 +27,37 @@
         VALUES (?, ?, ?, ?, ?, ?)
     </entry>
 
-    <entry key="deleteBook">
+    <entry key="deleteBookByCode">
         DELETE FROM BOOKS
         WHERE BOOK_CODE = ?
     </entry>
 
-    <entry key="selectGenreBook">
+    <entry key="callBookByGenre">
         SELECT B.*
         FROM BOOKS B
         WHERE B.BOOK_GENRE LIKE CONCAT(?, '%')
     </entry>
 
-    <entry key="selectTypeBook">
+    <entry key="callBookByType">
         SELECT B.*
         FROM BOOKS B
         WHERE B.BOOK_Type LIKE CONCAT(?, '%')
     </entry>
 
-    <entry key="bookAddRequest">
+    <entry key="inputBookRequest">
         INSERT INTO REQUEST
         (REQUEST_TITLE, REQUEST_AUTHOR, REQUEST_PUBLISHER, MEMBER_CODE, REQUEST_DATE)
         VALUES (?, ?, ?, ?, ?)
     </entry>
 
 
-    <entry key="insertIntoBoxToRent">
+    <entry key="insertRentBox">
         INSERT INTO BOX
         (MEMBER_CODE, BOOK_CODE, RENTAL, RENTAL_DATE, END_DATE, BUY_DATE)
         VALUES (?, ?, TRUE, ?, ADDDATE(?, INTERVAL 2 DAY), NULL)
     </entry>
 
-    <entry key="insertIntoBoxToBuy">
+    <entry key="insertBuyBox">
         INSERT INTO BOX
         (MEMBER_CODE, BOOK_CODE, RENTAL, RENTAL_DATE, END_DATE, BUY_DATE)
         VALUES (?, ?, FALSE, NULL, NULL, ?)
@@ -77,28 +77,39 @@
         LIMIT 5;
   </entry>
 
-    <entry key="searchBookBoxRental">
+    <entry key="callRentBox">
         SELECT
-        A.BOOK_CODE, A.BOOK_NAME, A.BOOK_AUTHOR, A.BOOK_PUBLISHER, A.BOOK_GENRE, A.BOOK_TYPE, B.RENTAL_DATE, B.END_DATE
+        A.BOOK_CODE, A.BOOK_NAME, A.BOOK_AUTHOR, A.BOOK_PUBLISHER, A.BOOK_GENRE, A.BOOK_TYPE, B.RENTAL, B.RENTAL_DATE, B.END_DATE
         FROM BOOKS A
         JOIN BOX B USING(BOOK_CODE)
         WHERE MEMBER_CODE = ? AND B.RENTAL = TRUE
         ORDER BY END_DATE;
     </entry>
 
-    <entry key="searchBookBoxBuy">
+    <entry key="callBuyBox">
         SELECT
-        A.BOOK_CODE, A.BOOK_NAME, A.BOOK_AUTHOR, A.BOOK_PUBLISHER, A.BOOK_GENRE, A.BOOK_TYPE, B.BUY_DATE
+        A.BOOK_CODE, A.BOOK_NAME, A.BOOK_AUTHOR, A.BOOK_PUBLISHER, A.BOOK_GENRE, A.BOOK_TYPE, B.RENTAL, B.BUY_DATE
         FROM BOOKS A
         JOIN BOX B USING(BOOK_CODE)
         WHERE MEMBER_CODE = ? AND B.RENTAL = FALSE
         ORDER BY END_DATE;
     </entry>
 
-    <entry key="selectRequest">
+    <entry key="selectAllRequest">
         SELECT *
           FROM REQUEST;
 
+    </entry>
+
+    <entry key="insertNewBook">
+        INSERT INTO BOOKS
+        (BOOK_CODE, BOOK_NAME, BOOK_AUTHOR, BOOK_GENRE, BOOK_TYPE, BOOK_PUBLISHER)
+        VALUES (?, ?, ?, ?, ?, ?)
+    </entry>
+
+    <entry key="selectLastBookCode">
+        SELECT MAX(A.BOOK_CODE)
+        FROM BOOKS A;
     </entry>
 
 </properties>

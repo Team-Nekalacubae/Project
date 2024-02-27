@@ -3,16 +3,15 @@
 <properties>
     <comment/>
 
-    <entry key="checkMember">
+    <entry key="selectFromMemberId">
         SELECT *
         FROM MEMBERS
         WHERE MEMBER_ID = ?
     </entry>
 
-    <entry key="callMemberInfo">
+    <entry key="selectAllMember">
         SELECT *
         FROM MEMBERS
-        WHERE MEMBER_ID = ?
     </entry>
 
     <entry key="updateMemberType">
@@ -21,10 +20,10 @@
         WHERE MEMBER_CODE = ?
     </entry>
 
-    <entry key="insertMember">
+    <entry key="insertNewMember">
         INSERT INTO MEMBERS
         (MEMBER_CODE, MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL, MEMBER_TYPE)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        VALUES (NULL, ?, ?, ?, ?, ?, ?)
     </entry>
 
     <entry key="selectAllMember">
@@ -59,6 +58,7 @@
           FROM MEMBERS
          WHERE MEMBER_TYPE = 5
     </entry>
+
     <entry key="updateRequestMember">
         UPDATE MEMBERS
            SET MEMBER_TYPE = 2

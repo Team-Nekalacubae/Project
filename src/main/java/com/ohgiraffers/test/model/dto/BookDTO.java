@@ -11,7 +11,7 @@ public class BookDTO implements java.io.Serializable {
 
         public BookDTO () {}
 
-        public BookDTO(int bookCode, String bookName, String bookAuthor, String bookGenre, String bookType, String bookPublisher) {
+        public BookDTO(String bookName, String bookAuthor, String bookGenre, String bookType, String bookPublisher) {
             this.bookCode = bookCode;
             this.bookName = bookName;
             this.bookAuthor = bookAuthor;
