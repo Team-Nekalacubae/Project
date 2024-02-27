@@ -382,7 +382,12 @@ public class Menu {
         for (BookDTO book : bookList) {
             System.out.println(book);
         }
-        bookSearchExpansionMenu(bookCode, bookList);
+
+        if (bookList.size() > 1) {
+            pileOfBooksMenu(bookList);
+        } else if (bookList.size() <= 1) {
+            bookSearchExpansionMenu(bookCode, bookList);
+        }
     }
 
     public void bookSearchExpansionMenu(int bookCode, List<BookDTO> bookList) {
@@ -734,6 +739,41 @@ public class Menu {
             System.out.println("'회원 번호 " + memberCode + "에게 관리자 권한이 부여됐습니다.\n");
         } else {
             System.out.println("관리자 권한 부여에 실패했습니다.\n");
+        }
+    }
+
+    public void pileOfBooksMenu(List<BookDTO> bookList) {
+        System.out.println("2개 이상의 도서가 검색됐습니다.");
+        System.out.print("추가 선택을 진행하시겠습니까? (1. 예 / 2. 아니오) : ");
+        int select = sc.nextInt();
+        if (select == 1) {
+            System.out.println();
+            for (int i = 0; i < bookList.size(); i++) {
+                System.out.println((i + 1) + "번 : " + bookList.get(i));
+            }
+            System.out.println();
+            System.out.print("추가 선택을 진행할 도서를 선택하세요 : ");
+            int answer = sc.nextInt();
+
+            int bookCode = bookList.get(answer - 1).getBookCode();
+
+            System.out.println("\n" + bookList.get(answer - 1));
+
+            if (!bookList.isEmpty()) {
+                if (memberInfo[1] == 1) {
+                    System.out.print("선택된 도서를 삭제하시겠습니까? (1. 예 / 2. 아니오) : ");
+                    answer = sc.nextInt();
+                    if (answer == 1) {
+                        directBookDeleteMenu(bookCode);
+                    }
+                } else if (memberInfo[1] == 2) {
+                    System.out.print("선택된 도서를 대여, 혹은 소장하시겠습니까? (1. 예 / 2. 아니오) : ");
+                    answer = sc.nextInt();
+                    if (answer == 1) {
+                        directBookRentMenu(bookCode);
+                    }
+                }
+            }
         }
     }
 }
