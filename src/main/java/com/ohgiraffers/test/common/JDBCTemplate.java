@@ -63,6 +63,7 @@ public class JDBCTemplate {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (NullPointerException e) {
         }
     }
 }

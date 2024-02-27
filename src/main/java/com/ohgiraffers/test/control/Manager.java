@@ -131,7 +131,6 @@ public class Manager {
 
     public int bookRent(Connection con, int memberCode, int bookCode, int answer) {
         int result = 0;
-
         if (answer == 1) {
             result = registBookDAO.insertRentBox(con, memberCode, bookCode);
         } else if (answer == 2) {

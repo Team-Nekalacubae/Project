@@ -33,7 +33,6 @@ public class Menu {
 
         while (true) {
             System.out.println("============= NEKALAeBOOK =============");
-            System.out.println();
             System.out.println("1. 회원으로 이용");
             System.out.println("2. 비회원으로 이용");
             System.out.println("0. 프로그램 종료");
@@ -235,21 +234,19 @@ public class Menu {
                 System.out.println("3. 도서 추가 요청");
                 System.out.println("4. 도서 대여 및 구매");
                 System.out.println("5. 개인 대여 및 소장 도서 목록 조회");
-                System.out.println("6. 회원 탈퇴\n");
+                System.out.println("6. 회원 탈퇴");
             }
+            if (memberInfo[1] > 2) {
+                System.out.println("9. 회원 가입");
+            }
+            System.out.println("0. 메뉴 선택 프로그램 종료");
             if (memberInfo[1] == 1) {
                 System.out.println("-------------- 관리자 전용 메뉴 --------------");
                 System.out.println("10. 도서 관리");
-                System.out.println("20. 회원 관리\n");
+                System.out.println("20. 회원 관리");
             }
-            if (memberInfo[1] > 2) {
-                System.out.println("9. 회원 가입\n");
-            }
-            System.out.println();
-            System.out.println("0. 메뉴 선택 프로그램 종료\n");
             System.out.print("메뉴를 선택하세요 : ");
             select = sc.nextInt();
-            System.out.println();
 
             switch (select) {
                 case 1:
@@ -333,6 +330,7 @@ public class Menu {
         for (OutMemberDTO member : memberList) {
             System.out.println(member);
         }
+        System.out.println();
     }
 
     private void bookBoxMenu() {
@@ -342,22 +340,23 @@ public class Menu {
         rentList = manager.rentBox(con, memberInfo[0]);
         buyList = manager.buyBox(con, memberInfo[0]);
 
-        System.out.println();
+        System.out.println("대여 도서 목록\n");
         if (!rentList.isEmpty()) {
             for (BoxDTO book : rentList) {
                 System.out.println(book);
             }
         } else if (rentList.isEmpty()) {
-            System.out.println("대여 중인 도서가 없습니다.\n");
+            System.out.println("대여 중인 도서가 없습니다.");
         }
-        System.out.println();
+        System.out.println("소장 도서 목록\n");
         if (!buyList.isEmpty()) {
             for (BoxDTO book : buyList) {
                 System.out.println(book);
             }
         } else if (buyList.isEmpty()) {
-            System.out.println("소장 중인 도서가 없습니다.\n");
+            System.out.println("소장 중인 도서가 없습니다.");
         }
+        System.out.println();
     }
 
     public void bookSearchMenu() {
@@ -435,9 +434,9 @@ public class Menu {
         result = manager.bookRent(con, memberInfo[0], bookCode, choice);
 
         if (result > 0) {
-            System.out.println("도서 대여(소장) 완료\n");
+            System.out.println("도서 대여(소장) 완료");
         } else {
-            System.out.println("도서 대여(소장) 실패\n");
+            System.out.println("도서 대여(소장) 실패");
         }
     }
 
@@ -489,9 +488,10 @@ public class Menu {
     public void bookSortByGenreMenu() {
         List<BookDTO> bookList = new ArrayList<>();
 
+        System.out.println("================ 조건 선택 ================");
         System.out.println("1. 비문학 | 2. 철학 | 3. 드라마 | 4. 액션 | 5. 무협 | 6. 개그");
         System.out.println("7. 판타지 | 8. 모험 | 9. 아동  | 10. 사회 | 11. 인문");
-        System.out.println("조회 하려는 장르를 선택하세요 : ");
+        System.out.print("조회 하려는 장르를 선택하세요 : ");
         int genre = sc.nextInt();
         System.out.println();
 
@@ -506,6 +506,7 @@ public class Menu {
     public void bookSortByTypeMenu() {
         List<BookDTO> bookList = new ArrayList<>();
 
+        System.out.println("================ 조건 선택 ================");
         System.out.println("1. 수필 | 2. 참고서 | 3. 만화 | 4. 동화 | 5. 자기계발서 | 6. 소설");
         System.out.print("조회 하려는 종류를 선택하세요 : ");
         int type = sc.nextInt();
@@ -554,9 +555,9 @@ public class Menu {
         result = manager.bookRent(con, memberInfo[0], bookCode, answer);
 
         if (result > 0) {
-            System.out.println("도서 대여(소장) 완료\n");
+            System.out.println("도서 대여(소장) 완료");
         } else {
-            System.out.println("도서 대여(소장) 실패\n");
+            System.out.println("도서 대여(소장) 실패");
         }
     }
 
@@ -584,13 +585,12 @@ public class Menu {
         int result = 0;
         String[] signUpAddInfo = new String[3];
 
-        System.out.println();
         System.out.print("이름을 입력하세요 : ");
-        String name = sc.nextLine();
-        System.out.println("전화번호를 입력하세요(예 : 010-0000-0000) : ");
-        String phone = sc.nextLine();
-        System.out.println("이메일 주소를 입력하세요(예 : example@gmail.com) : ");
-        String email = sc.nextLine();
+        signUpAddInfo[0] = sc.nextLine();
+        System.out.print("전화번호를 입력하세요(예 : 010-0000-0000) : ");
+        signUpAddInfo[1] = sc.nextLine();
+        System.out.print("이메일 주소를 입력하세요(예 : example@gmail.com) : ");
+        signUpAddInfo[2] = sc.nextLine();
         System.out.println();
 
         result = manager.signUp(con, signUpInfo, signUpAddInfo);
@@ -612,12 +612,12 @@ public class Menu {
         for (SearchDTO history : searchHistoryList) {
             System.out.println(history);
         }
-        bookSearchMenu();
         System.out.println();
+        bookSearchMenu();
     }
 
     public void printRequestMemberMenu() {
-        System.out.println("========== 회원 가입 승인 요청 목록 ==========\n");
+        System.out.println("========== 회원 가입 승인 요청 목록 ==========");
         List<MemberDTO> requestList = manager.printRequestMember(con);
 
         if (!requestList.isEmpty()) {
@@ -627,8 +627,9 @@ public class Menu {
             approveMemberMenu();
         } else {
             System.out.println("회원 가입 요청 목록이 비었습니다.");
-            System.out.println("관리자 메뉴로 돌아갑니다.\n");
+            System.out.println("관리자 메뉴로 돌아갑니다.");
         }
+        System.out.println();
     }
 
     public void approveMemberMenu() {
@@ -667,7 +668,7 @@ public class Menu {
     public void withdrawMemberMenu() {
         int result = 0;
 
-        System.out.println("=============== 회원 탈퇴 ===============\n");
+        System.out.println("=============== 회원 탈퇴 ===============");
         System.out.print("정말 탈퇴 하시겠습니까? (1. 예 / 2. 아니오) : ");
         sc.nextLine();
         String answer = sc.nextLine();
@@ -678,6 +679,7 @@ public class Menu {
 
             if (result > 0) {
                 System.out.println("회원 탈퇴가 처리됐습니다.\n");
+                memberInfo[1] = 4;
             } else {
                 System.out.println("회원 탈퇴가 처리되지 않았습니다.\n");
             }
@@ -693,6 +695,7 @@ public class Menu {
 
         System.out.println("=============== 도서 입력 ===============");
         System.out.print("도서의 제목을 입력하세요 : ");
+        sc.nextLine();
         String bookName = sc.nextLine();
         System.out.print("도서의 저자를 입력하세요 : ");
         String bookAuthor = sc.nextLine();

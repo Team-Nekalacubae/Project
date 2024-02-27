@@ -71,11 +71,11 @@ public class BookDTO implements java.io.Serializable {
         @Override
         public String toString() {
             return  "도서 번호 : " + bookCode +
-                    ", 도서 제목 : " + bookName + '\'' +
-                    ", 도서 저자 : " + bookAuthor + '\'' +
-                    ", 도서 출판사 : " + bookPublisher + '\'' +
-                    ", 도서 장르 : " + bookGenre + '\'' +
-                    ", 도서 종류 : " + bookType + '\'';
+                    ", 도서 제목 : " + bookName +
+                    ", 도서 저자 : " + bookAuthor +
+                    ", 도서 출판사 : " + bookPublisher +
+                    ", 도서 장르 : " + bookGenre +
+                    ", 도서 종류 : " + bookType;
         }
     }
 

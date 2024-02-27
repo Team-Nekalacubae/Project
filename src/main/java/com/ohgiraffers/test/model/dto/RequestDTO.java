@@ -64,9 +64,9 @@ public class RequestDTO implements Serializable {
 
     @Override
     public String toString() {
-        return  "도서 제목 : " + requestTitle + '\'' +
-                ", 도서 저자 : " + requestAuthor + '\'' +
-                ", 도서 출판사 : '" + requestPublisher + '\'' +
+        return  "도서 제목 : " + requestTitle +
+                ", 도서 저자 : " + requestAuthor +
+                ", 도서 출판사 : '" + requestPublisher +
                 ", 신청 회원 번호 : " + memberCode +
                 ", 요청일 : " + requestDate;
     }
