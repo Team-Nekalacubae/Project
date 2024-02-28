@@ -81,6 +81,8 @@ public class Menu {
         memberInfo = manager.signIn(con, signInInfo);
 
         if (memberInfo[1] > 0 && memberInfo[1] < 3) {
+            List<String> member = manager.printSelectMemberInfo(con, memberInfo[0]);
+            System.out.println(member.get(2) + "님 회원 확인되었습니다.");
             menu();
         } else {
             System.out.println("사용자 정보를 확인할 수 없습니다.");
