@@ -283,4 +283,24 @@ public class Manager {
 
         return isTrue;
     }
+
+    public boolean isEqualPw(Connection con, String memberId, String memberPw) {
+        String callMemberPw = registMemberDAO.callPassword(con, memberId);
+        boolean isTrue = memberPw.equals(callMemberPw);
+
+        return isTrue;
+    }
+
+    public List<String> printSelectMemberInfo(Connection con, int memberCode) {
+        List<String> memberInformation = registMemberDAO.selectMemberInfo(con, memberCode);
+
+        return memberInformation;
+    }
+
+    public int updateMemberInfo(Connection con, String[] changeMemberInfo, int memberCode) {
+        int result = 0;
+        result = registMemberDAO.updateMemberInfo(con, changeMemberInfo, memberCode);
+
+        return result;
+    }
 }

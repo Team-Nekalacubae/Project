@@ -242,7 +242,8 @@ public class Menu {
                 System.out.println("3. 도서 추가 요청");
                 System.out.println("4. 도서 대여 및 구매");
                 System.out.println("5. 개인 대여 및 소장 도서 목록 조회");
-                System.out.println("6. 회원 탈퇴");
+                System.out.println("6. 개인정보 조회 및 변경");
+                System.out.println("7. 회원 탈퇴");
             }
             if (memberInfo[1] > 2) {
                 System.out.println("9. 회원 가입");
@@ -286,6 +287,13 @@ public class Menu {
                     break;
                 case 6:
                     if (memberInfo[1] < 3) {
+                        selfCheckMemberInfo();
+                    } else {
+                        System.out.println("잘못된 메뉴입니다. 다시 선택해 주세요.\n");
+                    }
+                    break;
+                case 7:
+                    if (memberInfo[1] < 3) {
                         withdrawMemberMenu();
                     } else {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해 주세요.\n");
@@ -312,7 +320,6 @@ public class Menu {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해 주세요.\n");
                     }
                     break;
-
                 case 0:
                     break;
                 case 12:
@@ -798,6 +805,76 @@ public class Menu {
                     }
                 }
             }
+        }
+    }
+
+    public void selfCheckMemberInfo() {
+        while (true) {
+            System.out.println("========== 개인정보 조회 및 변경 ==========");
+            System.out.println("개인정보 조회를 위해 아이디와 비밀번호를 입력해 주세요.");
+            System.out.print("아이디 : ");
+            sc.nextLine();
+            String memberId = sc.nextLine();
+            System.out.print("비밀번호 : ");
+            String memberPw = sc.nextLine();
+            int answer = 0;
+            if (manager.isEqualPw(con, memberId, memberPw)) {
+                System.out.println("----------- 개인정보 조회 결과 ------------");
+                List<String> member = manager.printSelectMemberInfo(con, memberInfo[0]);
+                System.out.print("[ 아이디 : " + member.get(0));
+                System.out.print(" | 비밀번호 : " + member.get(1));
+                System.out.print(" | 이름 : " + member.get(2));
+                System.out.print(" | 전화번호 : " + member.get(3));
+                System.out.println(" | 메일주소 : " + member.get(4) + " ]\n");
+                System.out.print("회원 정보를 변경하시겠습니까? (1. 예 / 2. 아니오 : ");
+                answer = sc.nextInt();
+                if (answer == 1) {
+                    changeMemberInfo();
+                    break;
+                } else if (answer == 2){
+                    System.out.println("회원 정보 변경을 종료하겠습니다.");
+                    break;
+                }
+            } else {
+                System.out.println("사용자 정보를 확인 할 수 없습니다.");
+                System.out.print("회원 정보 조회를 종료하시겠습니까? (1. 예 /2. 아니오 : ");
+                answer = sc.nextInt();
+                if (answer == 1) {
+                    System.out.println("회원 정보 조회를 종료합니다.");
+                    break;
+                } else if (answer == 2) {
+                    System.out.println();
+                } else {
+                    System.out.println("잘 못 응답 하셨습니다.");
+                }
+
+            }
+        }
+
+    }
+    public void changeMemberInfo() {
+        System.out.println("변경 가능한 회원 정보는 '비밀번호, 전화번호, 메일주소' 입니다.");
+        System.out.print("변경할 비밀번호 : ");
+        sc.nextLine();
+        String changePw = sc.nextLine();
+        System.out.print("변경할 전화번호 : ");
+        String changePhone = sc.nextLine();
+        System.out.print("변경할 메일주소 : ");
+        String changeEmail = sc.nextLine();
+        String[] changeMemberInfo = {changePw, changePhone, changeEmail};
+        int result = 0;
+        result = manager.updateMemberInfo(con, changeMemberInfo, memberInfo[0]);
+        if (result > 0) {
+            System.out.println("------------- 변경된 회원 정보 -------------");
+            List<String> changeMember = manager.printSelectMemberInfo(con, memberInfo[0]);
+            System.out.print("[ 아이디 : " + changeMember.get(0));
+            System.out.print(" | 비밀번호 : " + changeMember.get(1));
+            System.out.print(" | 이름 : " + changeMember.get(2));
+            System.out.print(" | 전화번호 : " + changeMember.get(3));
+            System.out.println(" | 메일주소 : " + changeMember.get(4) + " ]\n");
+            System.out.println("회원 정보 변경이 완료 되었습니다.");
+        } else {
+            System.out.println("회원 정보 변경이 실패 되었습니다.");
         }
     }
 }
