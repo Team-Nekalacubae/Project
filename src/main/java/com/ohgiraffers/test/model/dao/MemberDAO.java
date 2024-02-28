@@ -3,9 +3,11 @@ package com.ohgiraffers.test.model.dao;
 import com.ohgiraffers.test.model.dto.MemberDTO;
 import com.ohgiraffers.test.model.dto.OutMemberDTO;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -289,5 +291,24 @@ public class MemberDAO {
             close(rset);
         }
         return memberIdList;
+    }
+
+    public int insertOutMember(Connection con, int memberCode) {
+        Statement stmt = null;
+
+        LocalDate now = LocalDate.now();
+
+        int result = 0;
+        String query = "INSERT INTO OUT_MEMBER (OUT_DATE, MEMBER_CODE) VALUES ('" + String.valueOf(now) + "', " + memberCode + ')';
+        try {
+            stmt = con.createStatement();
+
+            result = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(stmt);
+        }
+        return result;
     }
 }
