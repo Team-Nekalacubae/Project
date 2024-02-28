@@ -641,7 +641,7 @@ public class Menu {
     public void searchHistoryMenu() {
         List<SearchDTO> searchHistoryList = new ArrayList<>();
 
-        System.out.println("최근 검색한 5개의 도서를 출력합니다.\n");
+        System.out.println("최근 검색한 10개의 도서를 출력합니다.\n");
 
         searchHistoryList = manager.searchHistory(con);
 

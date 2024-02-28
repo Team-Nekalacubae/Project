@@ -369,7 +369,7 @@ public class BookDAO {
         String query = prop.getProperty("searchHistory");
 
 
-        SearchDTO book = null;
+        SearchDTO search = null;
         List<SearchDTO> searchHistoryList = null;
 
         try {
@@ -378,15 +378,15 @@ public class BookDAO {
 
             searchHistoryList = new ArrayList<>();
             while (rset.next()) {
-                book = new SearchDTO();
+                search = new SearchDTO();
 
-                book.setBookCode(rset.getInt("BOOK_CODE"));
-                book.setSearchName(rset.getString("SEARCH_NAME"));
-                book.setSearchDate(rset.getDate("SEARCH_DATE"));
-                book.setSearchTime(rset.getTime("SEARCH_TIME"));
-                book.setSearchElement(rset.getString("SEARCH_ELEMENT"));
+                search.setBookCode(rset.getInt("BOOK_CODE"));
+                search.setBookName(rset.getString("BOOK_NAME"));
+                search.setSearchDate(rset.getDate("SEARCH_DATE"));
+                search.setSearchTime(rset.getTime("SEARCH_TIME"));
+                search.setSearchElement(rset.getString("SEARCH_ELEMENT"));
 
-                    searchHistoryList.add(book);
+                searchHistoryList.add(search);
 
 
             }
