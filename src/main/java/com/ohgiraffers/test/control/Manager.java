@@ -26,8 +26,12 @@ public class Manager {
     }
 
     public int deleteMember(Connection con, int memberCode) {
-        int result = registMemberDAO.updateMemberType(con, memberCode, 4);
+        int result = 0;
+        int check = registMemberDAO.insertOutMember(con, memberCode);
 
+        if (check > 0) {
+            result = registMemberDAO.updateMemberType(con, memberCode, 4);
+        }
         return result;
     }
 
