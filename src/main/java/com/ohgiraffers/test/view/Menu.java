@@ -789,21 +789,24 @@ public class Menu {
             int bookCode = bookList.get(answer - 1).getBookCode();
 
             System.out.println("\n" + bookList.get(answer - 1));
-
-            if (!bookList.isEmpty()) {
-                if (memberInfo[1] == 1) {
-                    System.out.print("선택된 도서를 삭제하시겠습니까? (1. 예 / 2. 아니오) : ");
-                    answer = sc.nextInt();
-                    if (answer == 1) {
-                        directBookDeleteMenu(bookCode);
-                    }
-                } else if (memberInfo[1] == 2) {
-                    System.out.print("선택된 도서를 대여, 혹은 소장하시겠습니까? (1. 예 / 2. 아니오) : ");
-                    answer = sc.nextInt();
-                    if (answer == 1) {
-                        directBookRentMenu(bookCode);
+            if (manager.boxDuplicateCheck(con, memberInfo[0], bookCode)) {
+                if (!bookList.isEmpty()) {
+                    if (memberInfo[1] == 1) {
+                        System.out.print("선택된 도서를 삭제하시겠습니까? (1. 예 / 2. 아니오) : ");
+                        answer = sc.nextInt();
+                        if (answer == 1) {
+                            directBookDeleteMenu(bookCode);
+                        }
+                    } else if (memberInfo[1] == 2) {
+                        System.out.print("선택된 도서를 대여, 혹은 소장하시겠습니까? (1. 예 / 2. 아니오) : ");
+                        answer = sc.nextInt();
+                        if (answer == 1) {
+                            directBookRentMenu(bookCode);
+                        }
                     }
                 }
+            } else {
+                System.out.println("이미 대여(소장) 중인 도서입니다.");
             }
         }
     }
