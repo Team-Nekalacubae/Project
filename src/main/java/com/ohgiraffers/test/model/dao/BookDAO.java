@@ -673,7 +673,12 @@ public class BookDAO {
         Statement stmt = null;
         ResultSet rset = null;
 
-        String query = "SELECT BOOK_CODE FROM BOX WHERE MEMBER_CODE = " + memberCode;
+        LocalDate now = LocalDate.now();
+        String nStr = String.valueOf(now);
+        String rdStr;
+        String edStr;
+
+        String query = "SELECT * FROM BOX WHERE MEMBER_CODE = " + memberCode;
 
         ArrayList<Integer> bookNumberList = null;
         try {
@@ -682,7 +687,16 @@ public class BookDAO {
             bookNumberList = new ArrayList<>();
 
             while (rset.next()) {
-                bookNumberList.add(rset.getInt("BOOK_CODE"));
+                rdStr = String.valueOf(rset.getDate("RENTAL_DATE"));
+                edStr = String.valueOf(rset.getDate("END_DATE"));
+
+                if (!rset.getBoolean("RENTAL")) {
+                        bookNumberList.add(rset.getInt("BOOK_CODE"));
+                } else if (rset.getBoolean("RENTAL")){
+                    if ((nStr.compareTo(rdStr) >= 0) && (nStr.compareTo(edStr) <= 0)) {
+                        bookNumberList.add(rset.getInt("BOOK_CODE"));
+                    }
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
