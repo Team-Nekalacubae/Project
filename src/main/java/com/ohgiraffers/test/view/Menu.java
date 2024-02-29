@@ -10,6 +10,7 @@ import com.ohgiraffers.test.model.dto.SearchDTO;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,9 +42,14 @@ public class Menu {
             System.out.println("0. 프로그램 종료");
             System.out.println();
             System.out.print("메뉴를 선택하세요 : ");
-            select = sc.nextInt();
-            System.out.println();
-
+            try {
+                select = sc.nextInt();
+                System.out.println();
+            } catch (InputMismatchException e) {
+                System.out.print("메뉴에 해당하는 숫자를 입력해야 합니다. 다시 입력해 주세요 : ");
+                sc.nextLine();
+                select =sc.nextInt();
+            }
             switch (select) {
                 case 1:
                     signInMenu();
@@ -61,9 +67,11 @@ public class Menu {
                     System.out.println("다시 선택해주세요");
                     break;
             }
+
             if (select == 0) {
                 break;
             }
+
         }
     }
 
@@ -101,9 +109,14 @@ public class Menu {
             System.out.println("3. 도서 삭제");
             System.out.println("0. 관리자 메뉴 종료");
             System.out.print("메뉴를 선택하세요 : ");
-            select = sc.nextInt();
-            System.out.println();
-
+            try {
+                select = sc.nextInt();
+                System.out.println();
+            } catch (InputMismatchException e) {
+                System.out.print("메뉴에 해당하는 숫자를 입력해야 합니다. 다시 입력해 주세요 : ");
+                sc.nextLine();
+                select = sc.nextInt();
+            }
             switch (select) {
                 case 1:
                     printRequestBookMenu();
@@ -140,9 +153,14 @@ public class Menu {
             System.out.println("6. 관리자 권한 부여");
             System.out.println("0. 관리자 메뉴 종료");
             System.out.print("메뉴를 선택하세요 : ");
-            select = sc.nextInt();
-            System.out.println();
-
+            try {
+                select = sc.nextInt();
+                System.out.println();
+            } catch (InputMismatchException e) {
+                System.out.print("메뉴에 해당하는 숫자를 입력해야 합니다. 다시 입력해 주세요 : ");
+                sc.nextLine();
+                select =sc.nextInt();
+            }
             switch (select) {
                 case 1:
                     printAllMemberMenu();
@@ -202,8 +220,15 @@ public class Menu {
             System.out.print("5. 이메일 : ");
             String memberEmail = sc.nextLine();
             System.out.print("6. 회원 유형 : ");
-            int memeberType = sc.nextInt();
-            System.out.println();
+            int memeberType = 0;
+            try {
+                memeberType = sc.nextInt();
+                System.out.println();
+            } catch (InputMismatchException e) {
+                System.out.print("회원 유형에 해당하는 숫자를 입력해야 합니다. 다시 입력해 주세요 : ");
+                sc.nextLine();
+                memeberType = sc.nextInt();
+            }
 
             MemberDTO newMember = new MemberDTO(0, memberId, memberPw, memberName, memberPhone, memberEmail, memeberType);
             int result = manager.addNewMember(con, newMember);
@@ -221,8 +246,15 @@ public class Menu {
     public void deleteMemberMenu() {
         System.out.println("============= 회원 정보 삭제 =============");
         System.out.print("삭제할 회원의 회원 번호를 입력하세요. : ");
-        int memberCode = sc.nextInt();
-        System.out.println();
+        int memberCode = 0;
+        try {
+            memberCode = sc.nextInt();
+            System.out.println();
+        } catch (InputMismatchException e) {
+            System.out.print("잘 못된 번호 입니다. 다시 입력해 주세요 : ");
+            sc.nextLine();
+            memberCode = sc.nextInt();
+        }
 
         int result = manager.deleteMember(con, memberCode);
 
@@ -257,8 +289,13 @@ public class Menu {
                 System.out.println("20. 회원 관리");
             }
             System.out.print("메뉴를 선택하세요 : ");
-            select = sc.nextInt();
-
+            try {
+                select = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.print("메뉴에 해당하는 숫자를 입력해야합니다. 다시 입력해 주세요 : ");
+                sc.nextLine();
+                select = sc.nextInt();
+            }
             switch (select) {
                 case 1:
                     searchHistoryMenu();
@@ -409,14 +446,26 @@ public class Menu {
         if (!bookList.isEmpty()) {
             if (memberInfo[1] == 1) {
                 System.out.print("검색된 도서를 삭제하시겠습니까? (1. 예 / 2. 아니오) : ");
-                answer = sc.nextInt();
+                try {
+                    answer = sc.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+                    sc.nextLine();
+                    answer = sc.nextInt();
+                }
                 if (answer == 1) {
                     directBookDeleteMenu(bookCode);
                 }
             } else if (memberInfo[1] == 2) {
                 if (manager.boxDuplicateCheck(con, memberInfo[0], bookCode)) {
                     System.out.print("검색된 도서를 대여, 혹은 소장하시겠습니까? (1. 예 / 2. 아니오) : ");
-                    answer = sc.nextInt();
+                    try {
+                        answer = sc.nextInt();
+                    } catch (InputMismatchException e) {
+                        System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+                        sc.nextLine();
+                        answer = sc.nextInt();
+                    }
                     if (answer == 1) {
                         directBookRentMenu(bookCode);
                     }
@@ -428,13 +477,25 @@ public class Menu {
             System.out.println("조건에 맞는 도서가 존재하지 않습니다.");
             if (memberInfo[1] == 1) {
                 System.out.print("도서를 추가 하시겠습니까? (1. 예 / 2. 아니오) : ");
-                answer = sc.nextInt();
+                try {
+                    answer = sc.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+                    sc.nextLine();
+                    answer = sc.nextInt();
+                }
                 if (answer == 1) {
                     addNewBookMenu();
                 }
             } else if (memberInfo[1] == 2) {
                 System.out.print("도서 추가 요청을 하시겠습니까? (1. 예 / 2. 아니오) : ");
-                answer = sc.nextInt();
+                try {
+                    answer = sc.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+                    sc.nextLine();
+                    answer = sc.nextInt();
+                }
                 if (answer == 1) {
                     addBookRequestMenu();
                 }
@@ -501,8 +562,14 @@ public class Menu {
 
         System.out.println("=========== 조건별 도서 목록 조회 ===========");
         System.out.print("조회 조건을 선택하세요 (1. 장르 / 2. 종류 ) : ");
-        select = sc.nextInt();
-        System.out.println();
+        try {
+            select = sc.nextInt();
+            System.out.println();
+        } catch (InputMismatchException e) {
+            System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+            sc.nextLine();
+            select = sc.nextInt();
+        }
 
         if (select == 1) {
             bookSortByGenreMenu();
@@ -513,14 +580,19 @@ public class Menu {
 
     public void bookSortByGenreMenu() {
         List<BookDTO> bookList = new ArrayList<>();
-
+        int genre = 0;
         System.out.println("================ 조건 선택 ================");
         System.out.println("1. 비문학 | 2. 철학 | 3. 드라마 | 4. 액션  | 5. 무협 | 6. 개그");
         System.out.println("7. 판타지 | 8. 모험 | 9. 아동   | 10. 사회 | 11. 인문");
         System.out.print("조회 하려는 장르를 선택하세요 : ");
-        int genre = sc.nextInt();
-        System.out.println();
-
+        try {
+            genre = sc.nextInt();
+            System.out.println();
+        } catch (InputMismatchException e) {
+            System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+            sc.nextLine();
+            genre = sc.nextInt();
+        }
         bookList = manager.bookSortByGenre(con, genre);
 
         for (BookDTO book : bookList) {
@@ -532,12 +604,18 @@ public class Menu {
     public void bookSortByTypeMenu() {
         List<BookDTO> bookList = new ArrayList<>();
 
+        int type = 0;
         System.out.println("================ 조건 선택 ================");
         System.out.println("1. 수필 | 2. 참고서 | 3. 만화 | 4. 동화 | 5. 자기계발서 | 6. 소설");
         System.out.print("조회 하려는 종류를 선택하세요 : ");
-        int type = sc.nextInt();
-        System.out.println();
-
+        try {
+            type = sc.nextInt();
+            System.out.println();
+        } catch (InputMismatchException e) {
+            System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+            sc.nextLine();
+            type = sc.nextInt();
+        }
         bookList = manager.bookSortByType(con, type);
 
         for (BookDTO book : bookList) {
@@ -575,13 +653,26 @@ public class Menu {
 
     public void bookRentMenu() {
         int result = 0;
-
+        int bookCode = 0;
+        int answer = 0;
         System.out.print("대여 혹은 소장을 원하는 도서의 도서 코드를 입력하세요 : ");
-        int bookCode = sc.nextInt();
+        try {
+            bookCode = sc.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.print("도서 번호는 숫자로 입력해야 합니다. 다시 입력해 주세요 : ");
+            sc.nextLine();
+            bookCode = sc.nextInt();
+        }
         if (manager.boxDuplicateCheck(con, memberInfo[0], bookCode)) {
             System.out.print("대여 혹은 소장을 선택하세요 (1. 대여 / 2. 소장) : ");
-            int answer = sc.nextInt();
-            System.out.println();
+            try {
+                answer = sc.nextInt();
+                System.out.println();
+            } catch (InputMismatchException e) {
+                System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+                sc.nextLine();
+                answer = sc.nextInt();
+            }
 
             result = manager.bookRent(con, memberInfo[0], bookCode, answer);
 
@@ -759,10 +850,17 @@ public class Menu {
     }
 
     public void grantManagerMenu() {
+        int memberCode = 0;
         System.out.println("============= 관리자 권한 부여 =============\n");
         System.out.print("관리자 권한을 부여할 회원의 회원 번호를 입력하세요 : ");
-        int memberCode = sc.nextInt();
-        System.out.println();
+        try {
+            memberCode = sc.nextInt();
+            System.out.println();
+        } catch (InputMismatchException e) {
+            System.out.print("회원 번호는 숫자로 입력해야 합니다. 다시 입력해 주세요 : ");
+            sc.nextLine();
+            memberCode = sc.nextInt();
+        }
 
         int result = 0;
 
@@ -776,17 +874,31 @@ public class Menu {
     }
 
     public void pileOfBooksMenu(List<BookDTO> bookList) {
+        int select = 0;
         System.out.println("2개 이상의 도서가 검색됐습니다.");
         System.out.print("추가 선택을 진행하시겠습니까? (1. 예 / 2. 아니오) : ");
-        int select = sc.nextInt();
+        try {
+            select = sc.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+            sc.nextLine();
+            select = sc.nextInt();
+        }
         if (select == 1) {
             System.out.println();
             for (int i = 0; i < bookList.size(); i++) {
                 System.out.println((i + 1) + "번 : " + bookList.get(i));
             }
             System.out.println();
+            int answer = 0;
             System.out.print("추가 선택을 진행할 도서를 선택하세요 : ");
-            int answer = sc.nextInt();
+            try {
+                answer = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+                sc.nextLine();
+                answer = sc.nextInt();
+            }
 
             int bookCode = bookList.get(answer - 1).getBookCode();
 
@@ -795,7 +907,13 @@ public class Menu {
                 if (!bookList.isEmpty()) {
                     if (memberInfo[1] == 1) {
                         System.out.print("선택된 도서를 삭제하시겠습니까? (1. 예 / 2. 아니오) : ");
-                        answer = sc.nextInt();
+                        try {
+                            answer = sc.nextInt();
+                        } catch (InputMismatchException e) {
+                            System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+                            sc.nextLine();
+                            answer = sc.nextInt();
+                        }
                         if (answer == 1) {
                             directBookDeleteMenu(bookCode);
                         }
@@ -832,18 +950,30 @@ public class Menu {
                 System.out.print(" | 전화번호 : " + member.get(3));
                 System.out.println(" | 메일주소 : " + member.get(4) + " ]\n");
                 System.out.print("회원 정보를 변경하시겠습니까? (1. 예 / 2. 아니오 : ");
-                answer = sc.nextInt();
+                try {
+                    answer = sc.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+                    sc.nextLine();
+                    answer = sc.nextInt();
+                }
                 if (answer == 1) {
                     changeMemberInfo();
                     break;
-                } else if (answer == 2){
+                } else if (answer == 2) {
                     System.out.println("회원 정보 변경을 종료하겠습니다.");
                     break;
                 }
             } else {
                 System.out.println("사용자 정보를 확인 할 수 없습니다.");
                 System.out.print("회원 정보 조회를 종료하시겠습니까? (1. 예 /2. 아니오 : ");
-                answer = sc.nextInt();
+                try {
+                    answer = sc.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.print("잘 못된 응답입니다. 다시 입력해 주세요 : ");
+                    sc.nextLine();
+                    answer = sc.nextInt();
+                }
                 if (answer == 1) {
                     System.out.println("회원 정보 조회를 종료합니다.");
                     break;
@@ -857,6 +987,7 @@ public class Menu {
         }
 
     }
+
     public void changeMemberInfo() {
         System.out.println("변경 가능한 회원 정보는 '비밀번호, 전화번호, 메일주소' 입니다.");
         System.out.print("변경할 비밀번호 : ");
