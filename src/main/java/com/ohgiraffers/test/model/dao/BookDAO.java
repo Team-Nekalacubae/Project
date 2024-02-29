@@ -53,7 +53,7 @@ public class BookDAO {
             while (rset.next()) {
                 book = new BookDTO();
 
-                book.setBookCode(bookCode);
+                book.setBookCode(rset.getInt("BOOK_CODE"));
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
@@ -108,7 +108,8 @@ public class BookDAO {
             while (rset.next()) {
                 book = new BookDTO();
 
-                book.setBookCode(bookCode);
+//                book.setBookCode(bookCode);
+                book.setBookCode(rset.getInt("BOOK_CODE"));
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
@@ -164,7 +165,8 @@ public class BookDAO {
             while (rset.next()) {
                 book = new BookDTO();
 
-                book.setBookCode(bookCode);
+//                book.setBookCode(bookCode);
+                book.setBookCode(rset.getInt("BOOK_CODE"));
                 book.setBookName(rset.getString("BOOK_NAME"));
                 book.setBookAuthor(rset.getString("BOOK_AUTHOR"));
                 book.setBookGenre(rset.getString("BOOK_GENRE"));
@@ -367,7 +369,7 @@ public class BookDAO {
         String query = prop.getProperty("searchHistory");
 
 
-        SearchDTO book = null;
+        SearchDTO search = null;
         List<SearchDTO> searchHistoryList = null;
 
         try {
@@ -376,15 +378,15 @@ public class BookDAO {
 
             searchHistoryList = new ArrayList<>();
             while (rset.next()) {
-                book = new SearchDTO();
+                search = new SearchDTO();
 
-                book.setBookCode(rset.getInt("BOOK_CODE"));
-                book.setSearchName(rset.getString("SEARCH_NAME"));
-                book.setSearchDate(rset.getDate("SEARCH_DATE"));
-                book.setSearchTime(rset.getTime("SEARCH_TIME"));
-                book.setSearchElement(rset.getString("SEARCH_ELEMENT"));
+                search.setBookCode(rset.getInt("BOOK_CODE"));
+                search.setBookName(rset.getString("BOOK_NAME"));
+                search.setSearchDate(rset.getDate("SEARCH_DATE"));
+                search.setSearchTime(rset.getTime("SEARCH_TIME"));
+                search.setSearchElement(rset.getString("SEARCH_ELEMENT"));
 
-                    searchHistoryList.add(book);
+                searchHistoryList.add(search);
 
 
             }
@@ -664,5 +666,71 @@ public class BookDAO {
             close(rset);
         }
         return book;
+    }
+
+
+    public ArrayList<Integer> callBoxBookNumber(Connection con, int memberCode) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        LocalDate now = LocalDate.now();
+        String nStr = String.valueOf(now);
+        String rdStr;
+        String edStr;
+
+        String query = "SELECT * FROM BOX WHERE MEMBER_CODE = " + memberCode;
+
+        ArrayList<Integer> bookNumberList = null;
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+            bookNumberList = new ArrayList<>();
+
+            while (rset.next()) {
+                rdStr = String.valueOf(rset.getDate("RENTAL_DATE"));
+                edStr = String.valueOf(rset.getDate("END_DATE"));
+
+                if (!rset.getBoolean("RENTAL")) {
+                        bookNumberList.add(rset.getInt("BOOK_CODE"));
+                } else if (rset.getBoolean("RENTAL")){
+                    if ((nStr.compareTo(rdStr) >= 0) && (nStr.compareTo(edStr) <= 0)) {
+                        bookNumberList.add(rset.getInt("BOOK_CODE"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return bookNumberList;
+    }
+
+    public ArrayList<String> callBookName(Connection con) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        String query = "SELECT BOOK_NAME FROM BOOKS";
+
+        ArrayList<String> bookNameList = null;
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            bookNameList = new ArrayList<>();
+
+            while (rset.next()) {
+                bookNameList.add(rset.getString("BOOK_NAME"));
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return bookNameList;
     }
 }

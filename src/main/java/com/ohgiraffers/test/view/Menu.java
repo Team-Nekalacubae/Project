@@ -32,7 +32,10 @@ public class Menu {
         int select = 0;
 
         while (true) {
-            System.out.println("============= NEKALAeBOOK =============");
+            System.out.println("\n=======================================");
+            System.out.println("|             NEKALAeBOOK             |");
+            System.out.println("=======================================");
+
             System.out.println("1. 회원으로 이용");
             System.out.println("2. 비회원으로 이용");
             System.out.println("0. 프로그램 종료");
@@ -51,6 +54,7 @@ public class Menu {
                     menu();
                     break;
                 case 0:
+                    System.out.println(". . .");
                     System.out.println("NEKALAeBOOK을 종료합니다.");
                     break;
                 default:
@@ -77,6 +81,8 @@ public class Menu {
         memberInfo = manager.signIn(con, signInInfo);
 
         if (memberInfo[1] > 0 && memberInfo[1] < 3) {
+            List<String> member = manager.printSelectMemberInfo(con, memberInfo[0]);
+            System.out.println(member.get(2) + "님 회원 확인되었습니다.");
             menu();
         } else {
             System.out.println("사용자 정보를 확인할 수 없습니다.");
@@ -88,8 +94,8 @@ public class Menu {
         int select = 0;
 
         while (true) {
-            System.out.println("============== 관리 메뉴 ==============");
-            System.out.println("---------------- 도서 ----------------");
+            System.out.println("\n=============== 관리 메뉴 ===============");
+            System.out.println("--------------- 도서 관리 ---------------");
             System.out.println("1. 도서 추가 요청 목록 조회");
             System.out.println("2. 도서 신규 입력");
             System.out.println("3. 도서 삭제");
@@ -124,8 +130,8 @@ public class Menu {
         int select = 0;
 
         while (true) {
-            System.out.println("============== 관리 메뉴 ==============");
-            System.out.println("---------------- 도서 ----------------");
+            System.out.println("\n=============== 관리 메뉴 ===============");
+            System.out.println("--------------- 회원 관리 ---------------");
             System.out.println("1. 회원 목록 조회");
             System.out.println("2. 회원 정보 추가");
             System.out.println("3. 회원 정보 삭제");
@@ -186,25 +192,29 @@ public class Menu {
         System.out.print("1. 아이디 : ");
         sc.nextLine();
         String memberId = sc.nextLine();
-        System.out.print("2. 비밀번호 : ");
-        String memberPw = sc.nextLine();
-        System.out.print("3. 성명 : ");
-        String memberName = sc.nextLine();
-        System.out.print("4. 전화번호 : ");
-        String memberPhone = sc.nextLine();
-        System.out.print("5. 이메일 : ");
-        String memberEmail = sc.nextLine();
-        System.out.print("6. 회원 유형 : ");
-        int memeberType = sc.nextInt();
-        System.out.println();
+        if (manager.isUniqueId(con, memberId)) {
+            System.out.print("2. 비밀번호 : ");
+            String memberPw = sc.nextLine();
+            System.out.print("3. 성명 : ");
+            String memberName = sc.nextLine();
+            System.out.print("4. 전화번호 : ");
+            String memberPhone = sc.nextLine();
+            System.out.print("5. 이메일 : ");
+            String memberEmail = sc.nextLine();
+            System.out.print("6. 회원 유형 : ");
+            int memeberType = sc.nextInt();
+            System.out.println();
 
-        MemberDTO newMember = new MemberDTO(0, memberId, memberPw, memberName, memberPhone, memberEmail, memeberType);
-        int result = manager.addNewMember(con, newMember);
+            MemberDTO newMember = new MemberDTO(0, memberId, memberPw, memberName, memberPhone, memberEmail, memeberType);
+            int result = manager.addNewMember(con, newMember);
 
-        if (result > 0) {
-            System.out.println("신규 회원 정보 입력에 성공했습니다.\n");
+            if (result > 0) {
+                System.out.println("신규 회원 정보 입력에 성공했습니다.\n");
+            } else {
+                System.out.println("신규 회원 정보 입력에 실패했습니다.\n");
+            }
         } else {
-            System.out.println("신규 회원 정보 입력에 실패했습니다.\n");
+            System.out.println("중복된 아이디를 입력했습니다.");
         }
     }
 
@@ -227,21 +237,22 @@ public class Menu {
         int select = 0;
 
         while (true) {
-            System.out.println("=============== 메뉴 선택 ===============");
+            System.out.println("\n=============== 메뉴 선택 ===============");
             System.out.println("1. 도서 키워드 검색");
             System.out.println("2. 조건별 도서 목록 조회");
             if (memberInfo[1] < 3) {
                 System.out.println("3. 도서 추가 요청");
                 System.out.println("4. 도서 대여 및 구매");
                 System.out.println("5. 개인 대여 및 소장 도서 목록 조회");
-                System.out.println("6. 회원 탈퇴");
+                System.out.println("6. 개인정보 조회 및 변경");
+                System.out.println("7. 회원 탈퇴");
             }
             if (memberInfo[1] > 2) {
                 System.out.println("9. 회원 가입");
             }
             System.out.println("0. 메뉴 선택 프로그램 종료");
             if (memberInfo[1] == 1) {
-                System.out.println("-------------- 관리자 전용 메뉴 --------------");
+                System.out.println("------------ 관리자 전용 메뉴 ------------");
                 System.out.println("10. 도서 관리");
                 System.out.println("20. 회원 관리");
             }
@@ -278,6 +289,13 @@ public class Menu {
                     break;
                 case 6:
                     if (memberInfo[1] < 3) {
+                        selfCheckMemberInfo();
+                    } else {
+                        System.out.println("잘못된 메뉴입니다. 다시 선택해 주세요.\n");
+                    }
+                    break;
+                case 7:
+                    if (memberInfo[1] < 3) {
                         withdrawMemberMenu();
                     } else {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해 주세요.\n");
@@ -304,7 +322,6 @@ public class Menu {
                         System.out.println("잘못된 메뉴입니다. 다시 선택해 주세요.\n");
                     }
                     break;
-
                 case 0:
                     break;
                 case 12:
@@ -346,7 +363,7 @@ public class Menu {
                 System.out.println(book);
             }
         } else if (rentList.isEmpty()) {
-            System.out.println("대여 중인 도서가 없습니다.");
+            System.out.println("대여 중인 도서가 없습니다.\n");
         }
         System.out.println("소장 도서 목록\n");
         if (!buyList.isEmpty()) {
@@ -378,7 +395,12 @@ public class Menu {
         for (BookDTO book : bookList) {
             System.out.println(book);
         }
-        bookSearchExpansionMenu(bookCode, bookList);
+
+        if (bookList.size() > 1) {
+            pileOfBooksMenu(bookList);
+        } else if (bookList.size() <= 1) {
+            bookSearchExpansionMenu(bookCode, bookList);
+        }
     }
 
     public void bookSearchExpansionMenu(int bookCode, List<BookDTO> bookList) {
@@ -392,10 +414,14 @@ public class Menu {
                     directBookDeleteMenu(bookCode);
                 }
             } else if (memberInfo[1] == 2) {
-                System.out.print("검색된 도서를 대여, 혹은 소장하시겠습니까? (1. 예 / 2. 아니오) : ");
-                answer = sc.nextInt();
-                if (answer == 1) {
-                    directBookRentMenu(bookCode);
+                if (manager.boxDuplicateCheck(con, memberInfo[0], bookCode)) {
+                    System.out.print("검색된 도서를 대여, 혹은 소장하시겠습니까? (1. 예 / 2. 아니오) : ");
+                    answer = sc.nextInt();
+                    if (answer == 1) {
+                        directBookRentMenu(bookCode);
+                    }
+                } else {
+                    System.out.println("이미 대여(소장) 중인 도서입니다.");
                 }
             }
         } else if (bookList.isEmpty()) {
@@ -434,9 +460,9 @@ public class Menu {
         result = manager.bookRent(con, memberInfo[0], bookCode, choice);
 
         if (result > 0) {
-            System.out.println("도서 대여(소장) 완료");
+            System.out.println("도서 대여(소장)가 완료되었습니다.");
         } else {
-            System.out.println("도서 대여(소장) 실패");
+            System.out.println("도서 대여(소장)가 실패되었습니다.");
         }
     }
 
@@ -447,9 +473,9 @@ public class Menu {
         result = manager.directBookDelete(con, bookCode);
 
         if (result > 0) {
-            System.out.println("도서 삭제 완료\n");
+            System.out.println("도서가 삭제 되었습니다.\n");
         } else {
-            System.out.println("도서 삭제 실패\n");
+            System.out.println("도서가 삭제 되지 않았습니다.\n");
         }
     }
 
@@ -464,9 +490,9 @@ public class Menu {
         result = manager.bookDelete(con, bookCode);
 
         if (result > 0) {
-            System.out.println("도서 삭제 완료\n");
+            System.out.println("도서가 삭제 되었습니다.\n");
         } else {
-            System.out.println("도서 삭제 실패\n");
+            System.out.println("도서가 삭제 되지 않았습니다.\n");
         }
     }
 
@@ -489,8 +515,8 @@ public class Menu {
         List<BookDTO> bookList = new ArrayList<>();
 
         System.out.println("================ 조건 선택 ================");
-        System.out.println("1. 비문학 | 2. 철학 | 3. 드라마 | 4. 액션 | 5. 무협 | 6. 개그");
-        System.out.println("7. 판타지 | 8. 모험 | 9. 아동  | 10. 사회 | 11. 인문");
+        System.out.println("1. 비문학 | 2. 철학 | 3. 드라마 | 4. 액션  | 5. 무협 | 6. 개그");
+        System.out.println("7. 판타지 | 8. 모험 | 9. 아동   | 10. 사회 | 11. 인문");
         System.out.print("조회 하려는 장르를 선택하세요 : ");
         int genre = sc.nextInt();
         System.out.println();
@@ -528,18 +554,22 @@ public class Menu {
         System.out.print("추가를 원하는 도서의 제목을 입력하세요(필수) : ");
         sc.nextLine();
         request[0] = sc.nextLine();
-        System.out.print("추가를 원하는 도서의 저자를 입력하세요(필수) : ");
-        request[1] = sc.nextLine();
-        System.out.print("추가를 원하는 도서의 출판사를 입력하세요(필수) : ");
-        request[2] = sc.nextLine();
-        System.out.println();
+        if (manager.isUniqueTitle(con, request[0])) {
+            System.out.print("추가를 원하는 도서의 저자를 입력하세요(필수) : ");
+            request[1] = sc.nextLine();
+            System.out.print("추가를 원하는 도서의 출판사를 입력하세요(필수) : ");
+            request[2] = sc.nextLine();
+            System.out.println();
 
-        result = manager.addBookRequest(con, request, memberInfo[0]);
+            result = manager.addBookRequest(con, request, memberInfo[0]);
 
-        if (result > 0) {
-            System.out.println("도서 추가 요청 성공\n");
+            if (result > 0) {
+                System.out.println("입력된 도서의 등록 추가 요청이 성공되었습니다.\n");
+            } else {
+                System.out.println("도서의 등록 추가 요청이 실패되었습니다.\n");
+            }
         } else {
-            System.out.println("도서 추가 요청 실패\n");
+            System.out.println("이미 도서 목록에 존재하는 도서 입니다.");
         }
     }
 
@@ -548,16 +578,20 @@ public class Menu {
 
         System.out.print("대여 혹은 소장을 원하는 도서의 도서 코드를 입력하세요 : ");
         int bookCode = sc.nextInt();
-        System.out.print("대여 혹은 소장을 선택하세요 (1. 대여 / 2. 소장) : ");
-        int answer = sc.nextInt();
-        System.out.println();
+        if (manager.boxDuplicateCheck(con, memberInfo[0], bookCode)) {
+            System.out.print("대여 혹은 소장을 선택하세요 (1. 대여 / 2. 소장) : ");
+            int answer = sc.nextInt();
+            System.out.println();
 
-        result = manager.bookRent(con, memberInfo[0], bookCode, answer);
+            result = manager.bookRent(con, memberInfo[0], bookCode, answer);
 
-        if (result > 0) {
-            System.out.println("도서 대여(소장) 완료");
+            if (result > 0) {
+                System.out.println("도서 대여(소장)가 완료되었습니다.");
+            } else {
+                System.out.println("도서 대여(소장)가 실패되었습니다.");
+            }
         } else {
-            System.out.println("도서 대여(소장) 실패");
+            System.out.println("이미 대여(소장) 중인 도서입니다.");
         }
     }
 
@@ -568,16 +602,20 @@ public class Menu {
         System.out.print("아이디를 입력하세요 : ");
         sc.nextLine();
         signUpInfo[0] = sc.nextLine();
-        System.out.print("비밀번호를 입력하세요 : ");
-        signUpInfo[1] = sc.nextLine();
-        System.out.print("비밀번호를 다시 한번 입력하세요 : ");
-        String check = sc.nextLine();
+        if (manager.isUniqueId(con, signUpInfo[0])) {
+            System.out.print("비밀번호를 입력하세요 : ");
+            signUpInfo[1] = sc.nextLine();
+            System.out.print("비밀번호를 다시 한번 입력하세요 : ");
+            String check = sc.nextLine();
 
-        if (signUpInfo[1].equals(check)) {
-            signUpExpansionMenu(signUpInfo);
+            if (signUpInfo[1].equals(check)) {
+                signUpExpansionMenu(signUpInfo);
+            } else {
+                System.out.println("처음 입력한 비밀번호와 다릅니다.");
+                System.out.println("비밀번호를 다시 확인해주세요.\n");
+            }
         } else {
-            System.out.println("처음 입력한 비밀번호와 다릅니다.");
-            System.out.println("비밀번호를 다시 확인해주세요.\n");
+            System.out.println("중복된 아이디를 입력했습니다.");
         }
     }
 
@@ -596,16 +634,16 @@ public class Menu {
         result = manager.signUp(con, signUpInfo, signUpAddInfo);
 
         if (result > 0) {
-            System.out.println("회원 가입 신청 완료\n");
+            System.out.println("회원 가입 신청이 완료되었습니다.\n");
         } else {
-            System.out.println("회원 가입 신청 실패\n");
+            System.out.println("회원 가입 신청이 실패되었습니다.\n");
         }
     }
 
     public void searchHistoryMenu() {
         List<SearchDTO> searchHistoryList = new ArrayList<>();
 
-        System.out.println("최근 검색한 5개의 도서를 출력합니다.\n");
+        System.out.println("최근 검색한 10개의 도서를 출력합니다.\n");
 
         searchHistoryList = manager.searchHistory(con);
 
@@ -656,7 +694,7 @@ public class Menu {
     }
 
     public void printRequestBookMenu() {
-        System.out.println("============ 도서 추가 요청 목록 ============\n");
+        System.out.println("========== 도서 추가 요청 목록 ==========\n");
 
         List<RequestDTO> requestList = manager.printRequestBook(con);
 
@@ -697,22 +735,26 @@ public class Menu {
         System.out.print("도서의 제목을 입력하세요 : ");
         sc.nextLine();
         String bookName = sc.nextLine();
-        System.out.print("도서의 저자를 입력하세요 : ");
-        String bookAuthor = sc.nextLine();
-        System.out.print("도서의 장르를 입력하세요 : ");
-        String bookGenre = sc.nextLine();
-        System.out.print("도서의 종류를 입력하세요 : ");
-        String bookType = sc.nextLine();
-        System.out.print("도서의 출판사를 입력하세요 : ");
-        String bookPublisher = sc.nextLine();
-        System.out.println();
+        if (manager.isUniqueTitle(con, bookName)) {
+            System.out.print("도서의 저자를 입력하세요 : ");
+            String bookAuthor = sc.nextLine();
+            System.out.print("도서의 장르를 입력하세요 : ");
+            String bookGenre = sc.nextLine();
+            System.out.print("도서의 종류를 입력하세요 : ");
+            String bookType = sc.nextLine();
+            System.out.print("도서의 출판사를 입력하세요 : ");
+            String bookPublisher = sc.nextLine();
+            System.out.println();
 
-        result = manager.addNewBook(con, bookName, bookAuthor, bookGenre, bookType, bookPublisher);
+            result = manager.addNewBook(con, bookName, bookAuthor, bookGenre, bookType, bookPublisher);
 
-        if (result > 0) {
-            System.out.println("신규 도서 정보 입력에 성공했습니다.\n");
+            if (result > 0) {
+                System.out.println("신규 도서 정보 입력에 성공했습니다.\n");
+            } else {
+                System.out.println("신규 도서 정보 입력에 실패했습니다.\n");
+            }
         } else {
-            System.out.println("신규 도서 정보 입력에 실패했습니다.\n");
+            System.out.println("이미 도서 목록에 존재하는 도서 입니다.");
         }
     }
 
@@ -730,6 +772,114 @@ public class Menu {
             System.out.println("'회원 번호 " + memberCode + "에게 관리자 권한이 부여됐습니다.\n");
         } else {
             System.out.println("관리자 권한 부여에 실패했습니다.\n");
+        }
+    }
+
+    public void pileOfBooksMenu(List<BookDTO> bookList) {
+        System.out.println("2개 이상의 도서가 검색됐습니다.");
+        System.out.print("추가 선택을 진행하시겠습니까? (1. 예 / 2. 아니오) : ");
+        int select = sc.nextInt();
+        if (select == 1) {
+            System.out.println();
+            for (int i = 0; i < bookList.size(); i++) {
+                System.out.println((i + 1) + "번 : " + bookList.get(i));
+            }
+            System.out.println();
+            System.out.print("추가 선택을 진행할 도서를 선택하세요 : ");
+            int answer = sc.nextInt();
+
+            int bookCode = bookList.get(answer - 1).getBookCode();
+
+            System.out.println("\n" + bookList.get(answer - 1));
+            if (manager.boxDuplicateCheck(con, memberInfo[0], bookCode)) {
+                if (!bookList.isEmpty()) {
+                    if (memberInfo[1] == 1) {
+                        System.out.print("선택된 도서를 삭제하시겠습니까? (1. 예 / 2. 아니오) : ");
+                        answer = sc.nextInt();
+                        if (answer == 1) {
+                            directBookDeleteMenu(bookCode);
+                        }
+                    } else if (memberInfo[1] == 2) {
+                        System.out.print("선택된 도서를 대여, 혹은 소장하시겠습니까? (1. 예 / 2. 아니오) : ");
+                        answer = sc.nextInt();
+                        if (answer == 1) {
+                            directBookRentMenu(bookCode);
+                        }
+                    }
+                }
+            } else {
+                System.out.println("이미 대여(소장) 중인 도서입니다.");
+            }
+        }
+    }
+
+    public void selfCheckMemberInfo() {
+        while (true) {
+            System.out.println("========== 개인정보 조회 및 변경 ==========");
+            System.out.println("개인정보 조회를 위해 아이디와 비밀번호를 입력해 주세요.");
+            System.out.print("아이디 : ");
+            sc.nextLine();
+            String memberId = sc.nextLine();
+            System.out.print("비밀번호 : ");
+            String memberPw = sc.nextLine();
+            int answer = 0;
+            if (manager.isEqualPw(con, memberId, memberPw)) {
+                System.out.println("----------- 개인정보 조회 결과 ------------");
+                List<String> member = manager.printSelectMemberInfo(con, memberInfo[0]);
+                System.out.print("[ 아이디 : " + member.get(0));
+                System.out.print(" | 비밀번호 : " + member.get(1));
+                System.out.print(" | 이름 : " + member.get(2));
+                System.out.print(" | 전화번호 : " + member.get(3));
+                System.out.println(" | 메일주소 : " + member.get(4) + " ]\n");
+                System.out.print("회원 정보를 변경하시겠습니까? (1. 예 / 2. 아니오 : ");
+                answer = sc.nextInt();
+                if (answer == 1) {
+                    changeMemberInfo();
+                    break;
+                } else if (answer == 2){
+                    System.out.println("회원 정보 변경을 종료하겠습니다.");
+                    break;
+                }
+            } else {
+                System.out.println("사용자 정보를 확인 할 수 없습니다.");
+                System.out.print("회원 정보 조회를 종료하시겠습니까? (1. 예 /2. 아니오 : ");
+                answer = sc.nextInt();
+                if (answer == 1) {
+                    System.out.println("회원 정보 조회를 종료합니다.");
+                    break;
+                } else if (answer == 2) {
+                    System.out.println();
+                } else {
+                    System.out.println("잘 못 응답 하셨습니다.");
+                }
+
+            }
+        }
+
+    }
+    public void changeMemberInfo() {
+        System.out.println("변경 가능한 회원 정보는 '비밀번호, 전화번호, 메일주소' 입니다.");
+        System.out.print("변경할 비밀번호 : ");
+        sc.nextLine();
+        String changePw = sc.nextLine();
+        System.out.print("변경할 전화번호 : ");
+        String changePhone = sc.nextLine();
+        System.out.print("변경할 메일주소 : ");
+        String changeEmail = sc.nextLine();
+        String[] changeMemberInfo = {changePw, changePhone, changeEmail};
+        int result = 0;
+        result = manager.updateMemberInfo(con, changeMemberInfo, memberInfo[0]);
+        if (result > 0) {
+            System.out.println("------------- 변경된 회원 정보 -------------");
+            List<String> changeMember = manager.printSelectMemberInfo(con, memberInfo[0]);
+            System.out.print("[ 아이디 : " + changeMember.get(0));
+            System.out.print(" | 비밀번호 : " + changeMember.get(1));
+            System.out.print(" | 이름 : " + changeMember.get(2));
+            System.out.print(" | 전화번호 : " + changeMember.get(3));
+            System.out.println(" | 메일주소 : " + changeMember.get(4) + " ]\n");
+            System.out.println("회원 정보 변경이 완료 되었습니다.");
+        } else {
+            System.out.println("회원 정보 변경이 실패 되었습니다.");
         }
     }
 }

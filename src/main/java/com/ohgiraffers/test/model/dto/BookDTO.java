@@ -11,7 +11,7 @@ public class BookDTO implements java.io.Serializable {
 
         public BookDTO () {}
 
-        public BookDTO(String bookName, String bookAuthor, String bookGenre, String bookType, String bookPublisher) {
+        public BookDTO(int bookCode, String bookName, String bookAuthor, String bookGenre, String bookType, String bookPublisher) {
             this.bookCode = bookCode;
             this.bookName = bookName;
             this.bookAuthor = bookAuthor;
@@ -19,6 +19,14 @@ public class BookDTO implements java.io.Serializable {
             this.bookType = bookType;
             this.bookPublisher = bookPublisher;
         }
+
+    public BookDTO(String bookName, String bookAuthor, String bookGenre, String bookType, String bookPublisher) {this.bookCode = bookCode;
+        this.bookName = bookName;
+        this.bookAuthor = bookAuthor;
+        this.bookGenre = bookGenre;
+        this.bookType = bookType;
+        this.bookPublisher = bookPublisher;
+    }
 
         public int getBookCode() {
             return bookCode;
@@ -70,12 +78,12 @@ public class BookDTO implements java.io.Serializable {
 
         @Override
         public String toString() {
-            return  "도서 번호 : " + bookCode +
-                    ", 도서 제목 : " + bookName +
-                    ", 도서 저자 : " + bookAuthor +
-                    ", 도서 출판사 : " + bookPublisher +
-                    ", 도서 장르 : " + bookGenre +
-                    ", 도서 종류 : " + bookType;
+            return  "[ 도서 번호 : " + bookCode +
+                    " | 제목 : " + bookName +
+                    " | 저자 : " + bookAuthor +
+                    " | 출판사 : " + bookPublisher +
+                    " | 장르 : " + bookGenre +
+                    " | 종류 : " + bookType + " ]";
         }
     }
 

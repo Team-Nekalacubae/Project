@@ -26,8 +26,12 @@ public class Manager {
     }
 
     public int deleteMember(Connection con, int memberCode) {
-        int result = registMemberDAO.updateMemberType(con, memberCode, 4);
+        int result = 0;
+        int check = registMemberDAO.insertOutMember(con, memberCode);
 
+        if (check > 0) {
+            result = registMemberDAO.updateMemberType(con, memberCode, 4);
+        }
         return result;
     }
 
@@ -256,6 +260,46 @@ public class Manager {
 
     public int approveMember(Connection con) {
         int result = registMemberDAO.updateAllRequestMember(con);
+
+        return result;
+    }
+
+
+    public boolean boxDuplicateCheck(Connection con, int memberCode, int bookCode) {
+        boolean isTrue = !registBookDAO.callBoxBookNumber(con, memberCode).contains(bookCode);
+      
+        return isTrue;
+    }
+
+
+    public boolean isUniqueTitle(Connection con, String bookName) {
+        boolean isTrue = !registBookDAO.callBookName(con).contains(bookName);
+      
+        return isTrue;
+    }
+
+    public boolean isUniqueId(Connection con, String memberId) {
+        boolean isTrue = !registMemberDAO.callMemberId(con).contains(memberId);
+
+        return isTrue;
+    }
+
+    public boolean isEqualPw(Connection con, String memberId, String memberPw) {
+        String callMemberPw = registMemberDAO.callPassword(con, memberId);
+        boolean isTrue = memberPw.equals(callMemberPw);
+
+        return isTrue;
+    }
+
+    public List<String> printSelectMemberInfo(Connection con, int memberCode) {
+        List<String> memberInformation = registMemberDAO.selectMemberInfo(con, memberCode);
+
+        return memberInformation;
+    }
+
+    public int updateMemberInfo(Connection con, String[] changeMemberInfo, int memberCode) {
+        int result = 0;
+        result = registMemberDAO.updateMemberInfo(con, changeMemberInfo, memberCode);
 
         return result;
     }

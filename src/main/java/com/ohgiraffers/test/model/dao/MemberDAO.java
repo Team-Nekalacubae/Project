@@ -3,9 +3,11 @@ package com.ohgiraffers.test.model.dao;
 import com.ohgiraffers.test.model.dto.MemberDTO;
 import com.ohgiraffers.test.model.dto.OutMemberDTO;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -264,5 +266,104 @@ public class MemberDAO {
             close(rset);
         }
         return memberList;
+    }
+
+    public ArrayList<String> callMemberId(Connection con) {
+        Statement stmt = null;
+        ResultSet rset = null;
+
+        String query = "SELECT MEMBER_ID FROM MEMBERS";
+
+        ArrayList<String> memberIdList = null;
+
+        try {
+            stmt = con.createStatement();
+            rset = stmt.executeQuery(query);
+
+            memberIdList = new ArrayList<>();
+            while (rset.next()) {
+                memberIdList.add(rset.getString("MEMBER_ID"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(stmt);
+            close(rset);
+        }
+        return memberIdList;
+    }
+
+
+    public ArrayList<String> selectMemberInfo(Connection con, int memberCode) {
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+
+        ArrayList<String> memberInfo = null;
+        String query = "SELECT MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL FROM MEMBERS WHERE MEMBER_CODE = ?";
+
+        try {
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, memberCode);
+
+            rset = pstmt.executeQuery();
+            memberInfo = new ArrayList<>();
+
+            while (rset.next()) {
+
+                memberInfo.add(rset.getString("MEMBER_ID"));
+                memberInfo.add(rset.getString("MEMBER_PW"));
+                memberInfo.add(rset.getString("MEMBER_NAME"));
+                memberInfo.add(rset.getString("MEMBER_PHONE"));
+                memberInfo.add(rset.getString("MEMBER_EMAIL"));
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+            close(rset);
+        }
+        return memberInfo;
+    }
+
+    public int updateMemberInfo(Connection con, String[] changeMemberInfo, int memberCode) {
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = "UPDATE MEMBERS SET MEMBER_PW = ?, MEMBER_PHONE = ?, MEMBER_EMAIL = ? WHERE MEMBER_CODE = ?";
+        try {
+            pstmt = con.prepareStatement(query);
+
+            pstmt.setString(1, changeMemberInfo[0]);
+            pstmt.setString(2, changeMemberInfo[1]);
+            pstmt.setString(3, changeMemberInfo[2]);
+            pstmt.setInt(4, memberCode);
+
+            result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(pstmt);
+        }
+          return result;
+    }
+
+    public int insertOutMember(Connection con, int memberCode) {
+        Statement stmt = null;
+
+        LocalDate now = LocalDate.now();
+
+        int result = 0;
+        String query = "INSERT INTO OUT_MEMBER (OUT_DATE, MEMBER_CODE) VALUES ('" + String.valueOf(now) + "', " + memberCode + ')';
+        try {
+            stmt = con.createStatement();
+
+            result = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(stmt);
+
+        }
+        return result;
     }
 }

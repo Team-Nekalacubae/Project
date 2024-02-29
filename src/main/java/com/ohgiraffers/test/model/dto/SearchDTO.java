@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
-public class SearchDTO implements Serializable {
+public class SearchDTO extends BookDTO implements Serializable {
 
     private String searchElement;
     private String searchName;
@@ -76,10 +76,10 @@ public class SearchDTO implements Serializable {
     @Override
     public String toString() {
         return
-                "검색 주제 : " + searchElement +
-                ", 검색 내용 : " + searchName +
-                ", 도서 번호 : " + bookCode +
-                ", 검색 시간 : " + searchDate +
-                ", " + searchTime;
+                "[ 검색 주제 : " + searchElement +
+                " | 도서 제목 : " + getBookName() +
+                " | 도서 번호 : " + bookCode +
+                " | 검색 시간 : " + searchDate +
+                " " + searchTime + " ]";
     }
 }

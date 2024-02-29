@@ -84,15 +84,21 @@ public class BoxDTO extends BookDTO implements Serializable {
 
     @Override
     public String toString() {
-        String superStr = super.toString();
+//        String superStr = super.toString();
+        String superStr = " [도서 번호 : " + getBookCode() +
+                " | 제목 : " + getBookName() +
+                " | 저자 : " + getBookAuthor() +
+                " | 출판사 : " + getBookPublisher() +
+                " | 장르 : " + getBookGenre() +
+                " | 종류 : " + getBookType();
         String str = "";
         if (rental) {
-            str = ", 대여 기간 : " + rentalDate +
+            str = " | 대여 기간 : " + rentalDate +
                   " ~ " + endDate;
         } else {
-            str = ", 소장 시작 : " + buyDate;
+            str = " | 소장 시작 : " + buyDate;
         }
 
-        return superStr + str;
+        return superStr + str + " ]";
     }
 }

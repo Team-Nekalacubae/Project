@@ -66,15 +66,16 @@
 
     <entry key="searchHistory">
         SELECT
-            BOOK_CODE,
-            SEARCH_ELEMENT,
-            SEARCH_NAME,
-            SEARCH_DATE,
-            SEARCH_TIME
-        FROM SEARCH
+            A.BOOK_CODE,
+            A.SEARCH_ELEMENT,
+            B.BOOK_NAME,
+            A.SEARCH_DATE,
+            A.SEARCH_TIME
+        FROM SEARCH A
+        JOIN BOOKS B ON A.BOOK_CODE = B.BOOK_CODE
         ORDER BY SEARCH_DATE DESC,
                  SEARCH_TIME DESC
-        LIMIT 5;
+        LIMIT 10;
   </entry>
 
     <entry key="callRentBox">
