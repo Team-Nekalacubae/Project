@@ -155,5 +155,6 @@ NEKALAeBOOK 프로젝트는 java와 sql을 기반으로 제작되었으며, java
 <br/>
 
 # 📂 PPT 자료
-[eBOOK-프로젝트-ppt.pptx](https://github.com/Team-Nekalacubae/Project/files/14441302/eBOOK-.-ppt.pptx)
+[eBOOK-프로젝트-ppt.pdf](https://github.com/Team-Nekalacubae/Project/files/14473106/eBOOK-.-ppt.pdf)
+
 
